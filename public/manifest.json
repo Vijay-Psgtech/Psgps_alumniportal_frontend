@@ -1,0 +1,72 @@
+{
+  "name": "Alumni Campaign Management System",
+  "short_name": "Campaigns",
+  "description": "A comprehensive campaign management system for alumni engagement, stories, and events",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff",
+  "orientation": "portrait-or-landscape",
+  "categories": ["productivity"],
+  "screenshots": [
+    {
+      "src": "/screenshots/campaign-list-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/screenshots/campaign-list-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Campaigns",
+      "short_name": "Campaigns",
+      "description": "View all active campaigns",
+      "url": "/campaigns",
+      "icons": [
+        {
+          "src": "/icon-shortcut-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Create Campaign",
+      "short_name": "Create",
+      "description": "Create a new campaign",
+      "url": "/campaigns/create",
+      "icons": [
+        {
+          "src": "/icon-shortcut-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
