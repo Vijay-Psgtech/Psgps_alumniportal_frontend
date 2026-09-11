@@ -176,7 +176,7 @@ const CAMPAIGN_TEMPLATES = {
         fieldId: "college-impact",
         fieldName: "collegeImpact",
         fieldType: "textarea",
-        label: "How PSG CAS helped in your journey",
+        label: "How PSG PS helped in your journey",
         required: false,
       },
       {

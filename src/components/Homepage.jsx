@@ -181,13 +181,13 @@ function HomePage() {
       <section className="welcome-section" id="about"><div><span className="section-kicker">Our community</span><h2>One school.<br /><em>Many journeys.</em></h2></div><p>From the classrooms of PSG Public Schools to every corner of the world, our alumni carry a shared spirit of curiosity, character, and contribution. Stay connected to the people and place that shaped you.</p><a className="text-link" href="#community">Discover our story <span aria-hidden="true">&#8594;</span></a></section>
       <section className="module-grid" id="community">
         <article className="module-card blue-card"><span className="card-icon">&#9733;</span><span className="section-kicker">Stay connected</span><h3>Find your people</h3><p>Reconnect with classmates and grow your professional network.</p><a href="#directory">Explore the directory <span aria-hidden="true">&#8594;</span></a></article>
-        <article className="module-card event-card feature-animated" id="events" key={featuredEvent?.id || featuredEventTitle}>
+        <article className="module-card event-card feature-animated" id="events" key={`featured-event-${featuredEvent?.id || featuredEventTitle}`}>
           <span className="section-kicker">Mark your calendar</span>
           <h3>{featuredEventTitle}</h3>
           <div className="event-row"><strong>{featuredEventDate.split(' ')[1]?.replace(',', '') || 'Next'}</strong><div><b>{featuredEventCategory}</b><small>{featuredEventDate} &middot; {featuredEventVenue}</small></div><span aria-hidden="true">&#8594;</span></div>
           <Link to={featuredEventLink}>View event details <span aria-hidden="true">&#8594;</span></Link>
         </article>
-        <article className="module-card story-card feature-animated" id="stories" key={featuredAlbum?.id || featuredAlbumTitle}>
+        <article className="module-card story-card feature-animated" id="stories" key={`featured-story-${featuredAlbum?.id || featuredAlbumTitle}`}>
           <span className="section-kicker">Gallery spotlight</span>
           {featuredAlbumCover ? <img className="module-card-image" src={featuredAlbumCover} alt={featuredAlbumTitle} /> : null}
           <h3>{featuredAlbumTitle}</h3>

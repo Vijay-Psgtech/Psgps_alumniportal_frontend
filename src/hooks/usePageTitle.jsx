@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 const usePageTitle = (title) => {
   useEffect(() => {
-    document.title = `${title} | PSG ARTS ALUMNI ASSOCIATION`;
+    document.title = `${title} | PSG Public Schools Alumni Association`;
   }, [title]);
 };
 
