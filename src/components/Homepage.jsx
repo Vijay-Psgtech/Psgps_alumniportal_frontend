@@ -178,6 +178,8 @@ function HomePage() {
     <main className="site-shell">
       <SiteNavbar />
       <HeroBanner />
+      <LeadershipSection />
+      {/*Event & album section */}
       <section className="welcome-section" id="about"><div><span className="section-kicker">Our community</span><h2>One school.<br /><em>Many journeys.</em></h2></div><p>From the classrooms of PSG Public Schools to every corner of the world, our alumni carry a shared spirit of curiosity, character, and contribution. Stay connected to the people and place that shaped you.</p><a className="text-link" href="#community">Discover our story <span aria-hidden="true">&#8594;</span></a></section>
       <section className="module-grid" id="community">
         <article className="module-card blue-card"><span className="card-icon">&#9733;</span><span className="section-kicker">Stay connected</span><h3>Find your people</h3><p>Reconnect with classmates and grow your professional network.</p><a href="#directory">Explore the directory <span aria-hidden="true">&#8594;</span></a></article>
@@ -195,18 +197,23 @@ function HomePage() {
           <Link to={featuredAlbumLink}>Explore gallery <span aria-hidden="true">&#8594;</span></Link>
         </article>
       </section>
-      <LeadershipSection />
+
+      {/*Numbers Section */}
       <section className="numbers-section" id="impact">
         <div className="section-heading"><span className="section-pill">Our impact</span><h2>By The Numbers</h2><p>Our vibrant alumni community continues to grow stronger, building bonds and creating opportunities that make a lasting difference.</p></div>
         <div className="impact-grid"><article><span className="impact-icon people-icon" aria-hidden="true" /><strong>900<span>+</span></strong><b>Active alumni</b><p>A network of achievers inspiring and supporting one another.</p></article><article><span className="impact-icon globe-icon" aria-hidden="true" /><strong>15<span>+</span></strong><b>Countries</b><p>Our alumni presence spans the globe, united by shared values.</p></article><article><span className="impact-icon calendar-icon" aria-hidden="true" /><strong>5<span>+</span></strong><b>Annual events</b><p>Bringing alumni together to connect, collaborate and celebrate milestones.</p></article></div>
       </section>
+
+      {/*Find your alumni section*/}
       <section className="directory-section" id="directory">
         <div className="section-heading"><span className="section-pill">&#128269; Find your network</span><h2>Find Fellow PSGPSians</h2><p>Discover and connect with the PSGPS Alumni Network</p></div>
         <label className="directory-search"><span aria-hidden="true">&#8981;</span><input value={directoryQuery} onChange={(event) => setDirectoryQuery(event.target.value)} placeholder="Search alumni by name, batch, or profession..." aria-label="Search alumni" /></label>
         <div className="directory-filters">{['All Alumni', 'Near You', 'Technology', 'Design', 'Community'].map((filter) => <button className={directoryFilter === filter ? 'active' : ''} key={filter} type="button" onClick={() => setDirectoryFilter(filter)}>{filter}</button>)}</div>
-        <div className="alumni-results">{visibleAlumni.map((person) => <article className="alumni-result" key={person.name}><span className="result-avatar">{person.name.split(' ').map((name) => name[0]).join('')}</span><div><h3>{person.name}</h3><p>{person.role} &middot; {person.batch}</p><small>{person.location}</small></div><a href={`mailto:${person.name.toLowerCase().replaceAll(' ', '.')}@example.com`} aria-label={`Connect with ${person.name}`}>&#8599;</a></article>)}{visibleAlumni.length === 0 && <p className="empty-results">No alumni found. Try another search.</p>}</div>
+        {/* <div className="alumni-results">{visibleAlumni.map((person) => <article className="alumni-result" key={person.name}><span className="result-avatar">{person.name.split(' ').map((name) => name[0]).join('')}</span><div><h3>{person.name}</h3><p>{person.role} &middot; {person.batch}</p><small>{person.location}</small></div><a href={`mailto:${person.name.toLowerCase().replaceAll(' ', '.')}@example.com`} aria-label={`Connect with ${person.name}`}>&#8599;</a></article>)}{visibleAlumni.length === 0 && <p className="empty-results">No alumni found. Try another search.</p>}</div> */}
         <a className="directory-cta" href="#join">Start connecting now <span aria-hidden="true">&#8594;</span></a>
       </section>
+
+      {/*Footer*/}
       <footer className="site-footer" id="join">
         <div className="footer-brand"><img src={psgpsLogo} alt="PSG Public Schools" /><b>PSGPS ALUMNI</b><span>Strong roots. Shared journey. Limitless impact.</span></div>
         <div className="footer-contact"><span className="footer-kicker">Visit the school</span><address>PSG Public Schools<br />Avanashi Road, Peelamedu<br />Coimbatore - 641004, Tamil Nadu, India</address><a className="map-link" href="https://www.google.com/maps/place/PSG+Public+Schools/@11.0242327,77.0066683,15z/data=!4m5!3m4!1s0x0:0xc55f6cac5ba482c7!8m2!3d11.0237272!4d77.0048229" target="_blank" rel="noreferrer">Open school location <span aria-hidden="true">&#8599;</span></a></div>

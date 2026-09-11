@@ -1,12 +1,12 @@
-import patronImg1 from "../../assets/Banner/Patron1.jpg";
-import patronImg2 from "../../assets/Banner/PRINCIPAL.png";
-import patronImg3 from "../../assets/Banner/Picture1.png";
-import patronImg4 from "../../assets/Banner/Picture3.png";
-import patronImg5 from "../../assets/Banner/Picture4.png";
-import patronImg6 from "../../assets/Banner/Picture5.png";
-import patronImg7 from "../../assets/Banner/Picture6.png";
-import patronImg8 from "../../assets/Banner/Picture7.png";
-import patronImg9 from "../../assets/Banner/Picture8.png";
+import patronImg1 from "../../assets/Patrons/Chief.jpg";
+import patronImg2 from "../../assets/Patrons/PRINCIPAL.png";
+import patronImg3 from "../../assets/Patrons/Picture1.png";
+import patronImg4 from "../../assets/Patrons/Picture3.png";
+import patronImg5 from "../../assets/Patrons/Picture4.png";
+import patronImg6 from "../../assets/Patrons/Picture5.png";
+import patronImg7 from "../../assets/Patrons/Picture6.png";
+import patronImg8 from "../../assets/Patrons/Picture7.png";
+import patronImg9 from "../../assets/Patrons/Picture8.png";
 
 export const Patrons = [
   {

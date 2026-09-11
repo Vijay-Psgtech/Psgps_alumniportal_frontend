@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import gopalakrishnanImage from '../assets/Banner/Patron1.jpg'
-import alaguImage from '../assets/Banner/Picture1.png'
+import gopalakrishnanImage from '../assets/Patrons/trustee.jpg'
+import alaguImage from '../assets/Patrons/President.jpg'
 
 function LeadershipSection() {
   return (
@@ -18,9 +18,9 @@ function LeadershipSection() {
       </div>
 
       <div className="leader-grid">
-        <article className="leader-card leader-card-featured">
+        <article className="leader-card">
           <div className="leader-portrait">
-            <img src={gopalakrishnanImage} alt="Mr. L. Gopalakrishnan" />
+            <img src={gopalakrishnanImage} alt="Mr. L. Gopalakrishnan" loading="lazy" />
           </div>
           <div className="leader-detail">
             <span className="leader-label">Chief Patron · Institutional leadership</span>
@@ -39,10 +39,10 @@ function LeadershipSection() {
 
         <article className="leader-card">
           <div className="leader-portrait">
-            <img src={alaguImage} alt="Mr. AlaguNachiappan S" />
+            <img src={alaguImage} alt="Mr. AlaguNachiappan S" loading="lazy" />
           </div>
           <div className="leader-detail">
-            <span className="leader-label">President · PSG Public Schools Alumni Association</span>
+            <span className="leader-label">President · PSGPS Alumni Association</span>
             <h3>Mr. AlaguNachiappan S</h3>
             <b>Connecting generations of excellence</b>
             <p>Dedicated to building stronger alumni networks, mentorship, and opportunity.</p>
