@@ -77,7 +77,7 @@ const PublicOnlyRoute = ({ children }) => {
   const { user, authLoading } = useAuth();
   if (authLoading) return <AppLoader />;
   if (!user) return children;
-  if (user.role === "admin" || user.role === "superadmin") 
+  if (user.role === "admin" || user.role === "superadmin")
     return <Navigate to="/admin/dashboard" replace />;
   if (user.isApproved) return <Navigate to="/alumni/dashboard" replace />;
   return children;
