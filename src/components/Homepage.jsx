@@ -6,6 +6,7 @@ import LeadershipSection from './LeadershipSection'
 import SiteNavbar from './SiteNavbar'
 import { albumsAPI, eventsAPI, API_BASE } from '../services/api'
 import { alumniEvents, galleryAlbums } from '../content/data/EventsGalleryData'
+import { CalendarDays, Globe2, Handshake, MapPin, Search, UsersRound } from 'lucide-react'
 
 const imageUrl = (value) => {
   if (!value) return ''
@@ -33,12 +34,6 @@ function HomePage() {
   const [albumList, setAlbumList] = useState([])
   const [featuredEventIndex, setFeaturedEventIndex] = useState(0)
   const [featuredAlbumIndex, setFeaturedAlbumIndex] = useState(0)
-
-  const alumni = [
-    { name: 'Ananya Krishnan', batch: 'Batch 2012', role: 'Product Designer', location: 'Coimbatore', interest: 'Design' },
-    { name: 'Arjun Menon', batch: 'Batch 2008', role: 'Technology Leader', location: 'Bengaluru', interest: 'Technology' },
-    { name: 'Meera Suresh', batch: 'Batch 2016', role: 'Social Entrepreneur', location: 'Chennai', interest: 'Community' },
-  ]
 
   useEffect(() => {
     let isMounted = true
@@ -133,12 +128,6 @@ function HomePage() {
     return () => clearInterval(intervalId)
   }, [albumList.length])
 
-  const visibleAlumni = alumni.filter((person) => {
-    const matchesQuery = `${person.name} ${person.role} ${person.location}`.toLowerCase().includes(directoryQuery.toLowerCase())
-    const matchesFilter = directoryFilter === 'All Alumni' || (directoryFilter === 'Near You' && person.location === 'Coimbatore') || person.interest === directoryFilter
-    return matchesQuery && matchesFilter
-  })
-
   useEffect(() => {
     let frameId
     const updateParallax = () => {
@@ -147,7 +136,7 @@ function HomePage() {
     }
     updateParallax()
     window.addEventListener('scroll', updateParallax, { passive: true })
-    const revealTargets = document.querySelectorAll('.welcome-section, .module-card, .leaders-section .section-heading, .leader-card, .numbers-section .section-heading, .impact-grid article, .directory-section .section-heading, .directory-search, .directory-filters, .alumni-result, .site-footer')
+    const revealTargets = document.querySelectorAll('.welcome-section, .module-card, .leaders-section .section-heading, .leader-card, .numbers-section .section-heading, .impact-grid article, .directory-section .section-heading, .directory-search, .directory-filters, .connection-card, .site-footer')
     revealTargets.forEach((element) => element.classList.add('scroll-reveal'))
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -201,16 +190,20 @@ function HomePage() {
       {/*Numbers Section */}
       <section className="numbers-section" id="impact">
         <div className="section-heading"><span className="section-pill">Our impact</span><h2>By The Numbers</h2><p>Our vibrant alumni community continues to grow stronger, building bonds and creating opportunities that make a lasting difference.</p></div>
-        <div className="impact-grid"><article><span className="impact-icon people-icon" aria-hidden="true" /><strong>900<span>+</span></strong><b>Active alumni</b><p>A network of achievers inspiring and supporting one another.</p></article><article><span className="impact-icon globe-icon" aria-hidden="true" /><strong>15<span>+</span></strong><b>Countries</b><p>Our alumni presence spans the globe, united by shared values.</p></article><article><span className="impact-icon calendar-icon" aria-hidden="true" /><strong>5<span>+</span></strong><b>Annual events</b><p>Bringing alumni together to connect, collaborate and celebrate milestones.</p></article></div>
+        <div className="impact-grid"><article><span className="impact-icon people-icon" aria-hidden="true"><UsersRound size={24} strokeWidth={1.8} /></span><strong>900<span>+</span></strong><b>Active alumni</b><p>A network of achievers inspiring and supporting one another.</p></article><article><span className="impact-icon globe-icon" aria-hidden="true"><Globe2 size={24} strokeWidth={1.8} /></span><strong>15<span>+</span></strong><b>Countries</b><p>Our alumni presence spans the globe, united by shared values.</p></article><article><span className="impact-icon calendar-icon" aria-hidden="true"><CalendarDays size={24} strokeWidth={1.8} /></span><strong>5<span>+</span></strong><b>Annual events</b><p>Bringing alumni together to connect, collaborate and celebrate milestones.</p></article></div>
       </section>
 
       {/*Find your alumni section*/}
       <section className="directory-section" id="directory">
-        <div className="section-heading"><span className="section-pill">&#128269; Find your network</span><h2>Find Fellow PSGPSians</h2><p>Discover and connect with the PSGPS Alumni Network</p></div>
-        <label className="directory-search"><span aria-hidden="true">&#8981;</span><input value={directoryQuery} onChange={(event) => setDirectoryQuery(event.target.value)} placeholder="Search alumni by name, batch, or profession..." aria-label="Search alumni" /></label>
-        <div className="directory-filters">{['All Alumni', 'Near You', 'Technology', 'Design', 'Community'].map((filter) => <button className={directoryFilter === filter ? 'active' : ''} key={filter} type="button" onClick={() => setDirectoryFilter(filter)}>{filter}</button>)}</div>
-        {/* <div className="alumni-results">{visibleAlumni.map((person) => <article className="alumni-result" key={person.name}><span className="result-avatar">{person.name.split(' ').map((name) => name[0]).join('')}</span><div><h3>{person.name}</h3><p>{person.role} &middot; {person.batch}</p><small>{person.location}</small></div><a href={`mailto:${person.name.toLowerCase().replaceAll(' ', '.')}@example.com`} aria-label={`Connect with ${person.name}`}>&#8599;</a></article>)}{visibleAlumni.length === 0 && <p className="empty-results">No alumni found. Try another search.</p>}</div> */}
-        <a className="directory-cta" href="#join">Start connecting now <span aria-hidden="true">&#8594;</span></a>
+        <div className="section-heading"><span className="directory-heading-icon" aria-hidden="true"><Search size={34} strokeWidth={2.1} /></span><h2>Find Fellow <em>PSGPSians</em></h2><p>Discover and connect with the PSGPS Alumni Network</p></div>
+        <label className="directory-search"><Search size={19} aria-hidden="true" /><input value={directoryQuery} onChange={(event) => setDirectoryQuery(event.target.value)} placeholder="Search by name, batch, or profession..." aria-label="Search alumni" /></label>
+        <div className="directory-filters">{['All Alumni', 'Near You', 'Your Interests'].map((filter) => <button className={directoryFilter === filter ? 'active' : ''} key={filter} type="button" onClick={() => setDirectoryFilter(filter)}>{filter === 'Near You' ? <MapPin size={14} aria-hidden="true" /> : filter === 'Your Interests' ? <Handshake size={14} aria-hidden="true" /> : <UsersRound size={14} aria-hidden="true" />}{filter}</button>)}</div>
+        <div className="connection-grid">
+          <article className="connection-card connection-card-batch"><span className="connection-icon"><UsersRound size={42} strokeWidth={1.8} /></span><h3>Connect with<br />Batch Mates</h3><span className="connection-rule" /><p>Find and reconnect with your classmates from PSG Public Schools.</p></article>
+          <article className="connection-card connection-card-near"><span className="connection-icon"><MapPin size={42} strokeWidth={1.8} /></span><h3>Alumni Near You</h3><span className="connection-rule" /><p>Discover alumni living in your city or area.</p></article>
+          <article className="connection-card connection-card-interest"><span className="connection-icon"><Handshake size={42} strokeWidth={1.8} /></span><h3>Shared Interests</h3><span className="connection-rule" /><p>Find alumni with similar professional goals and hobbies.</p></article>
+        </div>
+        <a className="directory-cta" href="#join"><span aria-hidden="true">&#8594;</span>Start connecting now</a>
       </section>
 
       {/*Footer*/}
