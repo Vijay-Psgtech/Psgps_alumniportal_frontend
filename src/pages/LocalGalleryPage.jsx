@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Images } from "lucide-react";
-import SiteNavbar from "../components/SiteNavbar";
 import usePageTitle from "../hooks/usePageTitle";
 import { albumsAPI, API_BASE } from "../services/api";
 import { galleryAlbums } from "../content/data/EventsGalleryData";
@@ -64,7 +63,6 @@ function LocalGalleryPage() {
 
   return (
     <div className="media-page">
-      <SiteNavbar />
       <header className="media-hero media-hero-gallery">
         <span className="media-kicker">From the archives</span>
         <h1>Moments worth remembering.</h1>

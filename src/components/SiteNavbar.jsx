@@ -9,15 +9,15 @@ function SiteNavbar() {
         <span>PSGPS ALUMNI</span>
       </Link>
       <div className="nav-links">
-        <Link to="/#about">About us</Link>
-        <Link to="/#community">Community</Link>
+        <Link to="/about">About us</Link>
+        <Link to="/committee">Committee</Link>
         <Link to="/events">Events</Link>
         <Link to="/gallery">Gallery</Link>
         <Link to="/leadership">Leadership</Link>
-        <Link to="/#directory">Directory</Link>
+        <Link to="/directory">Directory</Link>
         <Link to="/contact">Contact</Link>
       </div>
-      <Link className="nav-join" to="/#join">Join now</Link>
+      <Link className="nav-join" to="/register">Join now</Link>
     </nav>
   )
 }

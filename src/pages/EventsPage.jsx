@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Calendar, MapPin, ArrowUpRight } from "lucide-react";
-import SiteNavbar from "../components/SiteNavbar";
 import usePageTitle from "../hooks/usePageTitle";
 import { API_BASE, eventsAPI } from "../services/api";
 import { alumniEvents } from "../content/data/EventsGalleryData";
@@ -69,7 +68,6 @@ function EventsPage() {
 
   return (
     <div className="media-page">
-      <SiteNavbar />
       <header className="media-hero">
         <span className="media-kicker">PSGPS Alumni Association</span>
         <h1>Events that bring us together.</h1>

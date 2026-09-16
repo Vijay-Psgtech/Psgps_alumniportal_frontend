@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Calendar, MapPin } from "lucide-react";
-import SiteNavbar from "../components/SiteNavbar";
 import usePageTitle from "../hooks/usePageTitle";
 import { albumsAPI, API_BASE } from "../services/api";
 import { galleryAlbums, findAlbum } from "../content/data/EventsGalleryData";
@@ -58,7 +57,6 @@ function GalleryDetailPage() {
   if (loading) {
     return (
       <div className="media-page">
-        <SiteNavbar />
         <main className="media-empty"><h1>Loading gallery...</h1></main>
       </div>
     );
@@ -68,7 +66,6 @@ function GalleryDetailPage() {
 
   return (
     <div className="media-page">
-      <SiteNavbar />
       <main className="album-detail">
         <Link className="back-link" to="/gallery"><ArrowLeft size={15} /> Back to gallery</Link>
         <div className="album-heading"><span className="media-kicker">{album.event || "Community"}</span><h1>{album.title}</h1><p>{album.description || `A gallery of moments from ${album.title}.`}</p><div className="media-meta"><span><Calendar size={14} />{album.date}</span><span><MapPin size={14} />{album.venue || "PSGPS Campus"}</span></div></div>
@@ -79,7 +76,7 @@ function GalleryDetailPage() {
 }
 
 function NotFound() {
-  return <div className="media-page"><SiteNavbar /><main className="media-empty"><h1>Gallery not found</h1><Link to="/gallery">Back to gallery</Link></main></div>;
+  return <div className="media-page"><main className="media-empty"><h1>Gallery not found</h1><Link to="/gallery">Back to gallery</Link></main></div>;
 }
 
 export default GalleryDetailPage;

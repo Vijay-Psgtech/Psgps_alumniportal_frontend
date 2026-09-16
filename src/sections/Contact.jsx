@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { CheckCircle, Clock3, Mail, MapPin, Phone, Send } from "lucide-react";
 import { Link } from "react-router-dom";
-import SiteNavbar from "../components/SiteNavbar";
 import usePageTitle from "../hooks/usePageTitle";
 
 const contactDetails = [
@@ -30,7 +29,6 @@ function ContactPage() {
 
   return (
     <div className="contact-page">
-      <SiteNavbar />
       <header className="contact-hero-new">
         <span className="contact-kicker">PSGPS Alumni Association</span>
         <h1>Let&apos;s stay connected.</h1>
