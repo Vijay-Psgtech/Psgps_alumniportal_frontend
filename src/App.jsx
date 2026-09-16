@@ -16,6 +16,7 @@ import "./App.css";
 // PUBLIC PAGES
 // ═══════════════════════════════════════════════════════════════════════
 const HomePage = lazy(() => import("./components/Homepage"));
+const AboutUsPage = lazy(() => import("./pages/AboutUs"));
 const LeadershipPage = lazy(() => import("./pages/LeadershipPage"));
 const ContactPage = lazy(() => import("./sections/Contact"));
 const CommitteePage = lazy(() => import("./pages/CommitteePage"));
@@ -452,6 +453,7 @@ export default function App() {
               {/* PUBLIC ROUTES */}
               {/* ═══════════════════════════════════════════════════════════════ */}
               <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutUsPage />} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/leadership" element={<LeadershipPage />} />
               <Route path="/leadership-team" element={<LeadershipPage />} />
