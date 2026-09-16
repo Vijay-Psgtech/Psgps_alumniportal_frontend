@@ -162,6 +162,90 @@ button, input { font: inherit; }
 .nav-dropdown-menu a:hover { background: rgba(255, 255, 255, 0.08); }
 .nav-actions { display: flex; align-items: center; gap: 10px; }
 .nav-menu-toggle { display: none; }
+.user-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 4px 10px 4px 5px;
+  border: 1px solid rgba(230, 239, 250, 0.28);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f0f6ff;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.user-btn:hover,
+.user-btn:focus-visible { border-color: rgba(241, 197, 109, 0.8); background: rgba(255, 255, 255, 0.11); outline: none; }
+.user-avatar {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #eac67a, #b77b2d);
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+.user-name {
+  max-width: 110px;
+  overflow: hidden;
+  color: #f0f6ff;
+  font-family: 'Plus Jakarta Sans', 'Trebuchet MS', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.chevron-icon { color: #b8cbe0; transition: transform 0.2s ease; }
+.chevron-open { transform: rotate(180deg); }
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  z-index: 30;
+  width: 238px;
+  overflow: hidden;
+  border: 1px solid rgba(121, 165, 216, 0.28);
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 22px 44px rgba(3, 15, 29, 0.28);
+}
+.dropdown-bar { height: 4px; background: linear-gradient(90deg, #eac67a, #1f66b8); }
+.user-dropdown-header { padding: 16px 16px 13px; background: #f5f9fe; border-bottom: 1px solid #e2ebf5; }
+.ud-label { color: #7890aa; font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
+.ud-name { margin-top: 5px; overflow: hidden; color: var(--navy); font-size: 14px; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
+.ud-role { margin-top: 4px; color: var(--blue); font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.ud-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 38px;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  color: #38516d;
+  font-family: 'Plus Jakarta Sans', 'Trebuchet MS', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.ud-item svg { flex: 0 0 auto; color: #7591ae; }
+.ud-item:hover,
+.ud-item.active { background: #edf5ff; color: var(--blue); }
+.ud-item:hover svg,
+.ud-item.active svg { color: var(--blue); }
+.ud-item.danger { color: #b42318; }
+.ud-item.danger svg { color: #d4493c; }
+.ud-item.danger:hover { background: #fff1f0; }
+.ud-divider { height: 1px; margin: 6px 14px; background: #e7eef6; }
 .nav-sign-in {
   display: inline-flex;
   align-items: center;
@@ -1748,6 +1832,10 @@ button, input { font: inherit; }
   .brand img { width: 86px; height: 34px; }
   .brand span { max-width: 110px; font-size: 9px; letter-spacing: 1.2px; }
   .nav-actions { order: 2; gap: 7px; }
+  .user-btn { min-height: 38px; padding-right: 7px; border-radius: 10px; }
+  .user-avatar { width: 29px; height: 29px; border-radius: 8px; font-size: 10px; }
+  .user-name { display: none; }
+  .user-dropdown { position: fixed; top: 66px; right: 5vw; width: min(238px, calc(100vw - 10vw)); }
   .nav-sign-in { min-height: 36px; padding: 0 10px; font-size: 9px; }
   .nav-join { min-height: 38px; padding: 0 12px; font-size: 9px; }
   .nav-menu-toggle {
