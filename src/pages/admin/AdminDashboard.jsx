@@ -570,12 +570,6 @@ const AdminDashboard = () => {
               color="orange"
             />
             <StatsCard
-              icon={BookOpen}
-              label="Departments"
-              value={stats.departments}
-              color="indigo"
-            />
-            <StatsCard
               icon={Shield}
               label="Admin Users"
               value={stats.adminUsers}
@@ -585,7 +579,7 @@ const AdminDashboard = () => {
         )}
 
         {/* System Health Check */}
-        <SystemHealth isSuperAdmin={isSuperAdmin} />
+        {/* <SystemHealth isSuperAdmin={isSuperAdmin} /> */}
 
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* STICKY TAB HEADER */}

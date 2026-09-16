@@ -8,7 +8,7 @@ const AboutUs = () => {
                 className="absolute inset-0 bg-cover bg-center lg:left-[30%]"
                 style={{ backgroundImage: `url(${schoolImage})` }}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0a1330] via-[#0a1330] lg:via-[#0a1330]/95 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0a1330] via-[#0a1330] lg:via-[#0a1330]/85 to-transparent" />
             <div className="absolute inset-0 bg-[#0a1330]/40 lg:bg-transparent" />
             <div className="relative z-10 px-6 py-10 sm:px-10 sm:py-12 lg:px-16 lg:py-14 max-w-3xl">
                 <h1 className="text-4xl font-bold text-white mb-4">About Us</h1>
