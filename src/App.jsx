@@ -17,20 +17,12 @@ import "./App.css";
 // ═══════════════════════════════════════════════════════════════════════
 const HomePage = lazy(() => import("./components/Homepage"));
 const LeadershipPage = lazy(() => import("./pages/LeadershipPage"));
-const NewsPage = lazy(() => import("./pages/Newspage"));
-const NewsDetailPage = lazy(() => import("./pages/NewsDetailPage"));
 const ContactPage = lazy(() => import("./sections/Contact"));
-const DonatePage = lazy(() => import("./pages/DonatePage"));
 const CommitteePage = lazy(() => import("./pages/CommitteePage"));
 
 // ═══════════════════════════════════════════════════════════════════════
 // EVENT PAGES
 // ═══════════════════════════════════════════════════════════════════════
-const CasEventsPage = lazy(() => import("./pages/CasEventsPage"));
-const CasEventDetailPage = lazy(() => import("./pages/CasEventDetailPage"));
-const UpcomingEventsPage = lazy(() => import("./pages/UpcomingEventsPage"));
-const PastEventsPage = lazy(() => import("./pages/PastEventsPage"));
-const ReunionsPage = lazy(() => import("./pages/ReunionsPage"));
 const EventsPage = lazy(() => import("./pages/EventsPage"));
 const EventDetailPage = lazy(() => import("./pages/EventDetailPage"));
 
@@ -39,12 +31,6 @@ const EventDetailPage = lazy(() => import("./pages/EventDetailPage"));
 // ═══════════════════════════════════════════════════════════════════════
 const LocalGalleryPage = lazy(() => import("./pages/LocalGalleryPage"));
 const GalleryDetailPage = lazy(() => import("./pages/GalleryDetailPage"));
-
-// ═══════════════════════════════════════════════════════════════════════
-// CAMPAIGN PAGES
-// ═══════════════════════════════════════════════════════════════════════
-const CampaignsPage = lazy(() => import("./pages/alumni/CampaignsPage"));
-const CampaignFormPage = lazy(() => import("./pages/alumni/CampaignFormPage"));
 
 // ═══════════════════════════════════════════════════════════════════════
 // ALUMNI PAGES
@@ -469,21 +455,12 @@ export default function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/leadership" element={<LeadershipPage />} />
               <Route path="/leadership-team" element={<LeadershipPage />} />
-              <Route path="/newsletter" element={<NewsPage />} />
-              <Route path="/news/:id" element={<NewsDetailPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              <Route path="/contact-us" element={<ContactPage />} />
-              <Route path="/donate" element={<DonatePage />} />
               <Route path="/committee" element={<CommitteePage />} />
 
               {/* ═══════════════════════════════════════════════════════════════ */}
               {/* EVENT ROUTES */}
               {/* ═══════════════════════════════════════════════════════════════ */}
-              <Route path="/cas-events" element={<CasEventsPage />} />
-              <Route path="/cas-events/:id" element={<CasEventDetailPage />} />
-              <Route path="/upcoming-events" element={<UpcomingEventsPage />} />
-              <Route path="/past-events" element={<PastEventsPage />} />
-              <Route path="/reunions" element={<ReunionsPage />} />
               <Route path="/events" element={<EventsPage />} />
               <Route path="/events/:slug" element={<EventDetailPage />} />
 
@@ -492,12 +469,6 @@ export default function App() {
               {/* ═══════════════════════════════════════════════════════════════ */}
               <Route path="/gallery" element={<LocalGalleryPage />} />
               <Route path="/gallery/:slug" element={<GalleryDetailPage />} />
-
-              {/* ═══════════════════════════════════════════════════════════════ */}
-              {/* CAMPAIGN ROUTES - PUBLIC */}
-              {/* ═══════════════════════════════════════════════════════════════ */}
-              <Route path="/campaigns" element={<CampaignsPage />} />
-              <Route path="/campaign/:id" element={<CampaignFormPage />} />
 
               {/* ═══════════════════════════════════════════════════════════════ */}
               {/* ALUMNI AUTHENTICATION */}
