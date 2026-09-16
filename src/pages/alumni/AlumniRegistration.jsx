@@ -855,7 +855,7 @@ const AlumniRegistration = () => {
         {/* Header */}
         <div className="w-full max-w-3xl mb-7 text-center">
           <p className="text-[11px] font-bold uppercase tracking-widest text-[#0052ab]/60 mb-1">
-            PSG College of Arts &amp; Science
+            PSG Public Schools
           </p>
           <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
             Alumni Registration
