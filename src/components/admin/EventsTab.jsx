@@ -28,7 +28,6 @@ const CATEGORY_COLORS = {
   Other: "#a0aec0",
 };
 
-export default EventsTab;
 
 export const EventsTab = ({ onError, onSuccess }) => {
   const [events, setEvents] = useState([]);
@@ -364,3 +363,6 @@ export const EventsTab = ({ onError, onSuccess }) => {
     </div>
   );
 };
+
+
+export default EventsTab;
