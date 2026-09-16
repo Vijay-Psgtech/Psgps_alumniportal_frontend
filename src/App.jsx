@@ -7,6 +7,8 @@ import { useAuth } from "./context/AuthContext";
 import ScrolltoTop from "./components/ScrolltoTop";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
+import SiteNavbar from "./components/SiteNavbar";
+import Footer from "./components/Footer";
 
 import "./App.css";
 
@@ -19,6 +21,7 @@ const NewsPage = lazy(() => import("./pages/Newspage"));
 const NewsDetailPage = lazy(() => import("./pages/NewsDetailPage"));
 const ContactPage = lazy(() => import("./sections/Contact"));
 const DonatePage = lazy(() => import("./pages/DonatePage"));
+const CommitteePage = lazy(() => import("./pages/CommitteePage"));
 
 // ═══════════════════════════════════════════════════════════════════════
 // EVENT PAGES
@@ -454,6 +457,7 @@ export default function App() {
       `}</style>
 
       <>
+        <SiteNavbar />
         <ScrolltoTop />
         <Suspense fallback={<AppLoader />}>
           <div className="app-wrapper">
@@ -470,6 +474,7 @@ export default function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/contact-us" element={<ContactPage />} />
               <Route path="/donate" element={<DonatePage />} />
+              <Route path="/committee" element={<CommitteePage />} />
 
               {/* ═══════════════════════════════════════════════════════════════ */}
               {/* EVENT ROUTES */}
@@ -649,7 +654,9 @@ export default function App() {
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </div>
-
+          <div className="footer-wrapper">
+            <Footer />
+          </div>
         </Suspense>
       </>
     </>

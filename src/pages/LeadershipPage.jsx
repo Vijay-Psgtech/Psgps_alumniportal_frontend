@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Patrons } from "../content/data/PatronsData";
 import usePageTitle from "../hooks/usePageTitle";
-import SiteNavbar from "../components/SiteNavbar";
 
 const groups = [
   { title: "Office Bearers", rank: "Office Bearer" },
@@ -26,7 +25,6 @@ function LeadershipPage() {
 
   return (
     <div className="leadership-page">
-      <SiteNavbar />
 
       <header className="leadership-hero">
         <div className="leadership-hero-inner">
