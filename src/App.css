@@ -79,7 +79,7 @@ button, input { font: inherit; }
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 20;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
