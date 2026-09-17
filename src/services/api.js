@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 console.log("📡 API Base URL:", API_BASE_URL);
 
 const api = axios.create({
@@ -15,23 +15,27 @@ const api = axios.create({
 // ═══════════════════════════════════════════════════════════════════════
 // REQUEST INTERCEPTOR — Add Authorization token to every request
 // ═══════════════════════════════════════════════════════════════════════
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("authToken");
-    
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-      console.log("✅ Token attached to request");
-    } else {
-      console.log("⚠️ No token found in localStorage");
-    }
-    
-    return config;
-  },
+api.interceptors.response.use(
+  (response) => response,
   (error) => {
-    console.error("❌ Request interceptor error:", error);
+    const status = error.response?.status;
+    const url = error.config?.url || "";
+    const message = error.response?.data?.message || error.message;
+
+    console.error("❌ API Error:", { status, url, message });
+
+    if (status === 401) {
+      // Cookie is already expired/invalid on the server side.
+      // Dispatch event so AuthContext / protected routes can react.
+      window.dispatchEvent(new CustomEvent("auth:logout", { detail: { url } }));
+    }
+
+    if (status === 403) {
+      window.dispatchEvent(new CustomEvent("auth:forbidden"));
+    }
+
     return Promise.reject(error);
-  }
+  },
 );
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -66,7 +70,7 @@ api.interceptors.response.use(
 );
 
 // ──────────────── API_BASE ──────────────────────── //
-export const API_BASE = "http://localhost:5000";
+export const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 // ──────────────── Auth API ──────────────────────── //
 export const authAPI = {
@@ -76,14 +80,8 @@ export const authAPI = {
         "Content-Type": "multipart/form-data",
       },
     }),
-  login: (data) => {
-    console.log("📤 Logging in...");
-    return api.post("/auth/login", data);
-  },
-  getProfile: () => {
-    console.log("📡 Fetching profile...");
-    return api.get("/auth/profile");
-  },
+  login: (data) => api.post("/auth/login", data),
+  getProfile: () => api.get("/auth/profile"),
   changePassword: (currentPassword, newPassword) =>
     api.put("/auth/change-password", { currentPassword, newPassword }),
   forgotPassword: (email) => api.post("/auth/forgot-password", { email }),
