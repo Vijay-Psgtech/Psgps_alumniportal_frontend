@@ -73,17 +73,6 @@ const QUICK_CARDS = [
     cta: "Explore locations",
   },
   {
-    id: "campaigns",
-    icon: Megaphone,
-    title: "Campaigns",
-    desc: "Participate in alumni campaigns and share your stories",
-    path: "/campaigns",
-    accent: "from-violet-500 to-purple-600",
-    lightBg: "bg-violet-50",
-    iconColor: "text-violet-600",
-    cta: "View campaigns",
-  },
-  {
     id: "donations",
     icon: Heart,
     title: "Make a Donation",
@@ -147,13 +136,13 @@ const AlumniDashboard = () => {
       color: "text-indigo-600",
       bg: "bg-indigo-50",
     },
-    {
-      label: "Departments",
-      value: stats.departmentStats,
-      icon: BookOpen,
-      color: "text-emerald-600",
-      bg: "bg-emerald-50",
-    },
+    // {
+    //   label: "Departments",
+    //   value: stats.departmentStats,
+    //   icon: BookOpen,
+    //   color: "text-emerald-600",
+    //   bg: "bg-emerald-50",
+    // },
     {
       label: "Cities Covered",
       value: stats.topCities ? stats.topCities + " + " : 0,
@@ -200,7 +189,7 @@ const AlumniDashboard = () => {
 
   /* ─── render ─── */
   return (
-    <div className="min-h-screen bg-[#f4f5f9] pt-24 pb-16">
+    <div className="min-h-screen bg-[#f4f5f9] pb-14 font-sans text-slate-800">
       {/* ══════════════ TOP BAR ══════════════ */}
       <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200/70 shadow-sm">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
@@ -380,7 +369,7 @@ const AlumniDashboard = () => {
         </motion.div>
 
         {/* ── Stats Row ── */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
           {STATS.map((s, i) => (
             <motion.div
               key={s.label}
@@ -455,7 +444,7 @@ const AlumniDashboard = () => {
             <Sparkles size={15} className="text-slate-300" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             {QUICK_CARDS.map((card, i) => (
               <motion.button
                 key={card.id}
@@ -599,13 +588,6 @@ const AlumniDashboard = () => {
                   path: "/alumni/map",
                   color: "text-emerald-500",
                   bg: "bg-emerald-50",
-                },
-                {
-                  label: "View All Campaigns",
-                  icon: Megaphone,
-                  path: "/campaigns",
-                  color: "text-violet-500",
-                  bg: "bg-violet-50",
                 },
                 {
                   label: "Make a Donation",
