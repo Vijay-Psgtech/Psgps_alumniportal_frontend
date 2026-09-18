@@ -10,7 +10,7 @@ const initialForm = {
   firstName: "",
   lastName: "",
   gender: "",
-  contactNumber: "",
+  phone: "",
   batchYear: "",
   stream: "",
   occupation: "",
@@ -20,9 +20,14 @@ const initialForm = {
   resAddress1: "",
   resAddress2: "",
   resCity: "",
+  city: "",
   resState: "",
+  state: "",
   resCountry: "",
+  country: "",
   resCoordinates: [],
+  location: [],
+  currentPhoto: "",
 };
 
 const inputClass =
@@ -53,7 +58,7 @@ const normalizeProfile = (data) => {
     firstName: profile.firstName || "",
     lastName: profile.lastName || "",
     gender: profile.gender || "",
-    contactNumber: profile.contactNumber || profile.phone || "",
+    phone: profile.phone || profile.contactNumber || "",
     batchYear: profile.batchYear || "",
     stream: profile.stream || "",
     occupation: profile.occupation || "",
@@ -63,9 +68,14 @@ const normalizeProfile = (data) => {
     resAddress1: profile.resAddress1 || addressParts[0] || "",
     resAddress2: profile.resAddress2 || addressParts[1] || "",
     resCity: profile.resCity || profile.city || "",
+    city: profile.city || profile.resCity || "",
     resState: profile.resState || profile.state || addressParts[3] || "",
+    state: profile.state || profile.resState || "",
     resCountry: profile.resCountry || profile.country || addressParts[4] || "",
+    country: profile.country || profile.resCountry || "",
     resCoordinates: coordinates,
+    location: Array.isArray(profile.location?.coordinates) ? profile.location.coordinates : coordinates,
+    currentPhoto: profile.files?.currentPhoto || profile.currentPhoto || "",
   };
 };
 
@@ -96,8 +106,9 @@ const AlumniProfile = () => {
       const rawProfile = response.data?.alumni || response.data?.user || response.data?.data || response.data;
       if (!rawProfile) throw new Error("Profile data not found");
       setProfileId(rawProfile._id || rawProfile.id || "");
-      setForm(normalizeProfile(rawProfile));
-      setExistingPhoto(rawProfile.files?.currentPhoto || rawProfile.currentPhoto || "");
+      const nextForm = normalizeProfile(rawProfile);
+      setForm(nextForm);
+      setExistingPhoto(nextForm.currentPhoto || rawProfile.files?.currentPhoto || rawProfile.currentPhoto || "");
     } catch (requestError) {
       if (requestError.response?.status === 401) navigate("/alumni/login");
       else setError(requestError.response?.data?.message || requestError.message || "Unable to load your profile.");
@@ -161,16 +172,8 @@ const AlumniProfile = () => {
   };
 
   const validate = () => {
-    if (!form.firstName.trim() || !form.gender || !/^\d{10}$/.test(form.contactNumber.replace(/\s/g, "")) || !form.batchYear || !form.stream || !form.occupation.trim() || !form.email.trim() || !form.resAddress1.trim() || !form.resCity.trim() || !form.resState.trim() || !form.resCountry.trim()) {
+    if (!form.firstName.trim() || !form.gender || !/^\d{10}$/.test(form.phone.replace(/\s/g, "")) || !form.batchYear || !form.stream || !form.occupation.trim() || !form.email.trim() || !form.resAddress1.trim() || !form.resCity.trim() || !form.resState.trim() || !form.resCountry.trim()) {
       setError("Please complete all required fields.");
-      return false;
-    }
-    if (form.password && form.password.length < 6) {
-      setError("Password must contain at least 6 characters.");
-      return false;
-    }
-    if (form.password !== form.confirmPassword) {
-      setError("Passwords do not match.");
       return false;
     }
     return true;
@@ -183,21 +186,26 @@ const AlumniProfile = () => {
     try {
       setSaving(true);
       setError("");
+      const normalizedCity = (form.resCity || form.city || "").trim();
+      const normalizedState = (form.resState || form.state || "").trim();
+      const normalizedCountry = (form.resCountry || form.country || "").trim();
+      const locationCoordinates = form.resCoordinates?.length ? form.resCoordinates : form.location || [];
+
       const formData = new FormData();
       formData.append("firstName", form.firstName.trim());
       formData.append("lastName", form.lastName.trim());
       formData.append("gender", form.gender);
-      formData.append("phone", form.contactNumber.trim());
+      formData.append("phone", form.phone.trim());
       formData.append("batchYear", form.batchYear);
       formData.append("stream", form.stream);
       formData.append("occupation", form.occupation.trim());
       formData.append("email", form.email.toLowerCase().trim());
-      formData.append("city", form.resCity.trim());
-      formData.append("state", form.resState.trim());
-      formData.append("country", form.resCountry.trim());
-      formData.append("fullAddress", [form.resAddress1, form.resAddress2, form.resCity, form.resState, form.resCountry].filter(Boolean).join(", "));
-      formData.append("coordinates", JSON.stringify(form.resCoordinates));
-      if (form.password) formData.append("password", form.password);
+      formData.append("city", normalizedCity);
+      formData.append("state", normalizedState);
+      formData.append("country", normalizedCountry);
+      formData.append("fullAddress", [form.resAddress1, form.resAddress2, normalizedCity, normalizedState, normalizedCountry].filter(Boolean).join(", "));
+      formData.append("location", JSON.stringify(locationCoordinates));
+      formData.append("coordinates", JSON.stringify(locationCoordinates));
       if (photo) formData.append("currentPhoto", photo);
 
       const response = await alumniAPI.updateProfile(profileId, formData);
@@ -249,11 +257,11 @@ const AlumniProfile = () => {
           </div>
 
           <div className="space-y-9">
-            <section><SectionTitle title="Personal details" /><div className="grid gap-5 sm:grid-cols-2"><Field label="First name" required><input name="firstName" value={form.firstName} onChange={updateField} className={inputClass} /></Field><Field label="Last name"><input name="lastName" value={form.lastName} onChange={updateField} className={inputClass} /></Field><Field label="Gender" required><select name="gender" value={form.gender} onChange={updateField} className={`${inputClass} cursor-pointer`}><option value="">Select gender</option><option>Male</option><option>Female</option><option>Other</option></select></Field><Field label="Contact number" required><input name="contactNumber" type="tel" value={form.contactNumber} onChange={updateField} placeholder="98765 43210" className={inputClass} /></Field></div></section>
+            <section><SectionTitle title="Personal details" /><div className="grid gap-5 sm:grid-cols-2"><Field label="First name" required><input name="firstName" value={form.firstName} onChange={updateField} className={inputClass} /></Field><Field label="Last name"><input name="lastName" value={form.lastName} onChange={updateField} className={inputClass} /></Field><Field label="Gender" required><select name="gender" value={form.gender} onChange={updateField} className={`${inputClass} cursor-pointer`}><option value="">Select gender</option><option>Male</option><option>Female</option><option>Other</option></select></Field><Field label="Phone" required><input name="phone" type="tel" value={form.phone} onChange={updateField} placeholder="98765 43210" className={inputClass} /></Field></div></section>
 
-            <section><SectionTitle title="Alumni details" /><div className="grid gap-5 sm:grid-cols-2"><Field label="Batch" required><input name="batchYear" value={form.batchYear} onChange={updateField} placeholder="e.g. 2018-2020" className={inputClass} /></Field><Field label="Stream" required><select name="stream" value={form.stream} onChange={updateField} className={`${inputClass} cursor-pointer`}><option value="">Select stream</option>{STREAMS.map((stream) => <option key={stream}>{stream}</option>)}</select></Field><Field label="Occupation" required className="sm:col-span-2"><input name="occupation" value={form.occupation} onChange={updateField} className={inputClass} /></Field></div></section>
+            <section><SectionTitle title="Alumni details" /><div className="grid gap-5 sm:grid-cols-2"><Field label="Batch" required><input name="batchYear" value={form.batchYear} readOnly className={`${inputClass} cursor-not-allowed bg-slate-100 text-slate-500`} /></Field><Field label="Stream" required><input name="stream" value={form.stream} readOnly className={`${inputClass} cursor-not-allowed bg-slate-100 text-slate-500`} /></Field><Field label="Occupation" required className="sm:col-span-2"><input name="occupation" value={form.occupation} onChange={updateField} className={inputClass} /></Field></div></section>
 
-            <section><SectionTitle title="Account access" /><div className="grid gap-5 sm:grid-cols-2"><Field label="Email" required className="sm:col-span-2"><input name="email" type="email" value={form.email} onChange={updateField} className={inputClass} /></Field><PasswordField label="New password" name="password" value={form.password} visible={showPassword} onChange={updateField} toggle={() => setShowPassword((value) => !value)} /><PasswordField label="Confirm new password" name="confirmPassword" value={form.confirmPassword} visible={showConfirmPassword} onChange={updateField} toggle={() => setShowConfirmPassword((value) => !value)} /></div></section>
+            <section><SectionTitle title="Account access" /><div className="grid gap-5 sm:grid-cols-2"><Field label="Email" required className="sm:col-span-2"><input name="email" type="email" value={form.email} readOnly className={`${inputClass} cursor-not-allowed bg-slate-100 text-slate-500`} /></Field></div></section>
 
             <section><SectionTitle title="Photo and address" /><div className="grid gap-5 sm:grid-cols-2"><Field label="Current photo" className="sm:col-span-2"><label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-slate-300 px-4 py-4 hover:border-blue-400 hover:bg-blue-50/30"><Camera size={20} className="text-blue-600" /><span className="min-w-0 flex-1 truncate text-sm font-semibold text-slate-700">{photo?.name || (existingPhoto ? "Replace current photo" : "Upload a recent photo")}</span><input type="file" accept="image/jpeg,image/png" className="hidden" onChange={(event) => setPhoto(event.target.files?.[0] || null)} /></label></Field><Field label="Address 1" required><input name="resAddress1" value={form.resAddress1} onChange={updateField} placeholder="House number and street" className={inputClass} /></Field><Field label="Address 2"><input name="resAddress2" value={form.resAddress2} onChange={updateField} placeholder="Area or landmark" className={inputClass} /></Field><Field label="City" required className="relative sm:col-span-2"><div className="relative"><input name="resCity" value={form.resCity} onChange={updateField} placeholder="Start typing your city" autoComplete="off" className={`${inputClass} pr-11`} /><LocateFixed size={17} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" /></div>{(suggestions.length > 0 || loadingSuggestions) && <div className="absolute left-0 right-0 top-full z-10 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">{loadingSuggestions ? <p className="px-4 py-3 text-xs text-slate-500">Finding places...</p> : suggestions.map((place) => <button type="button" key={place.place_id} onClick={() => selectCity(place)} className="flex w-full items-start gap-2 border-b border-slate-100 px-4 py-3 text-left text-xs text-slate-600 last:border-0 hover:bg-blue-50"><MapPin size={14} className="mt-0.5 shrink-0 text-blue-500" />{place.display_name}</button>)}</div>}</Field><Field label="State" required><input name="resState" value={form.resState} onChange={updateField} placeholder="e.g. Tamil Nadu" className={inputClass} /></Field><Field label="Country" required><input name="resCountry" value={form.resCountry} onChange={updateField} placeholder="e.g. India" className={inputClass} /></Field></div></section>
           </div>
@@ -271,7 +279,7 @@ const ProfileSummary = ({ form, existingPhoto }) => {
     ["First name", value("firstName")],
     ["Last name", value("lastName")],
     ["Gender", value("gender")],
-    ["Contact number", value("contactNumber")],
+    ["Phone", value("phone")],
   ];
   const address = [form.resAddress1, form.resAddress2, form.resCity, form.resState, form.resCountry]
     .filter(Boolean)
