@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import gopalakrishnanImage from '../assets/Patrons/trustee.jpg'
 import alaguImage from '../assets/Patrons/President.jpg'
+import { motion } from 'framer-motion'
 
 function LeadershipSection() {
   return (
@@ -18,7 +19,12 @@ function LeadershipSection() {
       </div>
 
       <div className="leader-grid">
-        <article className="leader-card">
+        <motion.article
+          className="leader-card"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="leader-portrait">
             <img src={gopalakrishnanImage} alt="Mr. L. Gopalakrishnan" loading="lazy" />
           </div>
@@ -35,9 +41,14 @@ function LeadershipSection() {
               <small>Years of service</small>
             </div>
           </div>
-        </article>
+        </motion.article>
 
-        <article className="leader-card">
+        <motion.article
+          className="leader-card"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="leader-portrait">
             <img src={alaguImage} alt="Mr. AlaguNachiappan S" loading="lazy" />
           </div>
@@ -51,7 +62,7 @@ function LeadershipSection() {
               <small>Alumni connected</small>
             </div>
           </div>
-        </article>
+        </motion.article>
       </div>
     </section>
   )
