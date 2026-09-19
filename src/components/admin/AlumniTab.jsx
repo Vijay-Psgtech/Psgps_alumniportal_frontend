@@ -221,7 +221,7 @@ const API_BASE = (import.meta.env.VITE_API_URL || "/api").replace("/api", "");
           <div  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             <AnimatePresence>
               {alumniList.map((a, i) => {
-              const photo = a.files?.currentPhoto || a.profileImage;
+              const photo = a?.currentPhoto || a.profileImage;
               return (
                 <motion.div
                   key={a._id}
@@ -278,18 +278,18 @@ const API_BASE = (import.meta.env.VITE_API_URL || "/api").replace("/api", "");
                     <div className="flex items-center gap-2 text-sm">
                       <Building size={14} className="text-gray-400" />
                       <span className="text-gray-600">
-                        {a.department}
+                        {a.stream ? `${a.stream} Stream` : "—"}
                       </span>
                       <span className="text-gray-400">•</span>
                       <Calendar size={14} className="text-gray-400" />
                       <span className="text-gray-600">{a.batchYear}</span>
                     </div>
 
-                    {a.currentCompany && (
+                    {a.occupation && (
                       <div className="flex items-center gap-2 text-sm">
                         <Briefcase size={14} className="text-gray-400" />
                         <span className="text-gray-600">
-                          {a.jobTitle} at {a.currentCompany}
+                          {a.occupation}
                         </span>
                       </div>
                     )}
@@ -300,18 +300,6 @@ const API_BASE = (import.meta.env.VITE_API_URL || "/api").replace("/api", "");
                         {a.city}, {a.country}
                       </span>
                     </div>
-
-                    {a.linkedin && (
-                      <a
-                        href={a.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800"
-                      >
-                        <Linkedin size={14} />
-                        LinkedIn Profile
-                      </a>
-                    )}
                   </div>
 
                   {/* Actions */}
