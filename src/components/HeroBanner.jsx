@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import schoolImage from '../assets/SCHOOL BUILDING PICTURE.png'
 import psgpsLogo from '../assets/PSGPS LOGO IN COREL.jpg'
+import { motion } from "framer-motion";
 
 /**
  * PSG Public Schools — Alumni "Together We Thrive" banner
@@ -64,19 +65,28 @@ export default function AlumniBanner({
         </div>
 
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 rounded-full bg-blue-600/90 px-4 py-1.5 mb-5">
+        <motion.div
+          className="inline-flex items-center gap-2 rounded-full bg-blue-600/90 px-4 py-1.5 mb-5"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <Users className="w-4 h-4 text-white" />
           <span className="text-white text-xs font-semibold tracking-wide">
             WELCOME TO EXCELLENCE
           </span>
-        </div>
+        </motion.div>
 
         {/* Headline */}
-        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight">
+        <motion.h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           TOGETHER
           <br />
           WE THRIVE
-        </h1>
+        </motion.h1>
         <div className="mt-4 mb-5 h-1 w-20 bg-red-600" />
 
         {/* Body copy */}
@@ -87,14 +97,24 @@ export default function AlumniBanner({
         </p>
 
         {/* Stats */}
-        <div className="flex items-center divide-x divide-white/15 rounded-xl bg-white/5 border border-white/10 px-4 py-3 mb-7 w-fit backdrop-blur-sm">
+        <motion.div
+          className="flex items-center divide-x divide-white/15 rounded-xl bg-white/5 border border-white/10 px-4 py-3 mb-7 w-fit backdrop-blur-sm"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <Stat icon={Users} value="900+" label="Alumni Connected" first />
           <Stat icon={Globe2} value="15+" label="Countries" />
           <Stat icon={CalendarDays} value="5+" label="Annual Events" />
-        </div>
+        </motion.div>
 
         {/* CTAs */}
-        <div className="flex flex-wrap items-center gap-3">
+        <motion.div
+          className="flex flex-wrap items-center gap-3"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <button className="inline-flex items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-500 transition-colors px-6 py-3 text-white text-sm font-bold">
             <Zap className="w-4 h-4 fill-white" />
             JOIN NOW
@@ -103,7 +123,7 @@ export default function AlumniBanner({
             LEARN MORE
             <ArrowRight className="w-4 h-4" />
           </button>
-        </div>
+        </motion.div>
       </div>
 
       {/* Bottom footer strip */}

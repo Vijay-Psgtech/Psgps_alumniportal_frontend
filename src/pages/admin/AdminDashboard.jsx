@@ -303,12 +303,6 @@ const AdminDashboard = () => {
   const ALUMNI_TAB_CONFIGS = [
     { key: "alumni", Icon: Users, label: "Alumni", badge: alumniList.length },
     {
-      key: "donations",
-      Icon: FileText,
-      label: "Donations",
-      badge: donationList.length,
-    },
-    {
       key: "donation-history",
       Icon: History,
       label: "Donation History",
@@ -343,19 +337,8 @@ const AdminDashboard = () => {
 
   const SUPER_ADMIN_TAB_CONFIGS = isSuperAdmin
     ? [
-        {
-          key: "departments",
-          Icon: BookOpen,
-          label: "Departments",
-          badge: stats.departments,
-        },
+        
         { key: "users", Icon: Shield, label: "Admin Users", badge: stats.adminUsers },
-        {
-          key: "system",
-          Icon: Settings,
-          label: "System Settings",
-          badge: "⚙️",
-        },
       ]
     : [];
 
@@ -460,7 +443,7 @@ const AdminDashboard = () => {
         }
       `}</style>
 
-      <div className="max-w-[1600px] mx-auto dashboard-container">
+      <div className="max-w-[1600px] mx-auto dashboard-container px-2 sm:px-4 lg:px-6">
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* HEADER SECTION */}
         {/* ═══════════════════════════════════════════════════════════════ */}
@@ -471,11 +454,9 @@ const AdminDashboard = () => {
         >
           <div>
             <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-              {isSuperAdmin
-                ? "🚀 Super Admin Dashboard"
-                : isAdmin
-                ? `📊 ${department} Department`
-                : "Admin Dashboard"}
+              {user.role === "admin"
+                ? `Admin Dashboard`
+                : `Super Admin Dashboard`}
             </h1>
             <p className="text-slate-600 mt-2 text-base sm:text-lg">
               {isSuperAdmin
@@ -578,9 +559,6 @@ const AdminDashboard = () => {
           </motion.div>
         )}
 
-        {/* System Health Check */}
-        {/* <SystemHealth isSuperAdmin={isSuperAdmin} /> */}
-
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* STICKY TAB HEADER */}
         {/* ═══════════════════════════════════════════════════════════════ */}
@@ -598,10 +576,9 @@ const AdminDashboard = () => {
                   }}
                   role="tab"
                   aria-selected={activeTab === key}
-                  className={`px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition whitespace-nowrap ${
-                    activeTab === key
-                      ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  className={`px-4 py-2 rounded-xl font-bold flex items-center gap-4 transition ${activeTab === key
+                    ? "bg-blue-600 text-white"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
                 >
                   <Icon size={15} />
