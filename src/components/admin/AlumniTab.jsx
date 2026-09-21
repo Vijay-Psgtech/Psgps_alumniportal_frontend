@@ -28,7 +28,7 @@ export const AlumniTab = ({
   setSelectedItem,
   pageData = { totalAlumni: 0, totalPages: 1, currentPage: 1 },
   userRole = "admin",
-  userDepartment = "",
+  userStream = "",
   onPageChange = () => { },
   onFilterChange = () => { },
 }) => {

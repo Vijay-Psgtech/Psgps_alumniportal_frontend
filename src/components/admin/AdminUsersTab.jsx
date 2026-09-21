@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Plus, Edit3, Trash2, CheckCircle, X, Search } from "lucide-react";
-import { adminUsersAPI, departmentAPI } from "../../services/api";
+import { adminUsersAPI } from "../../services/api";
+
+const STREAMS = ["Science", "Management"];
 
 const INITIAL_FORM = {
   firstName: "",
   lastName: "",
   email: "",
   role: "admin",
-  department: "",
+  stream: "",
   password: "",
   isActive: true,
 };
 
 const AdminUsersTab = ({ onError = () => {}, onSuccess = () => {} }) => {
   const [users, setUsers] = useState([]);
-  const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [departmentsLoading, setDepartmentsLoading] = useState(false);
   const [form, setForm] = useState(INITIAL_FORM);
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState("");
@@ -39,23 +39,9 @@ const AdminUsersTab = ({ onError = () => {}, onSuccess = () => {} }) => {
     }
   };
 
-  const fetchDepartments = async () => {
-    try {
-      setDepartmentsLoading(true);
-      const response = await departmentAPI.getAll();
-      const payload = response.data.data?.departments || response.data.data.departments || [];
-      setDepartments(Array.isArray(payload) ? payload : []);
-    } catch (error) {
-      console.error("Failed to load departments", error);
-      onError("Failed to load departments.");
-    } finally {
-      setDepartmentsLoading(false);
-    }
-  };
 
   useEffect(() => {
     fetchUsers();
-    fetchDepartments();
   }, []);
 
   const filteredUsers = useMemo(() => {
@@ -67,7 +53,7 @@ const AdminUsersTab = ({ onError = () => {}, onSuccess = () => {} }) => {
         user.lastName,
         user.email,
         user.role,
-        user.department,
+        user.stream,
       ]
         .filter(Boolean)
         .some((value) => value.toLowerCase().includes(term));
@@ -100,7 +86,7 @@ const AdminUsersTab = ({ onError = () => {}, onSuccess = () => {} }) => {
       lastName: user.lastName || "",
       email: user.email || "",
       role: user.role || "admin",
-      department: user.department || "",
+      stream: user.stream || "",
       password: "",
       isActive: user.isActive !== false,
     });
@@ -148,7 +134,7 @@ const AdminUsersTab = ({ onError = () => {}, onSuccess = () => {} }) => {
           lastName: form.lastName,
           email: form.email,
           role: form.role,
-          department: form.department,
+          stream: form.stream,
           isActive: form.isActive,
         };
         await adminUsersAPI.updateUser(editingId, payload);
@@ -166,7 +152,7 @@ const AdminUsersTab = ({ onError = () => {}, onSuccess = () => {} }) => {
           lastName: form.lastName,
           email: form.email,
           role: form.role,
-          department: form.department,
+          stream: form.stream,
           password: form.password,
         };
         const response = await adminUsersAPI.create(payload);
@@ -285,21 +271,20 @@ const AdminUsersTab = ({ onError = () => {}, onSuccess = () => {} }) => {
                 </select>
               </label>
               <label className="flex flex-col text-sm text-slate-600">
-                Department
+                Stream
                 <select
-                  name="department"
-                  value={form.department}
+                  name="stream"
+                  value={form.stream}
                   onChange={handleChange}
-                  disabled={departmentsLoading}
                   className="mt-2 rounded-md border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 disabled:bg-slate-100 disabled:cursor-not-allowed"
                 >
-                  <option value="">Select a department</option>
-                  {departments.map((dept) => (
+                  <option value="">Select a stream</option>
+                  {STREAMS.map((stream) => (
                     <option
-                      key={dept._id || dept.id}
-                      value={dept.name || dept._id}
+                      key={stream}
+                      value={stream}
                     >
-                      {dept.name || dept.departmentName}
+                      {stream}
                     </option>
                   ))}
                 </select>
@@ -376,7 +361,7 @@ const AdminUsersTab = ({ onError = () => {}, onSuccess = () => {} }) => {
                   <th className="px-4 py-3">Name</th>
                   <th className="px-4 py-3">Email</th>
                   <th className="px-4 py-3">Role</th>
-                  <th className="px-4 py-3">Department</th>
+                  <th className="px-4 py-3">Stream</th>
                   <th className="px-4 py-3">Status</th>
                   <th className="px-4 py-3 text-right">Actions</th>
                 </tr>
@@ -414,7 +399,7 @@ const AdminUsersTab = ({ onError = () => {}, onSuccess = () => {} }) => {
                         {user.role}
                       </td>
                       <td className="px-4 py-4 text-slate-600">
-                        {user.department || "—"}
+                        {user.stream || "—"}
                       </td>
                       <td className="px-4 py-4">
                         <span
