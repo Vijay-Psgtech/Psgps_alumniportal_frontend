@@ -103,9 +103,9 @@ button, input { font: inherit; }
   font-family: 'Plus Jakarta Sans', 'Trebuchet MS', sans-serif;
 }
 .brand img {
-  width: 118px;
-  height: 42px;
-  object-fit: cover;
+  width: 100px;
+  height: 60px;
+  object-fit: fit;
   filter: brightness(1.12);
 }
 .nav-links {
