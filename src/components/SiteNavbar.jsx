@@ -47,11 +47,13 @@ function SiteNavbar() {
       </Link>
 
       <div className={`nav-links${mobileMenuOpen ? ' is-open' : ''}`} id="primary-navigation">
-        <Link to="/about" onClick={closeMobileMenu}>About us</Link>
-        <Link to="/committee" onClick={closeMobileMenu}>Committee</Link>
+        {/* <Link to="/about" onClick={closeMobileMenu}>About us</Link>
+        <Link to="/committee" onClick={closeMobileMenu}>Committee</Link> */}
+        <Link to="/" onClick={closeMobileMenu}>Home</Link>
+        <Link to="/leadership" onClick={closeMobileMenu}>Leadership</Link>
+        <Link to="/newsletter" onClick={closeMobileMenu}>Newsletter</Link>
         <Link to="/events" onClick={closeMobileMenu}>Events</Link>
         <Link to="/gallery" onClick={closeMobileMenu}>Gallery</Link>
-        <Link to="/leadership" onClick={closeMobileMenu}>Leadership</Link>
         <div className="nav-dropdown">
           <button
             className="nav-dropdown-toggle"
@@ -60,7 +62,7 @@ function SiteNavbar() {
             aria-controls="alumni-menu"
             onClick={() => setAlumniMenuOpen((isOpen) => !isOpen)}
           >
-            Alumni <ChevronDown size={15} aria-hidden="true" />
+            Find Alumni <ChevronDown size={15} aria-hidden="true" />
           </button>
           {alumniMenuOpen && (
             <div className="nav-dropdown-menu" id="alumni-menu">
