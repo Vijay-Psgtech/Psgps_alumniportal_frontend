@@ -32,6 +32,7 @@ const initialForm = {
   batchYear: "",
   stream: "",
   occupation: "",
+  company: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -186,6 +187,7 @@ const AlumniRegistration = () => {
       formData.append("batchYear", form.batchYear);
       formData.append("stream", form.stream);
       formData.append("occupation", form.occupation.trim());
+      formData.append("company", form.company.trim());
       formData.append("email", form.email.toLowerCase().trim());
       formData.append("password", form.password);
       formData.append("city", form.resCity.trim());
@@ -329,8 +331,11 @@ const AlumniRegistration = () => {
                     {STREAMS.map((stream) => <option key={stream}>{stream}</option>)}
                   </Select>
                 </Field>
-                <Field label="Occupation" required error={errors.occupation} className="sm:col-span-2">
+                <Field label="Occupation" required error={errors.occupation} >
                   <input name="occupation" value={form.occupation} onChange={updateField} placeholder="e.g. Software Engineer" className={inputClass(errors.occupation)} />
+                </Field>
+                <Field label="Company" error={errors.company} >
+                  <input name="company" value={form.company} onChange={updateField} placeholder="e.g. Infosys" className={inputClass(errors.company)} />
                 </Field>
               </div>
             </div>
