@@ -1,6 +1,6 @@
-# PSG CAS Alumni Portal - Frontend
+# PSG Public Schools Alumni Portal - Frontend
 
-A modern, responsive web application frontend for the PSG CAS Alumni Portal built with React, Vite, and Tailwind CSS.
+A modern, responsive web application frontend for the PSG Public Schools Alumni Portal built with React + Vite, and Tailwind CSS.
 
 ## 🎯 Features
 
