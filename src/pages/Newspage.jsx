@@ -1,77 +1,89 @@
-import React, { useState, useEffect } from "react";
-import { Search, Calendar, Share2, ChevronRight } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  ArrowUpRight,
+  Calendar,
+  Check,
+  CircleAlert,
+  Search,
+  Share2,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { newsLetterAPI, API_BASE } from "../services/api";
 import { Link } from "react-router-dom";
 import usePageTitle from "../hooks/usePageTitle";
 
+const categories = [
+  "All Posts",
+  "Newsletters",
+  "Alumni Stories",
+  "Institute Updates",
+  "Events",
+  "Accolades/Accreditations",
+];
+
+const formatDate = (value) => {
+  if (!value) return "Date to be announced";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat("en-US", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+};
+
+const getImageUrl = (value) => {
+  if (!value || typeof value !== "string") return "";
+  const normalized = value.trim().replace(/\\/g, "/");
+  if (/^(https?:)?\/\//.test(normalized) || normalized.startsWith("data:") || normalized.startsWith("/")) {
+    return normalized;
+  }
+  return `${API_BASE}/${normalized}`;
+};
 
 const NewsPage = () => {
   const [newsData, setNewsData] = useState([]);
-  usePageTitle("News & Updates");
-
-  // Now use the defined newsData in state
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Posts");
-  const [filteredNews, setFilteredNews] = useState(newsData);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
+  const [copiedId, setCopiedId] = useState("");
+  usePageTitle("News & Updates");
 
-  // Categories sidebar
-  const categories = [
-    { id: "all", label: "All Posts", icon: "📰" },
-    { id: "newsletters", label: "Newsletters", icon: "📬" },
-    { id: "alumni-stories", label: "Alumni Stories", icon: "👥" },
-    { id: "institute-updates", label: "Institute Updates", icon: "🏫" },
-    { id: "events", label: "Events", icon: "🎯" },
-    { id: "accolades", label: "Accolades/Accreditations", icon: "🏆" },
-  ];
-
-  // Fetch news data from API on component mount
   useEffect(() => {
     const fetchNews = async () => {
       try {
+        setIsLoading(true);
+        setLoadError("");
         const response = await newsLetterAPI.getAll();
-        setNewsData(response.data.data);
-        setFilteredNews(response.data.data);
+        const data = Array.isArray(response?.data?.data)
+          ? response.data.data
+          : Array.isArray(response?.data) ? response.data : [];
+        setNewsData(data);
       } catch (error) {
         console.error("Error fetching news data:", error);
+        setLoadError("We could not load the latest stories. Please try again.");
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchNews();
   }, []);
 
-  // Handle search
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    filterNews(query, selectedCategory);
-  };
-
-  // Handle category filter
-  const handleCategoryFilter = (category) => {
-    setSelectedCategory(category);
-    filterNews(searchQuery, category);
-  };
-
-  // Filter news based on search and category
-  const filterNews = (query, category) => {
-    let filtered = newsData;
-
-    if (category !== "All Posts") {
-      filtered = filtered.filter(
-        (news) => news.category === category || news.tags.includes(category),
-      );
-    }
-
-    if (query.trim()) {
-      filtered = filtered.filter(
-        (news) =>
-          news.title.toLowerCase().includes(query.toLowerCase()) ||
-          news.description.toLowerCase().includes(query.toLowerCase()),
-      );
-    }
-
-    setFilteredNews(filtered);
-  };
+  const filteredNews = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    return newsData.filter((news) => {
+      const tags = Array.isArray(news.tags) ? news.tags : [];
+      const matchesCategory = selectedCategory === "All Posts"
+        || news.category === selectedCategory
+        || tags.includes(selectedCategory);
+      const searchableText = `${news.title || ""} ${news.description || ""}`.toLowerCase();
+      return matchesCategory && (!query || searchableText.includes(query));
+    });
+  }, [newsData, searchQuery, selectedCategory]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -90,472 +102,122 @@ const NewsPage = () => {
     },
   };
 
+  const shareStory = async (news) => {
+    const url = `${window.location.origin}/news/${news._id || news.id}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: news.title, url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        setCopiedId(news._id || news.id);
+        window.setTimeout(() => setCopiedId(""), 1800);
+      }
+    } catch (error) {
+      if (error.name !== "AbortError") console.error("Unable to share story:", error);
+    }
+  };
+
+  const renderStory = (news, index, featured = false) => {
+    const id = news._id || news.id || index;
+    const imageSrc = getImageUrl(news.imageUrl || news.image);
+    return (
+      <motion.article
+        key={id}
+        className={`news-story ${featured ? "news-story-featured" : ""}`}
+        variants={itemVariants}
+      >
+        {imageSrc ? (
+          <Link className="news-story-image" to={`/news/${id}`} aria-label={`Read ${news.title}`}>
+            <img src={imageSrc} alt="" loading={featured ? "eager" : "lazy"} />
+            <span className="news-story-image-action"><ArrowUpRight size={18} /></span>
+          </Link>
+        ) : (
+          <Link className="news-story-image news-story-image-empty" to={`/news/${id}`} aria-label={`Read ${news.title}`}>
+            <span>PSGPS</span>
+          </Link>
+        )}
+        <div className="news-story-body">
+          <div className="news-story-meta">
+            <span className="news-tag">{news.category || "Community"}</span>
+            <span><Calendar size={14} /> {formatDate(news.date)}</span>
+          </div>
+          <Link to={`/news/${id}`} className="news-story-title">{news.title || "Untitled story"}</Link>
+          <p>{news.description || "Read the latest from the PSGPS alumni community."}</p>
+          <div className="news-story-footer">
+            <span className="news-author">{news.author || "PSGPS Alumni Association"}</span>
+            <button className="news-share-button" type="button" onClick={() => shareStory(news)} aria-label={`Share ${news.title}`}>
+              {copiedId === id ? <Check size={15} /> : <Share2 size={15} />}
+              <span>{copiedId === id ? "Copied" : "Share"}</span>
+            </button>
+          </div>
+        </div>
+      </motion.article>
+    );
+  };
+
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    <div className="news-page">
+      <header className="news-hero">
+        <div className="news-hero-copy">
+          <span className="media-kicker">The alumni journal</span>
+          <h1>Stories from our shared journey.</h1>
+          <p>News, milestones, and ideas from the people who make the PSGPS community what it is.</p>
+        </div>
+        <div className="news-hero-mark" aria-hidden="true"><span>PSGPS</span><b>NEWS</b></div>
+      </header>
 
-        /* News Page Container */
-        .news-page {
-          min-height: 100vh;
-          background: #f8f9fa;
-          padding: 100px 60px;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
+      <main className="news-content">
+        <div className="news-toolbar">
+          <div>
+            <span className="media-kicker">From the association</span>
+            <h2>Latest updates</h2>
+          </div>
+          <p>Keep up with the people, places, and progress shaping our alumni network.</p>
+        </div>
 
-        .news-container {
-          max-width: 1400px;
-          margin: 0 auto;
-          display: grid;
-          grid-template-columns: 340px 1fr;
-          gap: 40px;
-        }
-
-        /* Sidebar */
-        .news-sidebar {
-          display: flex;
-          flex-direction: column;
-          gap: 24px;
-        }
-
-        /* Search Box */
-        .search-box {
-          display: flex;
-          gap: 0;
-          border-radius: 8px;
-          overflow: hidden;
-          background: white;
-          box-shadow: 0 4px 12px rgba(31, 41, 55, 0.1);
-        }
-
-        .search-box input {
-          flex: 1;
-          padding: 14px 18px;
-          border: none;
-          font-size: 14px;
-          color: #1f2937;
-          background: white;
-          font-family: inherit;
-        }
-
-        .search-box input::placeholder {
-          color: #9ca3af;
-        }
-
-        .search-box input:focus {
-          outline: none;
-          background: #fafbfc;
-        }
-
-        .search-btn {
-          padding: 0 18px;
-          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-          border: none;
-          color: white;
-          cursor: pointer;
-          font-weight: 600;
-          transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .search-btn:hover {
-          transform: translateX(-2px);
-          box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
-        }
-
-        /* Categories Section */
-        .categories-section {
-          background: white;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 4px 12px rgba(31, 41, 55, 0.1);
-        }
-
-        .categories-title {
-          padding: 20px 18px;
-          font-size: 14px;
-          font-weight: 700;
-          color: #1f2937;
-          border-bottom: 2px solid #e5e7eb;
-          text-transform: uppercase;
-          letter-spacing: 0.8px;
-        }
-
-        .category-list {
-          list-style: none;
-        }
-
-        .category-item {
-          border-bottom: 1px solid #e5e7eb;
-          transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .category-item:last-child {
-          border-bottom: none;
-        }
-
-        .category-link {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 16px 18px;
-          color: #4b5563;
-          text-decoration: none;
-          font-size: 14px;
-          font-weight: 500;
-          transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-          cursor: pointer;
-          background: white;
-          border: none;
-          width: 100%;
-          text-align: left;
-          font-family: inherit;
-        }
-
-        .category-link:hover {
-          background: #f3f4f6;
-          color: #0052cc;
-          padding-left: 22px;
-        }
-
-        .category-link.active {
-          background: #eff6ff;
-          color: #0052cc;
-          font-weight: 600;
-          border-left: 4px solid #dc2626;
-          padding-left: 14px;
-        }
-
-        /* Main Content */
-        .news-content {
-          display: flex;
-          flex-direction: column;
-          gap: 24px;
-        }
-
-        /* News Card */
-        .news-card {
-          background: white;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 2px 8px rgba(31, 41, 55, 0.08);
-          transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-          display: grid;
-          grid-template-columns: 1fr;
-        }
-
-        .news-card:hover {
-          box-shadow: 0 8px 20px rgba(31, 41, 55, 0.12);
-          transform: translateY(-4px);
-        }
-
-        .news-card.with-image {
-          grid-template-columns: 280px 1fr;
-        }
-
-        .news-image {
-          width: 100%;
-          height: 100%;
-          min-height: 200px;
-          object-fit: cover;
-          background: #e5e7eb;
-        }
-
-        .news-body {
-          padding: 28px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        }
-
-        .news-header {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          margin-bottom: 12px;
-          font-size: 13px;
-        }
-
-        .news-date {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          color: #6b7280;
-          font-weight: 500;
-        }
-
-        .news-share {
-          cursor: pointer;
-          color: #9ca3af;
-          transition: color 300ms;
-        }
-
-        .news-share:hover {
-          color: #0052cc;
-        }
-
-        .news-title {
-          font-size: 18px;
-          font-weight: 700;
-          color: #0052cc;
-          margin-bottom: 12px;
-          line-height: 1.4;
-          text-decoration: none;
-          display: block;
-          transition: color 300ms;
-          cursor: pointer;
-        }
-
-        .news-title:hover {
-          color: #1a73e8;
-          text-decoration: underline;
-        }
-
-        .news-excerpt {
-          font-size: 14px;
-          color: #6b7280;
-          -webkit-line-clamp: 2;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          line-height: 1.6;
-          margin-bottom: 16px;
-        }
-
-        .news-footer {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          flex-wrap: wrap;
-        }
-
-        .news-tag {
-          display: inline-block;
-          padding: 6px 12px;
-          background: #eff6ff;
-          color: #0052cc;
-          border-radius: 20px;
-          font-size: 12px;
-          font-weight: 600;
-          text-transform: capitalize;
-        }
-
-        .news-author {
-          font-size: 12px;
-          color: #9ca3af;
-          margin-left: auto;
-        }
-
-        /* Empty State */
-        .empty-state {
-          text-align: center;
-          padding: 60px 20px;
-          color: #6b7280;
-        }
-
-        .empty-state-icon {
-          font-size: 48px;
-          margin-bottom: 16px;
-        }
-
-        .empty-state-text {
-          font-size: 16px;
-          color: #4b5563;
-        }
-
-        /* Responsive */
-        @media(max-width: 1024px) {
-          .news-container {
-            grid-template-columns: 1fr;
-            gap: 30px;
-          }
-
-          .news-card.with-image {
-            grid-template-columns: 240px 1fr;
-          }
-
-          .news-sidebar {
-            order: 2;
-          }
-
-          .news-content {
-            order: 1;
-          }
-        }
-
-        @media(max-width: 768px) {
-          .news-page {
-            padding: 40px 16px;
-          }
-
-          .news-container {
-            gap: 24px;
-          }
-
-          .news-card.with-image {
-            grid-template-columns: 200px 1fr;
-          }
-
-          .news-body {
-            padding: 20px;
-          }
-
-          .news-title {
-            font-size: 16px;
-          }
-
-          .news-excerpt {
-            font-size: 13px;
-          }
-        }
-
-        @media(max-width: 640px) {
-          .news-page {
-            padding: 30px 12px;
-          }
-
-          .news-container {
-            grid-template-columns: 1fr;
-          }
-
-          .news-card.with-image {
-            grid-template-columns: 1fr;
-          }
-
-          .news-image {
-            min-height: 180px;
-          }
-
-          .news-body {
-            padding: 16px;
-          }
-
-          .news-title {
-            font-size: 15px;
-          }
-
-          .search-box {
-            margin-bottom: 16px;
-          }
-        }
-      `}</style>
-
-      <div className="news-page">
-        <motion.div
-          className="news-container"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Sidebar */}
-          <motion.aside className="news-sidebar" variants={itemVariants}>
-            {/* Search Box */}
-            <div className="search-box">
-              <input
-                type="text"
-                placeholder="Search by title"
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-              />
+        <section className="news-filters" aria-label="News filters">
+          <label className="news-search">
+            <Search size={18} aria-hidden="true" />
+            <span className="sr-only">Search stories</span>
+            <input
+              type="search"
+              placeholder="Search stories"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+            />
+            {searchQuery && <button type="button" onClick={() => setSearchQuery("")} aria-label="Clear search"><X size={16} /></button>}
+          </label>
+          <div className="news-filter-label"><SlidersHorizontal size={15} /> Filter by</div>
+          <div className="news-category-list">
+            {categories.map((category) => (
               <button
-                className="search-btn"
-                onClick={() => handleSearch(searchQuery)}
+                type="button"
+                key={category}
+                className={selectedCategory === category ? "is-active" : ""}
+                onClick={() => setSelectedCategory(category)}
               >
-                <Search size={20} />
+                {category}
               </button>
-            </div>
+            ))}
+          </div>
+        </section>
 
-            {/* Categories */}
-            <div className="categories-section">
-              <div className="categories-title">Categories</div>
-              <ul className="category-list">
-                {categories.map((category) => (
-                  <li key={category.id} className="category-item">
-                    <button
-                      className={`category-link ${
-                        selectedCategory === category.label ? "active" : ""
-                      }`}
-                      onClick={() => handleCategoryFilter(category.label)}
-                    >
-                      <span>{category.icon}</span>
-                      <span>{category.label}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.aside>
-
-          {/* Main Content */}
-          <motion.main className="news-content" variants={containerVariants}>
-            {filteredNews.length > 0 ? (
-              filteredNews.map((news, idx) => {
-                const imageSrc = news.imageUrl
-                  ? `${API_BASE}/${news.imageUrl}`
-                  : news.image;
-                const hasImage = Boolean(imageSrc);
-                return (
-                  <motion.article
-                    key={news._id || news.id || idx}
-                    className={`news-card ${hasImage ? "with-image" : ""}`}
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    {hasImage && (
-                      <img
-                        src={imageSrc}
-                        alt={news.title}
-                        className="news-image"
-                      />
-                    )}
-                    <div className="news-body">
-                      <div>
-                        <div className="news-header">
-                          <span className="news-date">
-                            <Calendar size={16} />
-                            {new Date(news.date).toLocaleString("en-US", {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            })}
-                          </span>
-                          <span className="news-share">
-                            <Share2 size={18} />
-                          </span>
-                        </div>
-                        <Link
-                          to={`/news/${news._id || news.id}`}
-                          className="news-title"
-                        >
-                          <h2 className="news-title">{news.title}</h2>
-                        </Link>
-
-                        <p className="news-excerpt">{news.description}</p>
-                      </div>
-
-                      <div className="news-footer">
-                        <span className="news-tag">{news.category}</span>
-                        <span className="news-author">{news.author}</span>
-                      </div>
-                    </div>
-                  </motion.article>
-                );
-              })
-            ) : (
-              <div className="empty-state">
-                <div className="empty-state-icon">📭</div>
-                <p className="empty-state-text">
-                  No posts found. Try adjusting your filters or search query.
-                </p>
-              </div>
-            )}
-          </motion.main>
-        </motion.div>
-      </div>
-    </>
+        {isLoading ? (
+          <div className="news-loading" aria-label="Loading stories">
+            {[1, 2, 3].map((item) => <div className="news-skeleton" key={item} />)}
+          </div>
+        ) : loadError ? (
+          <div className="news-empty"><CircleAlert size={28} /><h3>Something went wrong</h3><p>{loadError}</p></div>
+        ) : filteredNews.length === 0 ? (
+          <div className="news-empty"><Search size={28} /><h3>No stories found</h3><p>Try another search or choose a different category.</p></div>
+        ) : (
+          <motion.div className="news-results" variants={containerVariants} initial="hidden" animate="visible">
+            {renderStory(filteredNews[0], 0, true)}
+            <div className="news-story-grid">{filteredNews.slice(1).map((news, index) => renderStory(news, index + 1))}</div>
+          </motion.div>
+        )}
+      </main>
+    </div>
   );
 };
 

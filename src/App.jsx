@@ -18,6 +18,8 @@ import "./App.css";
 const HomePage = lazy(() => import("./components/Homepage"));
 const AboutUsPage = lazy(() => import("./pages/AboutUs"));
 const LeadershipPage = lazy(() => import("./pages/LeadershipPage"));
+const NewsPage = lazy(() => import("./pages/Newspage"));
+const NewsDetailPage = lazy(() => import("./pages/NewsDetailPage"));
 const ContactPage = lazy(() => import("./sections/Contact"));
 const CommitteePage = lazy(() => import("./pages/CommitteePage"));
 
@@ -457,6 +459,8 @@ export default function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/leadership" element={<LeadershipPage />} />
               <Route path="/leadership-team" element={<LeadershipPage />} />
+              <Route path="/newsletter" element={<NewsPage />} />
+              <Route path="/news/:id" element={<NewsDetailPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/committee" element={<CommitteePage />} />
 
