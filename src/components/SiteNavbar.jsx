@@ -12,7 +12,8 @@ import {
   LayoutDashboardIcon,
   User,
   Heart,
-  FileText
+  FileText,
+  NewspaperIcon
 } from 'lucide-react'
 import { Link, useNavigate, NavLink } from 'react-router-dom'
 import { useAuth } from "../context/AuthContext";
@@ -100,6 +101,10 @@ function SiteNavbar() {
                 <Link to="/admin/events" onClick={closeMobileMenu}>
                   <Calendar size={16} aria-hidden="true" />
                   Events
+                </Link>
+                <Link to="/admin/newsletters" onClick={closeMobileMenu}>
+                  <NewspaperIcon size={16} aria-hidden="true" />
+                  Newsletter
                 </Link>
                 <Link to="/admin/users" onClick={closeMobileMenu}>
                   <Users size={16} aria-hidden="true" />
@@ -204,6 +209,14 @@ function SiteNavbar() {
                         >
                           <Calendar size={14} />
                           Manage Events
+                        </NavLink>
+                        <NavLink
+                          to="/admin/newsletters"
+                          onClick={() => setUserMenuOpen(false)}
+                          className="ud-item"
+                        >
+                          <NewspaperIcon size={14} />
+                          NewsLetter
                         </NavLink>
                         <NavLink
                           to="/admin/users"
