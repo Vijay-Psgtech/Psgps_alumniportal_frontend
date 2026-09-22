@@ -274,7 +274,7 @@ export const AlumniTab = ({
                     {/* Details */}
                     <div className="space-y-3 mb-4">
                       <div className="flex items-center gap-2 text-sm">
-                        <Building size={14} className="text-gray-400" />
+                        <GraduationCap size={14} className="text-gray-400" />
                         <span className="text-gray-600">
                           {a.stream ? `${a.stream} Stream` : "—"}
                         </span>
@@ -289,6 +289,9 @@ export const AlumniTab = ({
                           <span className="text-gray-600">
                             {a.occupation}
                           </span>
+                          <span className="text-gray-400">•</span>
+                            <Building size={14} className="text-gray-400" />
+                          <span className="text-gray-600">{a.company ? a.company : '-'}</span>
                         </div>
                       )}
 
