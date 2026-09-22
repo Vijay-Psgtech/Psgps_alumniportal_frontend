@@ -724,16 +724,16 @@ const AdminDashboard = () => {
                 </button>
 
                 {/* Alumni View */}
-                {selectedItem.firstName ? (
+                {selectedItem.firstName && (
                   <>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
                       {/* Profile Column */}
                       <div className="md:col-span-1 bg-slate-50 rounded-2xl p-5 border border-slate-100">
                         <div className="flex flex-col items-center text-center">
                           <div className="w-28 h-28 rounded-full overflow-hidden bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-extrabold text-2xl mb-4 ring-4 ring-white shadow-md">
-                            {selectedItem.files?.currentPhoto ? (
+                            {selectedItem?.currentPhoto ? (
                               <img
-                                src={`${API_BASE}/uploads/${selectedItem.files.currentPhoto}`}
+                                src={`${API_BASE}/uploads/${selectedItem?.currentPhoto}`}
                                 alt={`${selectedItem.firstName} ${selectedItem.lastName}`}
                                 className="w-full h-full object-cover"
                               />
@@ -748,24 +748,7 @@ const AdminDashboard = () => {
                           <p className="text-sm text-slate-500 mt-1">
                             {selectedItem.stream || "Stream N/A"}
                           </p>
-                          <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-white border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600">
-                            Roll No: {selectedItem.rollNumber || "N/A"}
-                          </div>
                           <p className="text-sm text-slate-500 mt-2">{selectedItem.batchYear || "Year N/A"}</p>
-
-                          <div className="mt-4 w-full space-y-2">
-                            {selectedItem.linkedin && (
-                              <a
-                                href={selectedItem.linkedin}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="block w-full text-center px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-blue-600 font-semibold hover:bg-slate-100"
-                              >
-                                View LinkedIn
-                              </a>
-                            )}
-
-                          </div>
                         </div>
                       </div>
 
@@ -790,8 +773,8 @@ const AdminDashboard = () => {
                           <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
                             <p className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">Work</p>
                             <div className="mt-3 space-y-1 text-sm text-slate-800">
-                              <p className="truncate">{selectedItem.currentCompany || "-"}</p>
-                              <p className="truncate">{selectedItem.jobTitle || "-"}</p>
+                              <p className="truncate">{selectedItem.company || "-"}</p>
+                              <p className="truncate">{selectedItem.occupation || "-"}</p>
                             </div>
                           </div>
 
@@ -836,49 +819,6 @@ const AdminDashboard = () => {
                         </div>
                       </div>
                     </div>
-                  </>
-                ) : (
-                  <>
-                    {/* Donation View */}
-                    <h2 className="text-[25px] font-bold text-[#0c0e1a] mb-6 font-['Playfair_Display']">
-                      Membership Funds Details
-                    </h2>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                      {[
-                        {
-                          l: "Amount",
-                          v: `${selectedItem.currency === "INR" ? "₹" : "$"
-                            }${selectedItem.amount}`,
-                        },
-                        { l: "Status", v: selectedItem.status },
-                        {
-                          l: "Date",
-                          v: new Date(selectedItem.donatedAt).toLocaleString(),
-                        },
-                        { l: "Payment Method", v: selectedItem.paymentMethod },
-                      ].map((it) => (
-                        <div
-                          key={it.l}
-                          className="p-4 rounded-xl bg-slate-50 border border-slate-100"
-                        >
-                          <p className="text-[11px] uppercase tracking-wide text-gray-400 font-semibold">
-                            {it.l}
-                          </p>
-
-                          <p className="text-[15px] font-bold text-[#0c0e1a] mt-1">
-                            {it.v}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-
-                    <button
-                      onClick={() => setSelectedItem(null)}
-                      className="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition"
-                    >
-                      Close
-                    </button>
                   </>
                 )}
               </motion.div>
