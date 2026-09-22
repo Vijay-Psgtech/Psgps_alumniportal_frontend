@@ -14,6 +14,7 @@ const initialForm = {
     batchYear: "",
     stream: "",
     occupation: "",
+    company: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -62,6 +63,7 @@ const normalizeProfile = (data) => {
         batchYear: profile.batchYear || "",
         stream: profile.stream || "",
         occupation: profile.occupation || "",
+        company: profile.company || "",
         email: profile.email || "",
         password: "",
         confirmPassword: "",
@@ -170,7 +172,7 @@ const AlumniProfile = () => {
     };
 
     const validate = () => {
-        if (!form.firstName.trim() || !form.gender || !/^\d{10}$/.test(form.phone.replace(/\s/g, "")) || !form.batchYear || !form.stream || !form.occupation.trim() || !form.email.trim() || !form.resAddress1.trim() || !form.resCity.trim() || !form.resState.trim() || !form.resCountry.trim()) {
+        if (!form.firstName.trim() || !form.gender || !/^\d{10}$/.test(form.phone.replace(/\s/g, "")) || !form.batchYear || !form.stream || !form.occupation.trim() || !form.company.trim() || !form.email.trim() || !form.resAddress1.trim() || !form.resCity.trim() || !form.resState.trim() || !form.resCountry.trim()) {
             setError("Please complete all required fields.");
             return false;
         }
@@ -197,6 +199,7 @@ const AlumniProfile = () => {
             formData.append("batchYear", form.batchYear);
             formData.append("stream", form.stream);
             formData.append("occupation", form.occupation.trim());
+            formData.append("company", form.company.trim());
             formData.append("email", form.email.toLowerCase().trim());
             formData.append("city", normalizedCity);
             formData.append("state", normalizedState);
@@ -257,7 +260,7 @@ const AlumniProfile = () => {
                     <div className="space-y-9">
                         <section><SectionTitle title="Personal details" /><div className="grid gap-5 sm:grid-cols-2"><Field label="First name" required><input name="firstName" value={form.firstName} onChange={updateField} className={inputClass} /></Field><Field label="Last name"><input name="lastName" value={form.lastName} onChange={updateField} className={inputClass} /></Field><Field label="Gender" required><select name="gender" value={form.gender} onChange={updateField} className={`${inputClass} cursor-pointer`}><option value="">Select gender</option><option>Male</option><option>Female</option><option>Other</option></select></Field><Field label="Phone" required><input name="phone" type="tel" value={form.phone} onChange={updateField} placeholder="98765 43210" className={inputClass} /></Field></div></section>
 
-                        <section><SectionTitle title="Alumni details" /><div className="grid gap-5 sm:grid-cols-2"><Field label="Batch" required><input name="batchYear" value={form.batchYear} readOnly className={`${inputClass} cursor-not-allowed bg-slate-100 text-slate-500`} /></Field><Field label="Stream" required><input name="stream" value={form.stream} readOnly className={`${inputClass} cursor-not-allowed bg-slate-100 text-slate-500`} /></Field><Field label="Occupation" required className="sm:col-span-2"><input name="occupation" value={form.occupation} onChange={updateField} className={inputClass} /></Field></div></section>
+                        <section><SectionTitle title="Alumni details" /><div className="grid gap-5 sm:grid-cols-2"><Field label="Batch" required><input name="batchYear" value={form.batchYear} readOnly className={`${inputClass} cursor-not-allowed bg-slate-100 text-slate-500`} /></Field><Field label="Stream" required><input name="stream" value={form.stream} readOnly className={`${inputClass} cursor-not-allowed bg-slate-100 text-slate-500`} /></Field><Field label="Occupation" required ><input name="occupation" value={form.occupation} onChange={updateField} className={inputClass} /></Field><Field label="Company" required ><input name="company" value={form.company} onChange={updateField} className={inputClass} /></Field></div></section>
 
                         <section><SectionTitle title="Account access" /><div className="grid gap-5 sm:grid-cols-2"><Field label="Email" required className="sm:col-span-2"><input name="email" type="email" value={form.email} readOnly className={`${inputClass} cursor-not-allowed bg-slate-100 text-slate-500`} /></Field></div></section>
 
@@ -303,6 +306,7 @@ const ProfileSummary = ({ form, existingPhoto }) => {
                     <SummaryRow label="Batch" value={value("batchYear")} />
                     <SummaryRow label="Stream" value={value("stream")} />
                     <SummaryRow label="Occupation" value={value("occupation")} />
+                    <SummaryRow label="Company" value={value("company")} />
                     <SummaryRow label="Email" value={value("email")} />
                 </SummaryCard>
                 <SummaryCard title="Residential address" icon={MapPin}>
