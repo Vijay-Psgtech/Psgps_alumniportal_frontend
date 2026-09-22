@@ -357,7 +357,7 @@ const AdminDashboard = () => {
     );
 
   return (
-    <div className="bg-slate-100 min-h-screen pt-26 pb-16 px-4 sm:px-6 relative overflow-x-hidden font-['Outfit',sans-serif]">
+    <div className="bg-slate-100 min-h-screen pt-18 pb-12 px-4 sm:px-6 relative overflow-x-hidden font-['Outfit',sans-serif]">
       {/* Background glowing orb */}
       <div className="absolute -top-44 -right-44 w-[480px] h-[480px] bg-[radial-gradient(circle,rgba(201,168,76,.07)_0%,transparent_70%)] pointer-events-none rounded-full" />
 
@@ -461,7 +461,7 @@ const AdminDashboard = () => {
               "
             >
               {/* Left Accent */}
-              <div className="absolute left-0 top-0 h-full w-1 bg-linear-to-b from-blue-500 to-indigo-500" />
+              <div className="absolute left-0 top-0 h-full w-1 bg-linear-to-b from-[#0d2d52] to-[#143d69]" />
 
               <div className="flex items-center gap-4 h-full">
                 {/* Icon */}
@@ -518,7 +518,7 @@ const AdminDashboard = () => {
                 key={key}
                 onClick={() => setActiveTab(key)}
                 className={`px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition ${activeTab === key
-                    ? "bg-blue-600 text-white"
+                    ? "bg-[#0d2d52] text-white"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
               >
@@ -687,7 +687,7 @@ const AdminDashboard = () => {
           )}
         </AnimatePresence>
 
-        {/* Detail Modal for Alumni & Donations */}
+        {/* Detail Modal for Alumni */}
         <AnimatePresence>
           {selectedItem && (
             <motion.div
