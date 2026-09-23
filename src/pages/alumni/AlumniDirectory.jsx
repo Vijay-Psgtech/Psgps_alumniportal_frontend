@@ -15,17 +15,13 @@ import {
   ChevronRight,
   ArrowLeft,
   Search,
-  MapPin,
   Briefcase,
   Building2,
-  Phone,
-  Mail,
   Globe,
   Linkedin,
   Twitter,
   Instagram,
   Facebook,
-  Lock,
   CheckCircle,
   Filter,
   X,
@@ -33,18 +29,19 @@ import {
   Calendar,
   BookOpen,
   Hash,
-  ExternalLink,
   Eye,
-  EyeOff,
   LayoutGrid,
   List,
   ChevronDown,
   Layers,
+  ArrowRight,
+  Crown,
 } from "lucide-react";
 import { alumniAPI, API_BASE } from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
 import AlumniDetailModal from "./AlumniDetailModal";
 import usePageTitle from "../../hooks/usePageTitle";
+import { formatNumber } from "../../utils/formatters";
 
 /* ─────────────────────────────────────────
    Helpers
@@ -104,18 +101,68 @@ const BATCH_PALETTES = [
   },
 ];
 
-/* ─────────────────────────────────────────
-   Privacy — what a non-admin alumni can see
-───────────────────────────────────────── */
-const canSeeFullDetails = (viewer, subject) => {
-  if (!viewer || !subject) return false;
-  if (viewer.role === "admin" || viewer.role === "superadmin") return true;
-  return String(viewer.batchYear) === String(subject.batchYear);
+const ACCENT_MAP = {
+  "from-violet-500 to-purple-600": {
+    ring: "ring-violet-200",
+    dot: "bg-violet-500",
+    badge: "bg-violet-50  text-violet-700 ring-violet-200",
+  },
+  "from-sky-400   to-blue-600": {
+    ring: "ring-sky-200",
+    dot: "bg-sky-500",
+    badge: "bg-sky-50     text-sky-700    ring-sky-200",
+  },
+  "from-emerald-400 to-teal-600": {
+    ring: "ring-emerald-200",
+    dot: "bg-emerald-500",
+    badge: "bg-emerald-50 text-emerald-700 ring-emerald-200",
+  },
+  "from-amber-400 to-orange-500": {
+    ring: "ring-amber-200",
+    dot: "bg-amber-500",
+    badge: "bg-amber-50   text-amber-700  ring-amber-200",
+  },
+  "from-rose-400  to-pink-600": {
+    ring: "ring-rose-200",
+    dot: "bg-rose-500",
+    badge: "bg-rose-50    text-rose-700   ring-rose-200",
+  },
+  "from-cyan-400  to-sky-500": {
+    ring: "ring-cyan-200",
+    dot: "bg-cyan-500",
+    badge: "bg-cyan-50    text-cyan-700   ring-cyan-200",
+  },
 };
 
-/* ─────────────────────────────────────────
-   Sub-components
-───────────────────────────────────────── */
+function resolveAccent(gradient) {
+  return (
+    ACCENT_MAP[gradient] ?? {
+      ring: "ring-slate-200",
+      dot: "bg-slate-400",
+      badge: "bg-slate-50 text-slate-600 ring-slate-200",
+    }
+  );
+}
+
+/* ─── Tiny stat cell ─────────────────────────────────────────────────────────── */
+function StatCell({ icon: Icon, label, value }) {
+  if (!value) return null;
+  return (
+    <div className="flex items-start gap-2.5 min-w-0">
+      <div className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+        <Icon size={12} className="text-slate-500 dark:text-slate-400" />
+      </div>
+      <div className="min-w-0">
+        <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500 leading-none mb-0.5">
+          {label}
+        </p>
+        <p className="text-xs font-medium text-slate-700 dark:text-slate-200 truncate leading-snug">
+          {value}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 // Pill badge
 const Pill = ({ children, color = "slate" }) => {
@@ -136,37 +183,9 @@ const Pill = ({ children, color = "slate" }) => {
   );
 };
 
-// Social icon link
-const SocialLink = ({ href, icon: Icon, label }) => {
-  if (!href) return null;
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      title={label}
-      className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors group"
-    >
-      <Icon
-        size={13}
-        className="text-slate-500 group-hover:text-slate-800 transition-colors"
-      />
-    </a>
-  );
-};
-
-// Info chip row inside card
-const InfoChip = ({ icon: Icon, value, muted = false }) => {
-  if (!value) return null;
-  return (
-    <div
-      className={`flex items-center gap-1.5 ${muted ? "text-slate-400" : "text-slate-600"}`}
-    >
-      <Icon size={11} className="flex-shrink-0" />
-      <span className="text-xs font-medium truncate">{value}</span>
-    </div>
-  );
-};
+/* ─────────────────────────────────────────
+   Sub-components
+───────────────────────────────────────── */
 
 /* ─── Batch Year Card ─── */
 const BatchCard = ({ year, count, palette, isMine, onClick, index }) => (
@@ -209,9 +228,9 @@ const BatchCard = ({ year, count, palette, isMine, onClick, index }) => (
 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Users size={13} className="text-white/40" />
-          <span className="text-white/60 text-xs font-semibold">
-            {count != null ? `${count} alumni` : "—"}
+          <Users size={15} className="text-white/40" />
+          <span className="text-white/60 text-sm font-semibold">
+            {count != null ? `${formatNumber(count)} alumni` : "—"}
           </span>
         </div>
         <div className="flex items-center gap-1 text-white/40 hover:text-white/70 transition-colors">
@@ -223,193 +242,189 @@ const BatchCard = ({ year, count, palette, isMine, onClick, index }) => (
   </motion.button>
 );
 
-/* ─── Alumni Card — Full Details ─── */
-const AlumniCardFull = ({ alumni, apiBase, index }) => {
-  const [flipped, setFlipped] = useState(false);
+/* ─────────────────────────────────────────
+   Alumni Card
+───────────────────────────────────────── */
+const AlumniCard = ({ alumni, apiBase, index, onSelect }) => {
   const gradient = pickGradient(alumni.firstName);
-  const photo = alumni.files?.currentPhoto || alumni.profileImage;
+  const accent = resolveAccent(gradient);
+
+  const photo = alumni?.currentPhoto || alumni.profileImage;
   const photoUrl = photo ? `${apiBase}/uploads/${photo}` : null;
-  const social = alumni.social || {};
-  const hasSocial = Object.values(social).some(Boolean);
+
+  const roleLabel = alumni.occupation || null;
+
+  const companyLabel = alumni.company || alumni.industry || null;
+
+  const paidMembership = alumni.membershipStatus === "ACTIVE";
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
+    <motion.button
+      type="button"
+      onClick={onSelect}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, duration: 0.35 }}
-      className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col"
+      transition={{ delay: index * 0.045, duration: 0.32, ease: "easeOut" }}
+      whileHover={{ y: -3 }}
+      whileTap={{ scale: 0.985 }}
+      className={`
+        group text-left w-full
+        bg-white dark:bg-slate-900
+        rounded-2xl
+        border border-slate-200/80 dark:border-slate-700/60
+        shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)]
+        hover:shadow-[0_8px_24px_rgba(0,0,0,0.09),0_2px_6px_rgba(0,0,0,0.06)]
+        hover:border-slate-300 dark:hover:border-slate-600
+        transition-all duration-300 ease-out
+        overflow-hidden
+        relative
+      `}
     >
-      {/* Header band */}
-      <div className={`h-1.5 w-full bg-gradient-to-r ${gradient}`} />
+      {/* ── Left accent stripe ── */}
+      <span
+        className={`absolute inset-y-0 left-0 w-[3px] bg-gradient-to-b ${gradient} rounded-l-2xl`}
+        aria-hidden
+      />
 
-      <div className="p-5 flex flex-col flex-1 gap-3">
-        {/* Top: avatar + name */}
-        <div className="flex items-start gap-3">
+      <div className="pl-5 pr-5 pt-5 pb-4 flex flex-col gap-4">
+        {/* ══ HEADER: avatar + identity ════════════════════════════════════════ */}
+        <div className="flex items-start gap-4">
+          {/* Avatar */}
           <div
-            className={`relative flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center text-white text-lg font-black shadow-md overflow-hidden`}
+            className={`
+              relative flex-shrink-0
+              w-14 h-14 rounded-xl
+              ring-2 ${accent.ring}
+              bg-gradient-to-br ${gradient}
+              flex items-center justify-center
+              text-white text-base font-bold tracking-tight
+              overflow-hidden
+            `}
           >
             {photoUrl ? (
               <img
                 src={photoUrl}
-                alt={alumni.firstName}
+                alt={`${alumni.firstName} ${alumni.lastName}`}
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   e.target.style.display = "none";
                 }}
               />
             ) : (
-              getInitials(alumni.firstName, alumni.lastName)
+              <span className="select-none">
+                {getInitials(alumni.firstName, alumni.lastName)}
+              </span>
             )}
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-1.5 flex-wrap">
-              <h4 className="text-sm font-extrabold text-slate-900 truncate">
-                {alumni.firstName} {alumni.lastName}
-              </h4>
-              {alumni.isApproved && (
+
+            {/* Verified dot */}
+            {alumni.isApproved && (
+              <span
+                className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center"
+                title="Verified alumni"
+              >
                 <CheckCircle
-                  size={13}
-                  className="text-emerald-500 flex-shrink-0"
+                  size={12}
+                  className="text-emerald-500 fill-emerald-100 dark:fill-emerald-900/60"
+                  strokeWidth={2.5}
                 />
-              )}
+              </span>
+            )}
+          </div>
+
+          {/* Identity */}
+          <div className="min-w-0 flex-1 pt-0.5">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="text-[15px] font-semibold text-slate-900 dark:text-slate-100 leading-tight truncate">
+                {alumni.firstName} {alumni.lastName}
+              </h3>
+              <span>
+                {paidMembership && (
+                  <Pill color="emerald">
+                    <Crown size={10} className="text-emerald-500" />
+                    Membership Active
+                  </Pill>
+                )}
+              </span>
             </div>
-            <p className="text-[11px] text-slate-400 font-medium truncate mt-0.5">
-              {alumni.email}
-            </p>
-            <div className="flex flex-wrap gap-1 mt-1.5">
-              <Pill color="blue">
-                <GraduationCap size={9} /> {alumni.department}
-              </Pill>
-              {alumni.programmeType && (
-                <Pill color="violet">
-                  <Layers size={9} /> {alumni.programmeType}
-                </Pill>
+
+            {/* Role + Company */}
+            {(roleLabel || companyLabel) && (
+              <p className="mt-0.5 text-[12px] text-slate-500 dark:text-slate-400 leading-snug truncate">
+                {roleLabel}
+                {roleLabel && companyLabel && (
+                  <span className="mx-1 text-slate-300 dark:text-slate-600">
+                    ·
+                  </span>
+                )}
+                {companyLabel && (
+                  <span className="font-medium text-slate-600 dark:text-slate-300">
+                    {companyLabel}
+                  </span>
+                )}
+              </p>
+            )}
+
+            {/* Tags row */}
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {alumni.stream && (
+                <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 ring-1 ring-blue-200 dark:ring-blue-800">
+                  <GraduationCap size={9} />
+                  {`${alumni.stream} Stream`}
+                </span>
+              )}
+              {alumni.batchYear && (
+                <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 ring-1 ring-amber-200 dark:ring-amber-800">
+                  <Calendar size={9} />
+                  {alumni.batchYear}
+                </span>
               )}
             </div>
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-slate-50" />
+        {/* ══ DIVIDER ══════════════════════════════════════════════════════════ */}
+        <div className="border-t border-dashed border-slate-200 dark:border-slate-700/60" />
 
-        {/* Info chips */}
-        <div className="grid grid-cols-1 gap-1.5">
-          <InfoChip
-            icon={Calendar}
-            value={alumni.batchYear ? `Batch of ${alumni.batchYear}` : null}
+        {/* ══ META GRID ════════════════════════════════════════════════════════ */}
+        <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+          <StatCell
+            icon={Building2}
+            label="Industry"
+            value={alumni.company || alumni.industry}
           />
-          <InfoChip icon={BookOpen} value={alumni.degree} />
-          <InfoChip icon={Hash} value={alumni.rollNumber} />
-          {alumni.jobTitle && alumni.currentCompany && (
-            <InfoChip
-              icon={Briefcase}
-              value={`${alumni.jobTitle} @ ${alumni.currentCompany}`}
+          <StatCell
+            icon={Briefcase}
+            label="Designation"
+            value={alumni.occupation}
+          />
+          {alumni.batchYear && (
+            <StatCell
+              icon={GraduationCap}
+              label="Class of"
+              value={String(alumni.batchYear)}
             />
           )}
-          {!alumni.jobTitle && alumni.occupation && (
-            <InfoChip icon={Briefcase} value={alumni.occupation} />
-          )}
-          <InfoChip icon={Building2} value={alumni.industry} />
-          {(alumni.city || alumni.country) && (
-            <InfoChip
-              icon={MapPin}
-              value={[alumni.city, alumni.country].filter(Boolean).join(", ")}
-            />
-          )}
-          <InfoChip icon={Phone} value={alumni.phone} />
         </div>
 
-        {/* Social links */}
-        {hasSocial && (
-          <>
-            <div className="border-t border-slate-50" />
-            <div className="flex items-center gap-1.5 flex-wrap">
-              <SocialLink
-                href={social.linkedin}
-                icon={Linkedin}
-                label="LinkedIn"
-              />
-              <SocialLink
-                href={social.twitter}
-                icon={Twitter}
-                label="Twitter"
-              />
-              <SocialLink
-                href={social.instagram}
-                icon={Instagram}
-                label="Instagram"
-              />
-              <SocialLink
-                href={social.facebook}
-                icon={Facebook}
-                label="Facebook"
-              />
-              <SocialLink href={social.website} icon={Globe} label="Website" />
-            </div>
-          </>
-        )}
+        {/* ══ FOOTER ═══════════════════════════════════════════════════════════ */}
+        <div className="flex items-center justify-between pt-1">
+          {/* <p className="text-[11px] text-slate-400 dark:text-slate-500">
+            ID:{" "}
+            <span className="font-semibold text-slate-600 dark:text-slate-300 tabular-nums">
+              {alumni.alumniId || "—"}
+            </span>
+          </p> */}
 
-        {/* Alumni ID footer */}
-        <div className="mt-auto pt-2 border-t border-slate-50 flex items-center justify-between">
-          <span className="text-[10px] font-mono text-slate-300">
-            {alumni.alumniId}
+          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-400 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors duration-200">
+            View profile
+            <ArrowRight
+              size={11}
+              className="translate-x-0 group-hover:translate-x-0.5 transition-transform duration-200"
+            />
           </span>
-          {alumni.isApproved ? (
-            <Pill color="emerald">
-              <CheckCircle size={9} /> Verified
-            </Pill>
-          ) : (
-            <Pill color="amber">Pending</Pill>
-          )}
         </div>
       </div>
-    </motion.div>
-  );
-};
-
-/* ─── Alumni Card — Limited Details (other batch) ─── */
-const AlumniCardLimited = ({ alumni, index }) => {
-  const gradient = pickGradient(alumni.firstName);
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.04, duration: 0.3 }}
-      className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col"
-    >
-      <div className={`h-1 w-full bg-gradient-to-r ${gradient} opacity-40`} />
-      <div className="p-4 flex items-center gap-3">
-        {/* Blurred avatar placeholder */}
-        <div
-          className={`flex-shrink-0 w-11 h-11 rounded-xl bg-gradient-to-br ${gradient} opacity-30 flex items-center justify-center`}
-        >
-          <EyeOff size={15} className="text-white" />
-        </div>
-        <div className="min-w-0 flex-1">
-          <h4 className="text-sm font-bold text-slate-800 truncate">
-            {alumni.firstName} {alumni.lastName}
-          </h4>
-          <div className="flex flex-wrap gap-1 mt-1">
-            {alumni.department && (
-              <Pill>
-                <GraduationCap size={9} /> {alumni.department}
-              </Pill>
-            )}
-            {alumni.batchYear && (
-              <Pill color="amber">
-                <Calendar size={9} /> {alumni.batchYear}
-              </Pill>
-            )}
-          </div>
-        </div>
-        <div
-          className="flex-shrink-0 w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center"
-          title="Limited view"
-        >
-          <Lock size={12} className="text-slate-300" />
-        </div>
-      </div>
-    </motion.div>
+    </motion.button>
   );
 };
 
@@ -431,6 +446,7 @@ const AlumniDirectory = () => {
   const [batchLoading, setBatchLoading] = useState(true);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState({ occupations: [], stream: [] });
   const [filterOccupation, setFilterOccupation] = useState("");
   const [filterDept, setFilterDept] = useState("");
   const [gridMode, setGridMode] = useState("grid"); // "grid" | "list"
@@ -438,7 +454,7 @@ const AlumniDirectory = () => {
   const [stats, setStats] = useState({
     totalAlumni: 0,
     batchStats: 0,
-    departmentStats: 0,
+    streamStats: 2,
   });
   const [selectedAlumni, setSelectedAlumni] = useState(null);
   // Pagination state
@@ -448,8 +464,8 @@ const AlumniDirectory = () => {
   const itemsPerPage = 20;
   // ✅ Memoize params to prevent unnecessary object recreation
   const params = useMemo(
-    () => (isAdmin ? { department: user.department } : {}),
-    [isAdmin, user.department],
+    () => (isAdmin ? { stream: user.stream } : {}),
+    [isAdmin, user.stream],
   );
 
   // ── Load batches ──
@@ -490,7 +506,7 @@ const AlumniDirectory = () => {
     })();
   }, []);
 
-  // -- Load Stats (total, by batch, by department) ──
+  // -- Load Stats (total, by batch, by stream) ──
   useEffect(() => {
     (async () => {
       try {
@@ -499,7 +515,7 @@ const AlumniDirectory = () => {
         setStats({
           totalAlumni: data.totalAlumni || 0,
           batchStats: data.batchStats || 0,
-          departmentStats: data.departmentStats || 0,
+          streamStats: data.streamStats || 0,
         });
       } catch (e) {
         // Ignore stats loading errors — not critical
@@ -514,7 +530,7 @@ const AlumniDirectory = () => {
       pageNum = 1,
       searchStr = "",
       occFilter = "",
-      deptFilter = "",
+      streamFilter = "",
     ) => {
       try {
         setLoading(true);
@@ -526,7 +542,7 @@ const AlumniDirectory = () => {
           limit: itemsPerPage,
           search: searchStr || undefined,
           occupation: occFilter || undefined,
-          department: deptFilter || undefined,
+          stream: streamFilter || undefined,
           ...params,
         }); // GET /api/alumni/batch-wise?batchYear=year&page=1&limit=20&search=...
 
@@ -537,6 +553,7 @@ const AlumniDirectory = () => {
         setCurrentPage(data.page || 1);
         setSelectedBatch(year);
         setView("alumni");
+        setFilters({ occupations: data.filters.occupations || [], stream: data.filters.streams || [] });
       } catch (e) {
         setError("Failed to load alumni for this batch.");
       } finally {
@@ -562,28 +579,18 @@ const AlumniDirectory = () => {
     return alumniList; // Backend already filters, pagination handles the rest
   }, [alumniList]);
 
-  // ── Unique filter options ──
-  const occupations = useMemo(
-    () => [...new Set(alumniList.map((a) => a.occupation).filter(Boolean))],
-    [alumniList],
-  );
-  const departments = useMemo(
-    () => [...new Set(alumniList.map((a) => a.department).filter(Boolean))],
-    [alumniList],
-  );
 
-  // ── Split: full vs limited ──
-  const { fullCards, limitedCards } = useMemo(() => {
-    const fullCards = filtered.filter((a) => canSeeFullDetails(user, a));
-    const limitedCards = filtered.filter((a) => !canSeeFullDetails(user, a));
-    return { fullCards, limitedCards };
-  }, [filtered, user]);
+  // ── Alumni list ──
+  const displayedAlumni = useMemo(() => filtered, [filtered]);
 
   /* Display info - use total from pagination for accuracy */
   return (
     <>
-      <div ref={alumniRef} className="min-h-screen bg-[#f4f5f9] pt-24 pb-16 px-4 sm:px-6">
-        <div  className="container mx-auto px-6">
+      <div
+        ref={alumniRef}
+        className="min-h-screen bg-[#f4f5f9] pt-24 pb-16 px-4 sm:px-6"
+      >
+        <div className="container mx-auto px-6">
           {/* ── Page Header ── */}
           <motion.div
             className="mb-8"
@@ -615,7 +622,7 @@ const AlumniDirectory = () => {
                 </p>
                 <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-none">
                   {view === "batches"
-                    ? `Alumni Directory - ${isAdmin ? `Department ${user?.department || "N/A"}` : `Batch ${user?.batchYear || "Years"}`}`
+                    ? `Alumni Directory - ${isAdmin ? `Stream ${user?.stream || "N/A"}` : `Batch ${user?.batchYear || "Years"}`}`
                     : `Batch of ${selectedBatch}`}
                 </h1>
 
@@ -624,34 +631,28 @@ const AlumniDirectory = () => {
                   <div className="flex items-center gap-1.5">
                     <Users size={13} className="text-slate-400" />
                     <span className="text-sm text-slate-400 font-medium">
-                      {stats.totalAlumni} total alumni
+                      {formatNumber(stats.totalAlumni)} total alumni
                     </span>
                   </div>
 
                   <div className="flex items-center gap-1.5">
                     <GraduationCap size={13} className="text-slate-400" />
                     <span className="text-sm text-slate-400 font-medium">
-                      {stats.batchStats} total batches
+                      {formatNumber(stats.batchStats)} total batches
                     </span>
                   </div>
 
                   <div className="flex items-center gap-1.5">
                     <Building2 size={13} className="text-slate-400" />
                     <span className="text-sm text-slate-400 font-medium">
-                      {stats.departmentStats} total departments
+                      {formatNumber(stats.streamStats)} total streams
                     </span>
                   </div>
                 </div>
 
                 {view === "alumni" && !loading && (
                   <p className="text-sm text-slate-400 font-medium mt-1">
-                    {total} alumni found
-                    {!isAdmin && (
-                      <span className="ml-2 text-indigo-400">
-                        · {fullCards.length} full profile
-                        {fullCards.length !== 1 ? "s" : ""} visible
-                      </span>
-                    )}
+                    {formatNumber(total)} alumni found
                   </p>
                 )}
               </div>
@@ -736,32 +737,6 @@ const AlumniDirectory = () => {
                   </div>
                 ) : (
                   <>
-                    {/* Info banner for alumni */}
-                    {!isAdmin && (
-                      <motion.div
-                        className="flex items-start gap-3 px-5 py-3.5 rounded-2xl bg-indigo-50 border border-indigo-100 mb-6"
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                      >
-                        <Eye
-                          size={16}
-                          className="text-indigo-400 flex-shrink-0 mt-0.5"
-                        />
-                        <div>
-                          <p className="text-sm font-bold text-indigo-800">
-                            Visibility Notice
-                          </p>
-                          <p className="text-xs text-indigo-500 mt-0.5">
-                            Full details are visible for{" "}
-                            <strong>Batch {user?.batchYear}</strong> members.
-                            Other batches show name, department, and batch year
-                            only.
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                       {batches.map((year, i) => (
                         <BatchCard
@@ -780,7 +755,8 @@ const AlumniDirectory = () => {
                             alumniRef.current.scrollIntoView({
                               behavior: "smooth",
                             });
-                            loadBatch(year)}}
+                            loadBatch(year);
+                          }}
                           index={i}
                         />
                       ))}
@@ -808,7 +784,7 @@ const AlumniDirectory = () => {
                     />
                     <input
                       type="text"
-                      placeholder="Search by name, email or roll number…"
+                      placeholder="Search by name, roll number…"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                       className="w-full pl-10 pr-10 py-3 rounded-2xl border border-slate-200 bg-white text-sm text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 shadow-sm transition-all"
@@ -842,7 +818,7 @@ const AlumniDirectory = () => {
                             className="appearance-none pl-3.5 pr-8 py-2 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-300 shadow-sm cursor-pointer"
                           >
                             <option value="">All Occupations</option>
-                            {occupations.map((o) => (
+                            {filters.occupations.map((o) => (
                               <option key={o}>{o}</option>
                             ))}
                           </select>
@@ -858,8 +834,8 @@ const AlumniDirectory = () => {
                             onChange={(e) => setFilterDept(e.target.value)}
                             className="appearance-none pl-3.5 pr-8 py-2 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-300 shadow-sm cursor-pointer"
                           >
-                            <option value="">All Departments</option>
-                            {departments.map((d) => (
+                            <option value="">All Stream</option>
+                            {filters.stream.map((d) => (
                               <option key={d}>{d}</option>
                             ))}
                           </select>
@@ -915,34 +891,26 @@ const AlumniDirectory = () => {
                 ) : (
                   <>
                     {/* ── Full-detail section ── */}
-                    {fullCards.length > 0 && (
+                    {displayedAlumni.length > 0 && (
                       <section className="mb-8">
-                        {!isAdmin && (
-                          <div className="flex items-center gap-2 mb-4">
-                            <Eye size={13} className="text-emerald-500" />
-                            <span className="text-xs font-extrabold text-slate-500 uppercase tracking-widest">
-                              Your Batch — Full Details
-                            </span>
-                            <span className="text-[10px] font-bold text-slate-300">
-                              ({fullCards.length})
-                            </span>
-                          </div>
-                        )}
+                        <div className="flex items-center gap-2 mb-4">
+                          <Eye size={13} className="text-emerald-500" />
+                          <span className="text-xs font-extrabold text-slate-500 uppercase tracking-widest">
+                            Alumni Profiles
+                          </span>
+                          <span className="text-[10px] font-bold text-slate-300">
+                            ({displayedAlumni.length})
+                          </span>
+                        </div>
                         {gridMode === "grid" ? (
-                          <div
-                            className={`grid gap-4 ${
-                              gridMode === "grid"
-                                ? "grid-cols-1 sm:grid-cols-3 lg:grid-cols-5"
-                                : "grid-cols-1"
-                            }`}
-                          >
-                            {fullCards.map((alumni, i) => (
+                          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4">
+                            {displayedAlumni.map((alumni, i) => (
                               <div
                                 key={alumni._id}
                                 onClick={() => setSelectedAlumni(alumni)}
                                 className="cursor-pointer"
                               >
-                                <AlumniCardFull
+                                <AlumniCard
                                   alumni={alumni}
                                   apiBase={API_BASE}
                                   index={i}
@@ -959,19 +927,10 @@ const AlumniDirectory = () => {
                                     Name
                                   </th>
                                   <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500">
-                                    Department
-                                  </th>
-                                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500">
-                                    Programme
+                                    Stream
                                   </th>
                                   <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500">
                                     Batch
-                                  </th>
-                                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500">
-                                    Email
-                                  </th>
-                                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500">
-                                    Phone
                                   </th>
                                   <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500">
                                     Job
@@ -982,7 +941,7 @@ const AlumniDirectory = () => {
                                 </tr>
                               </thead>
                               <tbody className="bg-white divide-y divide-slate-100">
-                                {fullCards.map((alumni, i) => (
+                                {displayedAlumni.map((alumni, i) => (
                                   <tr
                                     key={alumni._id}
                                     onClick={() => setSelectedAlumni(alumni)}
@@ -1003,29 +962,22 @@ const AlumniDirectory = () => {
                                             {alumni.firstName} {alumni.lastName}
                                           </div>
                                           <div className="text-xs text-slate-400 truncate">
-                                            {alumni.email}
+                                            {alumni.company ||
+                                              alumni.industry ||
+                                              "—"}
                                           </div>
                                         </div>
                                       </div>
                                     </td>
                                     <td className="px-4 py-3 text-sm text-slate-700 align-middle">
-                                      {alumni.department || "—"}
-                                    </td>
-                                    <td className="px-4 py-3 text-sm text-slate-700 align-middle">
-                                      {alumni.programmeType || "—"}
+                                      {`${alumni.stream} Stream` || "—"}
                                     </td>
                                     <td className="px-4 py-3 text-sm text-slate-700 align-middle">
                                       {alumni.batchYear || "—"}
                                     </td>
                                     <td className="px-4 py-3 text-sm text-slate-700 align-middle truncate">
-                                      {alumni.email}
-                                    </td>
-                                    <td className="px-4 py-3 text-sm text-slate-700 align-middle">
-                                      {alumni.phone || "—"}
-                                    </td>
-                                    <td className="px-4 py-3 text-sm text-slate-700 align-middle truncate">
-                                      {alumni.jobTitle
-                                        ? `${alumni.jobTitle}${alumni.currentCompany ? " @ " + alumni.currentCompany : ""}`
+                                      {alumni.occupation
+                                        ? `${alumni.occupation}${alumni.company ? " @ " + alumni.company : ""}`
                                         : alumni.occupation || "—"}
                                     </td>
                                     <td className="px-4 py-3 align-middle">
@@ -1047,7 +999,7 @@ const AlumniDirectory = () => {
                     )}
 
                     {/* ── Pagination Controls (between full & limited) ── */}
-                    {totalPages > 1 && fullCards.length > 0 && (
+                    {totalPages > 1 && (
                       <div className="flex items-center justify-center gap-2 my-8 px-4 flex-wrap">
                         <button
                           onClick={() => {
@@ -1156,108 +1108,6 @@ const AlumniDirectory = () => {
                           alumni
                         </span>
                       </div>
-                    )}
-
-                    {/* ── Limited-detail section ── */}
-                    {limitedCards.length > 0 && (
-                      <section>
-                        <div className="flex items-center gap-2 mb-4">
-                          <Lock size={13} className="text-slate-400" />
-                          <span className="text-xs font-extrabold text-slate-400 uppercase tracking-widest">
-                            Other Batches — Limited View
-                          </span>
-                          <span className="text-[10px] font-bold text-slate-300">
-                            ({limitedCards.length})
-                          </span>
-                        </div>
-                        {gridMode === "grid" ? (
-                          <div
-                            className={`grid gap-3 ${
-                              gridMode === "grid"
-                                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                                : "grid-cols-1"
-                            }`}
-                          >
-                            {limitedCards.map((alumni, i) => (
-                              <div key={alumni._id} className="cursor-pointer">
-                                <AlumniCardLimited alumni={alumni} index={i} />
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="overflow-auto bg-white rounded-2xl border border-slate-100 shadow-sm">
-                            <table className="min-w-full table-fixed">
-                              <thead className="bg-slate-50">
-                                <tr>
-                                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500">
-                                    Name
-                                  </th>
-                                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500">
-                                    Department
-                                  </th>
-                                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500">
-                                    Batch
-                                  </th>
-                                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500">
-                                    Location
-                                  </th>
-                                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500">
-                                    View
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody className="bg-white divide-y divide-slate-100">
-                                {limitedCards.map((alumni, i) => (
-                                  <tr
-                                    key={alumni._id}
-                                    className="hover:bg-slate-50 cursor-pointer"
-                                  >
-                                    <td className="px-4 py-3 align-middle">
-                                      <div className="flex items-center gap-3">
-                                        <div
-                                          className={`w-9 h-9 rounded-md bg-gradient-to-br ${pickGradient(alumni.firstName)} flex items-center justify-center text-white font-bold opacity-60`}
-                                        >
-                                          {getInitials(
-                                            alumni.firstName,
-                                            alumni.lastName,
-                                          )}
-                                        </div>
-                                        <div className="min-w-0">
-                                          <div className="text-sm font-bold text-slate-800 truncate">
-                                            {alumni.firstName} {alumni.lastName}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </td>
-                                    <td className="px-4 py-3 text-sm text-slate-700 align-middle">
-                                      {alumni.department || "—"}
-                                    </td>
-                                    <td className="px-4 py-3 text-sm text-slate-700 align-middle">
-                                      {alumni.batchYear || "—"}
-                                    </td>
-                                    <td className="px-4 py-3 text-sm text-slate-700 align-middle">
-                                      {[alumni.city, alumni.country]
-                                        .filter(Boolean)
-                                        .join(", ") || "—"}
-                                    </td>
-                                    <td className="px-4 py-3 align-middle">
-                                      <div
-                                        className="w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center"
-                                        title="Limited view"
-                                      >
-                                        <Lock
-                                          size={14}
-                                          className="text-slate-400"
-                                        />
-                                      </div>
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        )}
-                      </section>
                     )}
                   </>
                 )}
