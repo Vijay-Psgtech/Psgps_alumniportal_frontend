@@ -114,7 +114,7 @@ const AlumniMap = () => {
 
   useEffect(() => {
     const loadMapData = async () => {
-      const params = isAdmin ? { department: user.department } : {};
+      const params = isAdmin ? { stream: user.stream } : {};
       try {
         setLoading(true);
         const response = await alumniAPI.getMapData(params);
@@ -294,14 +294,14 @@ const AlumniMap = () => {
 
                     <div className="flex items-center gap-4">
                       <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-500 flex items-center justify-center text-white text-xl font-extrabold shadow-lg shadow-blue-200 flex-shrink-0 select-none">
-                        {selectedAlumni.files?.currentPhoto ? (
+                        {selectedAlumni?.currentPhoto ? (
                           <img
-                            src={`${API_BASE}/uploads/${selectedAlumni.files?.currentPhoto}`}
+                            src={`${API_BASE}/uploads/${selectedAlumni?.currentPhoto}`}
                             alt="Profile"
                             className="w-full h-full object-cover hover:cursor-pointer"
                             onClick={() => {
                               setSelectedImage(
-                                selectedAlumni.files?.currentPhoto,
+                                selectedAlumni?.currentPhoto,
                               );
                               setImageModal(true);
                             }}
@@ -330,9 +330,9 @@ const AlumniMap = () => {
                           {selectedAlumni.batchYear}
                         </span>
                       )}
-                      {selectedAlumni.department && (
+                      {selectedAlumni.stream && (
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-white border border-blue-100 text-blue-600 shadow-sm">
-                          {selectedAlumni.department}
+                          {`${selectedAlumni.stream} Stream`}
                         </span>
                       )}
                     </div>
@@ -341,22 +341,6 @@ const AlumniMap = () => {
                   {/* Info rows */}
                   <div className="flex-1 px-5 py-2 overflow-y-auto">
                     <>
-                      {/*Degree & Department  */}
-                      <ModalRow
-                        icon={GraduationCap}
-                        label="Education"
-                        iconColor="text-blue-600"
-                        bgColor="bg-blue-50"
-                      >
-                        <p className="text-sm text-slate-700 font-medium">
-                          {selectedAlumni.degree || "—"}
-                          {selectedAlumni.department
-                            ? `, ${selectedAlumni.department}`
-                            : ""}
-                        </p>
-                            
-
-                      </ModalRow>
                       <ModalRow
                         icon={MapPin}
                         label="Location"
@@ -369,7 +353,7 @@ const AlumniMap = () => {
                         </p>
                       </ModalRow>
 
-                      {selectedAlumni.currentCompany && (
+                      {selectedAlumni.company && (
                         <ModalRow
                           icon={Building2}
                           label="Company"
@@ -377,12 +361,12 @@ const AlumniMap = () => {
                           bgColor="bg-amber-50"
                         >
                           <p className="text-sm text-slate-700 font-medium">
-                            {selectedAlumni.currentCompany}
+                            {selectedAlumni.company}
                           </p>
                         </ModalRow>
                       )}
 
-                      {selectedAlumni.jobTitle && (
+                      {selectedAlumni.occupation && (
                         <ModalRow
                           icon={Briefcase}
                           label="Position"
@@ -390,7 +374,7 @@ const AlumniMap = () => {
                           bgColor="bg-blue-50"
                         >
                           <p className="text-sm text-slate-700 font-medium">
-                            {selectedAlumni.jobTitle}
+                            {selectedAlumni.occupation}
                           </p>
                         </ModalRow>
                       )}
