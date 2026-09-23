@@ -163,7 +163,7 @@ export const AlbumFormModal = ({
             }
             disabled={!valid || isLoading}
             className={`flex-1 py-3 rounded-xl border-none font-['Outfit',sans-serif] text-sm font-bold flex items-center justify-center gap-2 transition-all
-                            ${valid && !isLoading ? "bg-linear-to-br from-blue-600 to-blue-900 text-white cursor-pointer shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:-translate-y-0.5" : "bg-slate-200 text-slate-400 cursor-not-allowed"}
+                            ${valid && !isLoading ? "bg-linear-to-br from-[#0d2d52] to-[#143d69] text-white cursor-pointer shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:-translate-y-0.5" : "bg-slate-200 text-slate-400 cursor-not-allowed"}
                             ${isLoading ? "opacity-70" : ""}`}
           >
             <CheckCircle size={15} />{" "}
