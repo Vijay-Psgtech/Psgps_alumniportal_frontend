@@ -229,7 +229,7 @@ const AlumniProfile = () => {
     }
 
     return (
-        <main className="min-h-screen bg-[#eef4fb] px-4 py-10 sm:px-6 lg:py-16">
+        <main className="min-h-screen bg-[#eef4fb] px-4 py-10 sm:px-6 lg:py-20">
             <div className="mx-auto max-w-4xl">
                 <header className="mb-7 flex flex-wrap items-end justify-between gap-4">
                     <div>
