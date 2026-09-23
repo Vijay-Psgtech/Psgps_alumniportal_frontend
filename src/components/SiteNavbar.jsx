@@ -22,24 +22,18 @@ function SiteNavbar() {
   const adminMenuRef = useRef(null)
 
   useEffect(() => {
-    // The transparent nav is only legible over a dark hero (like the
-    // AlumniBanner). Pages without a `.ab-hero` section — login, forms,
-    // dashboards — have a light background, so on those we force the
-    // condensed/opaque style immediately instead of waiting on scroll,
-    // otherwise the light nav text disappears against the light page.
-    const hasHero = () => !!document.querySelector('.ab-hero')
+    // location / and home : transparent initially, dark after scrolling.
+    // All other pages: dark immediately
+    const isHomePage = location.pathname === '/' || location.pathname === '/home'
 
-    const onScroll = () => setScrolled(window.scrollY > 60 || !hasHero())
+    const onScroll = () => setScrolled(!isHomePage || window.scrollY > 60)
 
-    // Run once on mount / whenever the route changes, then again shortly
-    // after in case the hero mounts asynchronously (images, etc.).
     onScroll()
-    const raf = requestAnimationFrame(onScroll)
 
     window.addEventListener('scroll', onScroll, { passive: true })
+
     return () => {
       window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(raf)
     }
   }, [location.pathname])
 
