@@ -287,13 +287,6 @@ const AdminDashboard = () => {
           label: "Campaign Manager",
           badge: stats.totalCampaigns,
         },
-        {
-          key: "notifications",
-          Icon: Bell,
-          label: "Notifications",
-          badge: "🔔",
-        },
-  
         { key: "users", Icon: Users, label: "Admin Users", badge: "👤" },
       ]
       : []),
