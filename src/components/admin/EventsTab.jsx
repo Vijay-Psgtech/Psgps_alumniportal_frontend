@@ -184,7 +184,7 @@ export const EventsTab = ({ onError, onSuccess }) => {
             <button
               key={f}
               onClick={() => setStatusFilter(f)}
-              className={`px-4 py-2 border-none font-['Outfit',sans-serif] text-xs font-bold transition-colors capitalize ${statusFilter === f ? "bg-[#667eea] text-white" : "bg-transparent text-gray-400 hover:bg-slate-50 hover:text-gray-600"}`}
+              className={`px-4 py-2 border-none font-['Outfit',sans-serif] text-xs font-bold transition-colors capitalize ${statusFilter === f ? "bg-[#0d2d52] text-white" : "bg-transparent text-gray-400 hover:bg-slate-50 hover:text-gray-600"}`}
             >
               {f}
             </button>
@@ -192,7 +192,7 @@ export const EventsTab = ({ onError, onSuccess }) => {
         </div>
         <button
           onClick={() => setModal({ type: "add" })}
-          className="px-4 py-2.5 rounded-xl border-none bg-linear-to-br from-[#667eea] to-[#764ba2] text-white font-['Outfit',sans-serif] text-[13px] font-bold cursor-pointer flex items-center gap-1.5 whitespace-nowrap shadow-md shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:shadow-blue-500/40"
+          className="px-4 py-2.5 rounded-xl border-none bg-linear-to-br from-[#0d2d52] to-[#143d69] text-white font-['Outfit',sans-serif] text-[13px] font-bold cursor-pointer flex items-center gap-1.5 whitespace-nowrap shadow-md shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:shadow-blue-500/40"
         >
           <Plus size={14} /> Add Event
         </button>

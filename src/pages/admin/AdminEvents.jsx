@@ -29,7 +29,7 @@ import { u } from "framer-motion/client";
 
 // Category colors mapping
 const CATEGORY_COLORS = {
-  Awards: "#667eea",
+  Awards: "#143d69",
   Lecture: "#764ba2",
   Sports: "#f093fb",
   Memorial: "#4facfe",
@@ -250,7 +250,7 @@ const AdminEvents = () => {
           </div>
           <button
             onClick={() => setModal({ type: "add" })}
-            className="px-6 py-3 rounded-xl border-none bg-linear-to-br from-[#667eea] to-[#764ba2] text-white font-['Outfit',sans-serif] font-bold text-sm cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:shadow-blue-500/40 active:translate-y-0 w-full sm:w-auto"
+            className="px-6 py-3 rounded-xl border-none bg-linear-to-br from-[#0d2d52] to-[#143d69] text-white font-['Outfit',sans-serif] font-bold text-sm cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:shadow-blue-500/40 active:translate-y-0 w-full sm:w-auto"
           >
             <Plus size={18} /> Add Event
           </button>
@@ -423,7 +423,7 @@ const AdminEvents = () => {
                   onClick={() => setStatusFilter(f)}
                   className={`flex-1 sm:flex-none px-4 py-2.5 border-none font-['Outfit',sans-serif] text-xs sm:text-sm font-bold transition-all capitalize ${
                     statusFilter === f
-                      ? "bg-[#667eea] text-white"
+                      ? "bg-[#143d69] text-white"
                       : "bg-white text-gray-500 hover:bg-slate-50 hover:text-gray-700"
                   }`}
                 >
@@ -448,7 +448,7 @@ const AdminEvents = () => {
                   onClick={() => setViewMode("grid")}
                   className={`p-2.5 transition-all ${
                     viewMode === "grid"
-                      ? "bg-[#667eea] text-white"
+                      ? "bg-[#143d69] text-white"
                       : "bg-white text-gray-500 hover:bg-slate-50 hover:text-gray-700"
                   }`}
                   title="Grid View"
@@ -496,7 +496,7 @@ const AdminEvents = () => {
             {/* GRID VIEW */}
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {paginatedData.map((event, idx) => {
-                const cc = CATEGORY_COLORS[event.category] || "#667eea";
+                const cc = CATEGORY_COLORS[event.category] || "#143d69";
                 return (
                   <motion.div
                     key={event._id}
@@ -722,7 +722,7 @@ const AdminEvents = () => {
                   </thead>
                   <tbody>
                     {paginatedData.map((event, idx) => {
-                      const cc = CATEGORY_COLORS[event.category] || "#667eea";
+                      const cc = CATEGORY_COLORS[event.category] || "#143d69";
                       return (
                         <motion.tr
                           key={event._id}
