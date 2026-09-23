@@ -189,7 +189,7 @@ const AlumniDashboard = () => {
 
   /* ─── render ─── */
   return (
-    <div className="min-h-screen bg-[#f4f5f9] pb-14 font-sans text-slate-800">
+    <div className="min-h-screen bg-[#f4f5f9] pt-18 font-sans text-slate-800">
       {/* ══════════════ TOP BAR ══════════════ */}
       <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200/70 shadow-sm">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">

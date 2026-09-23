@@ -357,7 +357,7 @@ const AdminDashboard = () => {
     );
 
   return (
-    <div className="bg-slate-100 min-h-screen pt-18 pb-12 px-4 sm:px-6 relative overflow-x-hidden font-['Outfit',sans-serif]">
+    <div className="bg-slate-100 min-h-screen pt-26 pb-16 px-4 sm:px-6 relative overflow-x-hidden font-['Outfit',sans-serif]">
       {/* Background glowing orb */}
       <div className="absolute -top-44 -right-44 w-[480px] h-[480px] bg-[radial-gradient(circle,rgba(201,168,76,.07)_0%,transparent_70%)] pointer-events-none rounded-full" />
 
