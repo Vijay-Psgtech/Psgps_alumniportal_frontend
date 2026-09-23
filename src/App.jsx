@@ -10,8 +10,6 @@ import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import SiteNavbar from "./components/SiteNavbar";
 import Footer from "./components/Footer";
 
-import "./App.css";
-
 // ═══════════════════════════════════════════════════════════════════════
 // PUBLIC PAGES
 // ═══════════════════════════════════════════════════════════════════════
