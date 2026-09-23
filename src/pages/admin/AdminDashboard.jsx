@@ -287,13 +287,6 @@ const AdminDashboard = () => {
           label: "Campaign Manager",
           badge: stats.totalCampaigns,
         },
-        {
-          key: "notifications",
-          Icon: Bell,
-          label: "Notifications",
-          badge: "🔔",
-        },
-  
         { key: "users", Icon: Users, label: "Admin Users", badge: "👤" },
       ]
       : []),
@@ -314,13 +307,13 @@ const AdminDashboard = () => {
         },
         {
           icon: <IndianRupee className="w-6 h-6 text-purple-600" />,
-          val: formatCurrency(stats.totalMembershipFees),
-          label: "Membership Funds",
+          val: formatCurrency(stats.totalDonatedAmount),
+          label: "Donation Funds",
         },
         {
-          icon: <BadgeCheck className="w-6 h-6 text-teal-600" />,
-          val: formatNumber(stats.completedMembership),
-          label: "Completed",
+          icon: <Calendar className="w-6 h-6 text-teal-600" />,
+          val: formatNumber(stats.totalEvents),
+          label: "Total Events",
         },
       ]
       : [
@@ -336,13 +329,13 @@ const AdminDashboard = () => {
         },
         {
           icon: <IndianRupee className="w-6 h-6 text-purple-600" />,
-          val: formatCurrency(stats.totalMembershipFees),
-          label: "Membership Funds",
+          val: formatCurrency(stats.totalDonatedAmount),
+          label: "Donation Funds",
         },
         {
-          icon: <BadgeCheck className="w-6 h-6 text-teal-600" />,
-          val: formatNumber(stats.completedMembership),
-          label: "Completed",
+          icon: <Calendar className="w-6 h-6 text-teal-600" />,
+          val: formatNumber(stats.totalEvents),
+          label: "Total Events",
         },
       ];
 
