@@ -34,6 +34,12 @@ const LocalGalleryPage = lazy(() => import("./pages/LocalGalleryPage"));
 const GalleryDetailPage = lazy(() => import("./pages/GalleryDetailPage"));
 
 // ═══════════════════════════════════════════════════════════════════════
+// ✅ CAMPAIGN PAGES - Public campaigns (No auth needed)
+// ═══════════════════════════════════════════════════════════════════════
+const CampaignsPage = lazy(() => import("./pages/alumni/CampaignsPage"));
+const CampaignFormPage = lazy(() => import("./pages/alumni/CampaignFormPage"));
+
+// ═══════════════════════════════════════════════════════════════════════
 // ALUMNI PAGES
 // ═══════════════════════════════════════════════════════════════════════
 const AlumniRegistration = lazy(() => import("./pages/alumni/AlumniRegistration"));
@@ -473,6 +479,18 @@ export default function App() {
               {/* ═══════════════════════════════════════════════════════════════ */}
               <Route path="/gallery" element={<LocalGalleryPage />} />
               <Route path="/gallery/:slug" element={<GalleryDetailPage />} />
+
+              {/* ═══════════════════════════════════════════════════════════════ */}
+              {/* ✅ CAMPAIGN ROUTES - PUBLIC (No authentication needed) */}
+              {/* ═══════════════════════════════════════════════════════════════ */}
+              <Route
+                path="/campaigns"
+                element={<CampaignsPage />}
+              />
+              <Route
+                path="/campaign/:id"
+                element={<CampaignFormPage />}
+              />
 
               {/* ═══════════════════════════════════════════════════════════════ */}
               {/* ALUMNI AUTHENTICATION */}
