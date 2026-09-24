@@ -72,6 +72,17 @@ const QUICK_CARDS = [
     iconColor: "text-emerald-600",
     cta: "Explore locations",
   },
+   {
+    id: "campaigns",
+    icon: Megaphone,
+    title: "Campaigns",
+    desc: "Participate in alumni campaigns and share your stories",
+    path: "/campaigns",
+    accent: "from-violet-500 to-purple-600",
+    lightBg: "bg-violet-50",
+    iconColor: "text-violet-600",
+    cta: "View campaigns",
+  },
   {
     id: "donations",
     icon: Heart,
@@ -444,7 +455,7 @@ const AlumniDashboard = () => {
             <Sparkles size={15} className="text-slate-300" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
             {QUICK_CARDS.map((card, i) => (
               <motion.button
                 key={card.id}
@@ -589,6 +600,13 @@ const AlumniDashboard = () => {
                   path: "/alumni/map",
                   color: "text-emerald-500",
                   bg: "bg-emerald-50",
+                },
+                {
+                  label: "View All Campaigns",
+                  icon: Megaphone,
+                  path: "/campaigns",
+                  color: "text-violet-500",
+                  bg: "bg-violet-50",
                 },
                 {
                   label: "Make a Donation",
