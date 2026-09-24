@@ -111,12 +111,12 @@ const PROFILE_CHECKS = [
   { label: "Personal Info", key: (u) => !!(u?.phone && u?.gender) },
   {
     label: "Academic Details",
-    key: (u) => !!(u?.department && u?.graduationYear),
+    key: (u) => !!(u?.stream && u?.batchYear),
   },
-  { label: "Professional", key: (u) => !!(u?.currentCompany || u?.occupation) },
+  { label: "Professional", key: (u) => !!(u?.company || u?.occupation) },
   {
-    label: "Social Links",
-    key: (u) => !!(u?.social?.linkedin || u?.social?.website),
+    label: "Profile Picture",
+    key: (u) => !!(u?.currentPhoto),
   },
 ];
 
