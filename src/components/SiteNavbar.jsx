@@ -252,7 +252,36 @@ function SiteNavbar() {
 
         @media (max-width: 900px) {
           .ab-navbar { padding: 0 5vw; background: linear-gradient(180deg, rgba(7,29,56,0.9), rgba(11,33,61,0.9)); }
-          .ab-menu-toggle { display: inline-flex; }
+          .ab-menu-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border: 1px solid rgba(230, 239, 250, 0.5);
+            border-radius: 10px;
+            background: rgba(7, 29, 56, 0.72);
+            color: #f1f4f8;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+          }
+          .ab-navbar.ab-mobile-menu-open .ab-menu-toggle {
+            position: fixed;
+            top: 18px;
+            right: 5vw;
+            z-index: 1002;
+          }
+          .ab-navbar.ab-mobile-menu-open .ab-actions > *:not(.ab-menu-toggle) {
+            opacity: 0;
+            pointer-events: none;
+          }
+          .ab-menu-toggle:hover,
+          .ab-menu-toggle:focus-visible {
+            border-color: #f5d58a;
+            color: #f5d58a;
+            outline: none;
+          }
           .ab-user-name { display: none; }
           .ab-nav-links {
             position: fixed;
@@ -272,7 +301,7 @@ function SiteNavbar() {
         }
       `}</style>
 
-      <nav className={`ab-navbar${scrolled ? ' ab-condensed' : ''}`} aria-label="Main navigation">
+      <nav className={`ab-navbar${scrolled ? ' ab-condensed' : ''}${mobileMenuOpen ? ' ab-mobile-menu-open' : ''}`} aria-label="Main navigation">
         <Link className="ab-brand" to="/" aria-label="PSGPS Alumni home">
           <img src={psgpsLogo} alt="PSG Public Schools" />
           <span>PSGPS Alumni</span>
