@@ -827,7 +827,7 @@ const AlumniDirectory = () => {
                             className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
                           />
                         </div>
-                        {/* Department filter */}
+                        {/* Stream filter */}
                         <div className="relative">
                           <select
                             value={filterDept}

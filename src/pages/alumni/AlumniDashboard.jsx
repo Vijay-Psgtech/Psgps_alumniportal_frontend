@@ -147,13 +147,6 @@ const AlumniDashboard = () => {
       color: "text-indigo-600",
       bg: "bg-indigo-50",
     },
-    // {
-    //   label: "Departments",
-    //   value: stats.departmentStats,
-    //   icon: BookOpen,
-    //   color: "text-emerald-600",
-    //   bg: "bg-emerald-50",
-    // },
     {
       label: "Cities Covered",
       value: stats.topCities ? stats.topCities + " + " : 0,
@@ -331,10 +324,10 @@ const AlumniDashboard = () => {
 
               {/* Meta pills */}
               <div className="flex flex-wrap gap-2 mt-4">
-                {user?.department && (
+                {user?.stream && (
                   <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-300 bg-white/8 border border-white/10 px-3 py-1 rounded-full">
                     <BookOpen size={10} className="text-indigo-400" />{" "}
-                    {user.department}
+                    {`${user.stream} Stream`}
                   </span>
                 )}
                 {user?.batchYear && (
