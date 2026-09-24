@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import HeroBanner from './HeroBanner'
 import LeadershipSection from './LeadershipSection'
+import Notablealumni from '../sections/Notablealumni'
 import { albumsAPI, eventsAPI, API_BASE } from '../services/api'
 import { alumniEvents, galleryAlbums } from '../content/data/EventsGalleryData'
 import { CalendarDays, Globe2, Handshake, MapPin, Search, UsersRound } from 'lucide-react'
@@ -165,6 +166,7 @@ function HomePage() {
     <main className="site-shell">
       <HeroBanner />
       <LeadershipSection />
+      <Notablealumni />
       {/*Event & album section */}
       <section className="welcome-section" id="about"><div><span className="section-kicker">Our community</span><h2>One school.<br /><em>Many journeys.</em></h2></div><p>From the classrooms of PSG Public Schools to every corner of the world, our alumni carry a shared spirit of curiosity, character, and contribution. Stay connected to the people and place that shaped you.</p><a className="text-link" href="#community">Discover our story <span aria-hidden="true">&#8594;</span></a></section>
       <section className="module-grid" id="community">

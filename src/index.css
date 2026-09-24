@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+@keyframes notable-alumni-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 0.75rem)); }
+}
+
+@utility animate-notable-alumni-scroll {
+  animation: notable-alumni-scroll 72s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-notable-alumni-scroll { animation-play-state: paused; }
+}
+
 :root {
   --navy: #071d38;
   --navy-2: #0d2d52;
