@@ -20,6 +20,7 @@ const AdminReports = () => {
   const [alumniData, setAlumniData] = useState([]);
   const [alumniList, setAlumniList] = useState([]);
   const [departmentData, setDepartmentData] = useState([]);
+  const [streamData, setStreamData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   usePageTitle("Admin Reports");
@@ -65,6 +66,21 @@ const AdminReports = () => {
     fetchAlumniDataByDepartment();
   }, []);
 
+  useEffect(() => {
+    const fetchAlumniDataByStream = async () => {
+      try {
+        const res = await adminReportsAPI.fetchAlumniDataByStream();
+        const data = res?.data?.data;
+        if (data) {
+          setStreamData(data.countByStream || []);
+        }
+      } catch (fetchError) {
+        console.error("Failed to load alumni data by stream:", fetchError);
+      }
+    };
+    fetchAlumniDataByStream();
+  },[]);
+
   const chartData = useMemo(() => {
     return (alumniData || [])
       .slice()
@@ -76,7 +92,7 @@ const AdminReports = () => {
   }, [alumniList]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 mt-16 p-4 sm:p-6 lg:p-24">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 mt-12 p-4 sm:p-6 lg:p-24">
       <header className="mb-8">
         <h1 className="text-2xl sm:text-3xl font-semibold text-slate-800">
           Admin Reports
@@ -165,13 +181,13 @@ const AdminReports = () => {
 
             
 
-            <div className="rounded-xl bg-white p-6 shadow-sm border border-slate-200">
+            {/* <div className="rounded-xl bg-white p-6 shadow-sm border border-slate-200">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-lg font-semibold text-slate-800">
-                  Alumni by Department
+                  Alumni by Stream
                 </h2>
                 <p className="mt-2 sm:mt-0 text-sm text-slate-500">
-                  Distribution of alumni across departments
+                  Distribution of alumni across stream
                 </p>
               </div>
 
@@ -179,22 +195,108 @@ const AdminReports = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={departmentData}
+                      data={streamData}
                       cx="50%"
                       cy="50%"
                       labelLine={true}
                       outerRadius={80}
                       fill="#8884d8"
                       dataKey="count"
-                      label={({ department, percent }) => `${department} ${(percent * 100).toFixed(0)}%`}
+                      label={({ stream, percent }) => `${stream} ${(percent * 100).toFixed(0)}%`}
                     >
-                      {departmentData.map((entry, index) => (
+                      {streamData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={['#0088FE', '#00C49F', '#FFBB28', '#FF8042'][index % 4]} />
                       ))}
                     </Pie>
                     <Tooltip formatter={(value) => formatNumber(value)} />
                   </PieChart>
                 </ResponsiveContainer>
+              </div>
+            </div> */}
+
+             <div className="rounded-xl bg-white p-6 shadow-sm border border-slate-200">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <h2 className="text-lg font-semibold text-slate-800">
+                  Alumni by Stream
+                </h2>
+                <p className="mt-2 sm:mt-0 text-sm text-slate-500">
+                  Distribution of alumni across streams
+                </p>
+              </div>
+
+              <div className="mt-6 flex flex-col lg:flex-row gap-6">
+                <div className="h-64 w-full lg:w-1/2">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={streamData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={60}
+                        outerRadius={100}
+                        fill="#8884d8"
+                        dataKey="count"
+                        label={false}
+                      >
+                        {streamData.map((entry, index) => {
+                          const colors = [
+                            "#3b82f6", "#10b981", "#f59e0b", "#ef4444",
+                            "#06b6d4", "#6366f1", "#84cc16", "#d946ef"
+                          ];
+                          return (
+                            <Cell 
+                              key={`cell-${index}`} 
+                              fill={colors[index % colors.length]}
+                            />
+                          );
+                        })}
+                      </Pie>
+                      <Tooltip 
+                        formatter={(value) => [formatNumber(value), "Count"]}
+                        contentStyle={{
+                          backgroundColor: "#1e293b",
+                          border: "none",
+                          borderRadius: "8px",
+                          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                          color: "#f1f5f9"
+                        }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+
+                <div className="w-full lg:w-1/2 flex flex-col justify-center">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-64 overflow-y-auto pr-2">
+                    {streamData.map((s, index) => {
+                      const colors = [
+                        "#3b82f6", "#10b981", "#f59e0b", "#ef4444",
+                        "#8b5cf6", "#ec4899", "#14b8a6", "#f97316",
+                        "#06b6d4", "#6366f1", "#84cc16", "#d946ef"
+                      ];
+                      const total = streamData.reduce((sum, d) => sum + d.count, 0);
+                      const percentage = ((s.count / total) * 100).toFixed(1);
+                      return (
+                        <div 
+                          key={`legend-${index}`}
+                          className="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-50 transition-colors"
+                        >
+                          <div 
+                            className="w-3 h-3 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: colors[index % colors.length] }}
+                          ></div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs font-medium text-slate-700 truncate">
+                              {s.stream}
+                            </p>
+                            <p className="text-xs text-slate-500">
+                              {formatNumber(s.count)} ({percentage}%)
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -215,7 +317,7 @@ const AdminReports = () => {
                       <tr>
                         <th className="py-3 px-4 border-b">Name</th>
                         <th className="py-3 px-4 border-b">Batch</th>
-                        <th className="py-3 px-4 border-b">Branch</th>
+                        <th className="py-3 px-4 border-b">Stream</th>
                         <th className="py-3 px-4 border-b">Email</th>
                       </tr>
                     </thead>
@@ -228,8 +330,8 @@ const AdminReports = () => {
                           <td className="py-3 px-4 border-b flex items-center gap-3 font-medium">
                             <img
                               src={
-                                alumni.profileImage
-                                  ? `${API_BASE}/${alumni.profileImage}`
+                                alumni?.currentPhoto
+                                  ? `${API_BASE}/uploads/${alumni.currentPhoto}`
                                   : "/default-avatar.png"
                               }
                               alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
@@ -241,7 +343,7 @@ const AdminReports = () => {
                             {alumni.batchYear || "—"}
                           </td>
                           <td className="py-3 px-4 border-b">
-                            {alumni.department || "—"}
+                            {alumni.stream || "—"}
                           </td>
                           <td className="py-3 px-4 border-b">
                             {alumni.email || "—"}
@@ -259,9 +361,9 @@ const AdminReports = () => {
                       className="rounded-xl border border-slate-200 bg-slate-50 p-4"
                     >
                       <div className="flex items-center gap-3">
-                        {alumni.files?.currentPhoto ? (
+                        {alumni?.currentPhoto ? (
                           <img
-                            src={`${API_BASE}/uploads/${alumni.files?.currentPhoto}`}
+                            src={`${API_BASE}/uploads/${alumni?.currentPhoto}`}
                             alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
                             className="w-10 h-10 rounded-full border object-cover"
                           />
@@ -289,8 +391,8 @@ const AdminReports = () => {
                           <p>{alumni.batchYear || "—"}</p>
                         </div>
                         <div className="rounded-lg bg-white p-2 shadow-sm">
-                          <p className="font-medium text-slate-700">Branch</p>
-                          <p>{alumni.department || "—"}</p>
+                          <p className="font-medium text-slate-700">Stream</p>
+                          <p>{alumni.stream || "—"}</p>
                         </div>
                       </div>
                     </div>

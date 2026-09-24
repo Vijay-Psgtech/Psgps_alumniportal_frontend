@@ -587,6 +587,11 @@ export const adminReportsAPI = {
     console.log("📊 Fetching alumni data by department...");
     return api.get("/reports/alumni-data-by-department");
   },
+  fetchAlumniDataByStream: () => {
+    console.log("📊 Fetching alumni data by stream...");
+    return api.get("/reports/alumni-data-by-stream");
+  }
+
 };
 
 // ── ✅ Notification API ───────────────────────────────────────────────
