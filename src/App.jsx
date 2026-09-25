@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import SiteNavbar from "./components/SiteNavbar";
 import Footer from "./components/Footer";
+import BacktoTop from "./components/BacktoTop";
 
 // ═══════════════════════════════════════════════════════════════════════
 // PUBLIC PAGES
@@ -451,6 +452,7 @@ export default function App() {
 
       <>
         <SiteNavbar />
+        <BacktoTop />
         <ScrolltoTop />
         <Suspense fallback={<AppLoader />}>
           <div className="app-wrapper">
