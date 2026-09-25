@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import HeroBanner from './HeroBanner'
-import LeadershipSection from './LeadershipSection'
+import LeadershipSection from '../sections/LeadershipSection'
 import Notablealumni from '../sections/Notablealumni'
 import { albumsAPI, eventsAPI, API_BASE } from '../services/api'
 import { alumniEvents, galleryAlbums } from '../content/data/EventsGalleryData'
