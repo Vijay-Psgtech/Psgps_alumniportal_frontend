@@ -34,7 +34,6 @@ import usePageTitle from "../../hooks/usePageTitle";
 import { EventsTab } from "../../components/admin/EventsTab";
 import { AlbumsTab } from "../../components/admin/AlbumsTab";
 import { AlumniTab } from "../../components/admin/AlumniTab";
-import { DonationsTab } from "../../components/admin/DonationsTab";
 
 import { AdminUsersTab } from "../../components/admin/AdminUsersTab";
 // import NotificationManager from "../../pages/Notificationmanager";
