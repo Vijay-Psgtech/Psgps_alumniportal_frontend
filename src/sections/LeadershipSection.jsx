@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import gopalakrishnanImage from '../assets/Patrons/trustee.jpg'
+import gopalakrishnanImage from '../assets/Patrons/trustee.JPG'
 import alaguImage from '../assets/Patrons/President.jpg'
 import { motion } from 'framer-motion'
 
