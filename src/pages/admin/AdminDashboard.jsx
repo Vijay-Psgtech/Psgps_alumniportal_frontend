@@ -37,7 +37,7 @@ import { AlumniTab } from "../../components/admin/AlumniTab";
 
 import { AdminUsersTab } from "../../components/admin/AdminUsersTab";
 
-import DonationHistory from "../../components/admin/DonationHistory";
+import DonationHistory from "../../components/admin/Donationhistory";
 import CampaignCreator from "../../components/admin/Campaigncreator";
 import CampaignResponsesManager from "../../components/admin/Campaignresponsesmanager";
 
