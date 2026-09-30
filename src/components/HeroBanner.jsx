@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Users, Globe2, CalendarDays, ArrowRight, ChevronDown, Sparkles } from "lucide-react";
 import { motion, animate, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-import schoolImage from "../assets/SCHOOL BUILDING PICTURE.png";
+import schoolImage from "../assets/school_building.png";
 import psgpsLogo from "../assets/PSGPS LOGO IN COREL.jpg";
 
 const container = {
@@ -89,7 +89,8 @@ export default function AlumniBanner({
           inset: 0;
           background-image: var(--ab-hero-image);
           background-size: cover;
-          background-position: center 35%;
+          background-position: center;
+          background-repeat: no-repeat;
           z-index: 0;
         }
         @media (prefers-reduced-motion: no-preference) {
