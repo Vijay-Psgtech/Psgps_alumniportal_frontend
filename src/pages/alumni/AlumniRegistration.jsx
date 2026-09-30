@@ -18,9 +18,10 @@ import { useAuth } from "../../context/AuthContext";
 import usePageTitle from "../../hooks/usePageTitle";
 
 const CLASSES = ["KG", ...Array.from({ length: 12 }, (_, index) => String(index + 1))];
+const currentYear = new Date().getFullYear();
 const BATCHES = Array.from({ length: 75 }, (_, index) => {
-  const start = new Date().getFullYear() - index;
-  return `${start - 2}-${start}`;
+  const start = currentYear - index;
+  return `${start}-${start + 1}`;
 });
 const STREAMS = ["Science", "Management"];
 
