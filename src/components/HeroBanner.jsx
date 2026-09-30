@@ -1,5 +1,5 @@
 // AlumniBanner.jsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Users, Globe2, CalendarDays, ArrowRight, ChevronDown, Sparkles } from "lucide-react";
 import { motion, animate, useMotionValue, useSpring, useTransform } from "framer-motion";
 
@@ -66,7 +66,6 @@ export default function AlumniBanner({
     <section
       ref={heroRef}
       className="ab-hero"
-      style={{ "--ab-hero-image": `url(${imageUrl})` }}
       onPointerMove={handlePointerMove}
     >
       <style>{`
@@ -87,10 +86,10 @@ export default function AlumniBanner({
         .ab-hero-bg {
           position: absolute;
           inset: 0;
-          background-image: var(--ab-hero-image);
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
           z-index: 0;
         }
         @media (prefers-reduced-motion: no-preference) {
@@ -311,7 +310,7 @@ export default function AlumniBanner({
           font-size: 26px; font-weight: 700; color: #fff;
           display: flex; align-items: baseline; gap: 3px;
         }
-        .ab-stat strong span { font-size: 15px; color: var(--gold-soft, #f5dc97); }
+        .ab-stat strong span:last-child { font-size: 15px; color: var(--gold-soft, #f5dc97); }
         .ab-stat small {
           font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
           color: rgba(230, 238, 250, 0.7); font-weight: 700;
@@ -418,7 +417,7 @@ export default function AlumniBanner({
         }
       `}</style>
 
-      <div className="ab-hero-bg" aria-hidden="true" />
+      <img className="ab-hero-bg" src={imageUrl} alt="" aria-hidden="true" loading="eager" fetchPriority="high" decoding="async" />
       <div className="ab-hero-overlay" aria-hidden="true" />
 
       <motion.div
@@ -517,14 +516,16 @@ export default function AlumniBanner({
 }
 
 function Stat({ icon: Icon, value, suffix, label }) {
-  const [display, setDisplay] = useState(0);
+  const displayRef = useRef(null);
 
   useEffect(() => {
     const controls = animate(0, value, {
       duration: 1.4,
       delay: 0.5,
       ease: [0.22, 1, 0.36, 1],
-      onUpdate: (v) => setDisplay(Math.round(v)),
+      onUpdate: (v) => {
+        if (displayRef.current) displayRef.current.textContent = String(Math.round(v));
+      },
     });
     return () => controls.stop();
   }, [value]);
@@ -539,7 +540,7 @@ function Stat({ icon: Icon, value, suffix, label }) {
         <Icon size={13} strokeWidth={2} aria-hidden="true" />
       </span>
       <strong>
-        {display}
+        <span ref={displayRef}>0</span>
         <span>{suffix}</span>
       </strong>
       <small>{label}</small>

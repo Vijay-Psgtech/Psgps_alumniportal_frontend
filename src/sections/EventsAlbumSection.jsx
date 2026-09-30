@@ -171,7 +171,7 @@ const EventsAlbumSection = () => {
                 </article>
                 <article className="module-card story-card feature-animated" id="stories" key={`featured-story-${featuredAlbum?.id || featuredAlbumTitle}`}>
                     <span className="section-kicker">Gallery spotlight</span>
-                    {featuredAlbumCover ? <img className="module-card-image" src={featuredAlbumCover} alt={featuredAlbumTitle} /> : null}
+                    {featuredAlbumCover ? <img className="module-card-image" src={featuredAlbumCover} alt={featuredAlbumTitle} loading="lazy" decoding="async" /> : null}
                     <h3>{featuredAlbumTitle}</h3>
                     <p>{featuredAlbum?.description || 'Moments that keep our alumni story alive.'}</p>
                     <Link to={featuredAlbumLink}>Explore gallery <span aria-hidden="true">&#8594;</span></Link>
