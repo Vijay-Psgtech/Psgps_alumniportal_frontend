@@ -17,11 +17,11 @@ import { authAPI } from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
 import usePageTitle from "../../hooks/usePageTitle";
 
+const CLASSES = ["KG", ...Array.from({ length: 12 }, (_, index) => String(index + 1))];
 const BATCHES = Array.from({ length: 75 }, (_, index) => {
   const start = new Date().getFullYear() - index;
   return `${start - 2}-${start}`;
 });
-
 const STREAMS = ["Science", "Management"];
 
 const initialForm = {
@@ -30,6 +30,8 @@ const initialForm = {
   gender: "",
   contactNumber: "",
   batchYear: "",
+  classFrom: "",
+  classTo: "",
   stream: "",
   occupation: "",
   company: "",
@@ -87,6 +89,7 @@ const AlumniRegistration = () => {
   const [registered, setRegistered] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const requiresStream = ["11", "12"].includes(form.classTo);
 
   usePageTitle("Alumni Registration");
 
@@ -124,6 +127,7 @@ const AlumniRegistration = () => {
       ...current,
       [name]: value,
       ...(name === "resCity" ? { resCoordinates: [] } : {}),
+      ...(name === "classTo" && !["11", "12"].includes(value) ? { stream: "" } : {}),
     }));
     setErrors((current) => ({ ...current, [name]: undefined }));
   };
@@ -153,8 +157,13 @@ const AlumniRegistration = () => {
     if (!/^\d{10}$/.test(form.contactNumber.replace(/\s/g, ""))) {
       nextErrors.contactNumber = "Enter a valid 10-digit number";
     }
-    if (!form.batchYear) nextErrors.batchYear = "Select your batch";
-    if (!form.stream) nextErrors.stream = "Select your stream";
+    if (!form.batchYear) nextErrors.batchYear = "Select your batch year";
+    if (!form.classFrom) nextErrors.classFrom = "Select the starting class";
+    if (!form.classTo) nextErrors.classTo = "Select the ending class";
+    if (form.classFrom && form.classTo && CLASSES.indexOf(form.classFrom) > CLASSES.indexOf(form.classTo)) {
+      nextErrors.classTo = "Ending class must be the same as or higher than starting class";
+    }
+    if (requiresStream && !form.stream) nextErrors.stream = "Select your stream";
     if (!form.occupation.trim()) nextErrors.occupation = "Occupation is required";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       nextErrors.email = "Enter a valid email address";
@@ -185,7 +194,9 @@ const AlumniRegistration = () => {
       formData.append("gender", form.gender);
       formData.append("phone", form.contactNumber.trim());
       formData.append("batchYear", form.batchYear);
-      formData.append("stream", form.stream);
+      formData.append("classFrom", form.classFrom);
+      formData.append("classTo", form.classTo);
+      if (requiresStream) formData.append("stream", form.stream);
       formData.append("occupation", form.occupation.trim());
       formData.append("company", form.company.trim());
       formData.append("email", form.email.toLowerCase().trim());
@@ -319,18 +330,32 @@ const AlumniRegistration = () => {
                 <span className="h-px flex-1 bg-slate-200" />
               </div>
               <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Batch" required error={errors.batchYear}>
+                <Field label="Batch year" required error={errors.batchYear}>
                   <Select name="batchYear" value={form.batchYear} onChange={updateField} error={errors.batchYear}>
-                    <option value="">Select batch</option>
+                    <option value="">Select batch year</option>
                     {BATCHES.map((batch) => <option key={batch}>{batch}</option>)}
                   </Select>
                 </Field>
-                <Field label="Stream" required error={errors.stream}>
-                  <Select name="stream" value={form.stream} onChange={updateField} error={errors.stream}>
-                    <option value="">Select stream</option>
-                    {STREAMS.map((stream) => <option key={stream}>{stream}</option>)}
+                <Field label="Class from" required error={errors.classFrom}>
+                  <Select name="classFrom" value={form.classFrom} onChange={updateField} error={errors.classFrom}>
+                    <option value="">Select class</option>
+                    {CLASSES.map((classLevel) => <option key={classLevel}>{classLevel}</option>)}
                   </Select>
                 </Field>
+                <Field label="Class to" required error={errors.classTo}>
+                  <Select name="classTo" value={form.classTo} onChange={updateField} error={errors.classTo}>
+                    <option value="">Select class</option>
+                    {CLASSES.map((classLevel) => <option key={classLevel}>{classLevel}</option>)}
+                  </Select>
+                </Field>
+                {requiresStream && (
+                  <Field label="Stream" required error={errors.stream}>
+                    <Select name="stream" value={form.stream} onChange={updateField} error={errors.stream}>
+                      <option value="">Select stream</option>
+                      {STREAMS.map((stream) => <option key={stream}>{stream}</option>)}
+                    </Select>
+                  </Field>
+                )}
                 <Field label="Occupation" required error={errors.occupation} >
                   <input name="occupation" value={form.occupation} onChange={updateField} placeholder="e.g. Software Engineer" className={inputClass(errors.occupation)} />
                 </Field>
