@@ -249,8 +249,8 @@ const AlumniRegistration = () => {
   }
 
   return (
-    <main className="min-h-screen bg-[#eef4fb] px-4 py-8 sm:px-6 lg:px-10 lg:py-14">
-      <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-3xl bg-white shadow-2xl shadow-blue-900/10 lg:grid-cols-[0.82fr_1.5fr]">
+    <main className="min-h-screen bg-[#eef4fb] px-4 py-8 sm:px-6 lg:px-10 lg:py-20">
+      <div className="mx-auto grid w-full max-w-7xl overflow-hidden rounded-3xl bg-white shadow-2xl shadow-blue-900/10 lg:grid-cols-[0.82fr_1.5fr]">
         <aside className="relative overflow-hidden bg-[#073b72] px-7 py-10 text-white sm:px-10 lg:px-12 lg:py-14">
           <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full border-[28px] border-white/10" />
           <div className="relative flex h-full flex-col">
