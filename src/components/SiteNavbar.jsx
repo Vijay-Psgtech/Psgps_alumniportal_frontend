@@ -94,7 +94,7 @@ function SiteNavbar() {
         }
 
         .ab-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .ab-brand img { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+        .ab-brand img { width: 50px; height: 50px; object-fit: contain; border-radius: 8px; }
         .ab-brand span {
           font-family: var(--font-display, serif);
           font-size: 19px;
