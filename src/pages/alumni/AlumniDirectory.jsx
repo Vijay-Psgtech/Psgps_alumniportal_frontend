@@ -255,6 +255,9 @@ const AlumniCard = ({ alumni, apiBase, index, onSelect }) => {
   const roleLabel = alumni.occupation || null;
 
   const companyLabel = alumni.company || alumni.industry || null;
+  const classesAttended = alumni.classFrom && alumni.classTo
+    ? `${alumni.classFrom}–${alumni.classTo}`
+    : "Not provided";
 
   const paidMembership = alumni.membershipStatus === "ACTIVE";
 
@@ -396,6 +399,11 @@ const AlumniCard = ({ alumni, apiBase, index, onSelect }) => {
             icon={Briefcase}
             label="Designation"
             value={alumni.occupation}
+          />
+          <StatCell
+            icon={BookOpen}
+            label="Classes attended"
+            value={classesAttended}
           />
           {alumni.batchYear && (
             <StatCell

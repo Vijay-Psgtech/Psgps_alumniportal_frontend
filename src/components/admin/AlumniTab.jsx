@@ -4,6 +4,7 @@ import {
   Clock,
   CheckCircle,
   GraduationCap,
+  BookOpen,
   Building2,
   Mail,
   ExternalLink,
@@ -281,6 +282,13 @@ export const AlumniTab = ({
                         <span className="text-gray-400">•</span>
                         <Calendar size={14} className="text-gray-400" />
                         <span className="text-gray-600">{a.batchYear}</span>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-sm">
+                        <BookOpen size={14} className="text-gray-400" />
+                        <span className="text-gray-600">
+                          Classes attended: {a.classFrom && a.classTo ? `${a.classFrom}–${a.classTo}` : "Not provided"}
+                        </span>
                       </div>
 
                       {a.occupation && (

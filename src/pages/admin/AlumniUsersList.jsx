@@ -6,6 +6,7 @@ import {
   Phone,
   MapPin,
   Calendar,
+  BookOpen,
   Building,
   Briefcase,
   Linkedin,
@@ -521,6 +522,12 @@ const AlumniUsersList = () => {
                       <Calendar size={14} className="text-gray-400" />
                       <span className="text-gray-600">{alumni.batchYear}</span>
                     </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <BookOpen size={14} className="text-gray-400" />
+                      <span className="text-gray-600">
+                        Classes attended: {alumni.classFrom && alumni.classTo ? `${alumni.classFrom}–${alumni.classTo}` : "Not provided"}
+                      </span>
+                    </div>
 
                     {alumni.occupation && (
                       <div className="flex items-center gap-2 text-sm">
@@ -657,7 +664,7 @@ const AlumniUsersList = () => {
                         Contact
                       </th>
                       <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-600">
-                        Stream & Year
+                        Alumni details
                       </th>
                       <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-600">
                         Company
@@ -722,6 +729,9 @@ const AlumniUsersList = () => {
                             <p className="font-medium">{alumni.stream}</p>
                             <p className="text-xs">
                               {alumni.batchYear}
+                            </p>
+                            <p className="text-xs">
+                              Classes attended: {alumni.classFrom && alumni.classTo ? `${alumni.classFrom}–${alumni.classTo}` : "Not provided"}
                             </p>
                           </div>
                         </td>
@@ -946,6 +956,7 @@ const AlumniUsersList = () => {
                             <p className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">Academic</p>
                             <div className="mt-3 space-y-1 text-sm text-slate-800">
                               <p className="truncate">Stream: {selectedItem.stream || "-"}</p>
+                              <p>Classes attended: {selectedItem.classFrom && selectedItem.classTo ? `${selectedItem.classFrom}–${selectedItem.classTo}` : "Not provided"}</p>
                             </div>
                           </div>
 
