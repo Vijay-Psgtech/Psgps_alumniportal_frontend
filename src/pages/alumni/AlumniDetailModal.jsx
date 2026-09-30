@@ -243,7 +243,7 @@ const AlumniDetailModal = ({ alumni, isOpen, onClose, apiBase, viewer }) => {
                   marginTop: 4,
                 }}
               >
-                {`${alumni.stream} Stream`} • {alumni.batchYear}
+                {[alumni.stream && `${alumni.stream} Stream`, alumni.batchYear].filter(Boolean).join(" • ")}
               </div>
 
               {jobLine && (
@@ -283,6 +283,11 @@ const AlumniDetailModal = ({ alumni, isOpen, onClose, apiBase, viewer }) => {
                 icon={Hash}
                 label="Batch Year"
                 value={alumni.batchYear}
+              />
+              <InfoRow
+                icon={BookOpen}
+                label="Classes attended"
+                value={alumni.classFrom && alumni.classTo ? `${alumni.classFrom}–${alumni.classTo}` : "Not provided"}
               />
             </Section>
 

@@ -758,6 +758,7 @@ const AdminDashboard = () => {
                             <p className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">Academic</p>
                             <div className="mt-3 space-y-1 text-sm text-slate-800">
                               <p className="truncate">Stream: {selectedItem.stream || "-"}</p>
+                              <p>Classes attended: {selectedItem.classFrom && selectedItem.classTo ? `${selectedItem.classFrom}–${selectedItem.classTo}` : "Not provided"}</p>
                             </div>
                           </div>
 
