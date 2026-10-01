@@ -362,6 +362,14 @@ const AdminReports = () => {
                         <p>{alumni.batchYear || "—"}</p>
                       </div>
                       <div className="rounded-lg bg-white p-2 shadow-sm">
+                        <p className="font-medium text-slate-700">Class Attended</p>
+                        <p>
+                          {alumni.classFrom && alumni.classTo
+                            ? `${alumni.classFrom} - ${alumni.classTo}`
+                            : "—"}
+                        </p>
+                      </div>
+                      <div className="rounded-lg bg-white p-2 shadow-sm">
                         <p className="font-medium text-slate-700">Stream</p>
                         <p>{alumni.stream || "—"}</p>
                       </div>
