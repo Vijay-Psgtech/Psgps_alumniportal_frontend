@@ -79,7 +79,7 @@ const AdminReports = () => {
       }
     };
     fetchAlumniDataByStream();
-  },[]);
+  }, []);
 
   const chartData = useMemo(() => {
     return (alumniData || [])
@@ -179,42 +179,7 @@ const AdminReports = () => {
               </div>
             </div>
 
-            
-
-            {/* <div className="rounded-xl bg-white p-6 shadow-sm border border-slate-200">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                <h2 className="text-lg font-semibold text-slate-800">
-                  Alumni by Stream
-                </h2>
-                <p className="mt-2 sm:mt-0 text-sm text-slate-500">
-                  Distribution of alumni across stream
-                </p>
-              </div>
-
-              <div className="mt-6 h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={streamData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={true}
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="count"
-                      label={({ stream, percent }) => `${stream} ${(percent * 100).toFixed(0)}%`}
-                    >
-                      {streamData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={['#0088FE', '#00C49F', '#FFBB28', '#FF8042'][index % 4]} />
-                      ))}
-                    </Pie>
-                    <Tooltip formatter={(value) => formatNumber(value)} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </div> */}
-
-             <div className="rounded-xl bg-white p-6 shadow-sm border border-slate-200">
+            <div className="rounded-xl bg-white p-6 shadow-sm border border-slate-200">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-lg font-semibold text-slate-800">
                   Alumni by Stream
@@ -244,14 +209,14 @@ const AdminReports = () => {
                             "#06b6d4", "#6366f1", "#84cc16", "#d946ef"
                           ];
                           return (
-                            <Cell 
-                              key={`cell-${index}`} 
+                            <Cell
+                              key={`cell-${index}`}
                               fill={colors[index % colors.length]}
                             />
                           );
                         })}
                       </Pie>
-                      <Tooltip 
+                      <Tooltip
                         formatter={(value) => [formatNumber(value), "Count"]}
                         contentStyle={{
                           backgroundColor: "#1e293b",
@@ -276,17 +241,17 @@ const AdminReports = () => {
                       const total = streamData.reduce((sum, d) => sum + d.count, 0);
                       const percentage = ((s.count / total) * 100).toFixed(1);
                       return (
-                        <div 
+                        <div
                           key={`legend-${index}`}
                           className="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-50 transition-colors"
                         >
-                          <div 
+                          <div
                             className="w-3 h-3 rounded-full flex-shrink-0"
                             style={{ backgroundColor: colors[index % colors.length] }}
                           ></div>
                           <div className="flex-1 min-w-0">
                             <p className="text-xs font-medium text-slate-700 truncate">
-                              {s.stream}
+                              {s.stream || "Other"}
                             </p>
                             <p className="text-xs text-slate-500">
                               {formatNumber(s.count)} ({percentage}%)
@@ -301,105 +266,111 @@ const AdminReports = () => {
             </div>
           </section>
           <div className="rounded-xl bg-white p-6 shadow-sm border border-slate-200">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                <h2 className="text-lg font-semibold text-slate-800">
-                  Recently Registered Alumni
-                </h2>
-                <p className="mt-2 sm:mt-0 text-sm text-slate-500">
-                  Showing the most recent records
-                </p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+              <h2 className="text-lg font-semibold text-slate-800">
+                Recently Registered Alumni
+              </h2>
+              <p className="mt-2 sm:mt-0 text-sm text-slate-500">
+                Showing the most recent records
+              </p>
+            </div>
+
+            <div className="mt-6">
+              <div className="hidden md:block overflow-x-auto">
+                <table className="min-w-full text-sm text-left border border-gray-200">
+                  <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
+                    <tr>
+                      <th className="py-3 px-4 border-b">Name</th>
+                      <th className="py-3 px-4 border-b">Batch</th>
+                      <th className="py-3 px-4 border-b">Class Attended</th>
+                      <th className="py-3 px-4 border-b">Stream</th>
+                      <th className="py-3 px-4 border-b">Email</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-gray-700">
+                    {recentAlumni.map((alumni) => (
+                      <tr
+                        key={alumni._id || alumni.email}
+                        className="hover:bg-gray-50"
+                      >
+                        <td className="py-3 px-4 border-b flex items-center gap-3 font-medium">
+                          <img
+                            src={
+                              alumni?.currentPhoto
+                                ? `${API_BASE}/uploads/${alumni.currentPhoto}`
+                                : "/default-avatar.png"
+                            }
+                            alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
+                            className="w-8 h-8 rounded-full border object-cover"
+                          />
+                          {alumni.firstName} {alumni.lastName || ""}
+                        </td>
+                        <td className="py-3 px-4 border-b">
+                          {alumni.batchYear || "—"}
+                        </td>
+                        <td className="py-3 px-4 border-b">
+                          {alumni.classFrom && alumni.classTo
+                            ? `${alumni.classFrom} - ${alumni.classTo}`
+                            : "—"}
+                        </td>
+                        <td className="py-3 px-4 border-b">
+                          {alumni.stream || "—"}
+                        </td>
+                        <td className="py-3 px-4 border-b">
+                          {alumni.email || "—"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
 
-              <div className="mt-6">
-                <div className="hidden md:block overflow-x-auto">
-                  <table className="min-w-full text-sm text-left border border-gray-200">
-                    <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
-                      <tr>
-                        <th className="py-3 px-4 border-b">Name</th>
-                        <th className="py-3 px-4 border-b">Batch</th>
-                        <th className="py-3 px-4 border-b">Stream</th>
-                        <th className="py-3 px-4 border-b">Email</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-gray-700">
-                      {recentAlumni.map((alumni) => (
-                        <tr
-                          key={alumni._id || alumni.email}
-                          className="hover:bg-gray-50"
-                        >
-                          <td className="py-3 px-4 border-b flex items-center gap-3 font-medium">
-                            <img
-                              src={
-                                alumni?.currentPhoto
-                                  ? `${API_BASE}/uploads/${alumni.currentPhoto}`
-                                  : "/default-avatar.png"
-                              }
-                              alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
-                              className="w-8 h-8 rounded-full border object-cover"
-                            />
-                            {alumni.firstName} {alumni.lastName || ""}
-                          </td>
-                          <td className="py-3 px-4 border-b">
-                            {alumni.batchYear || "—"}
-                          </td>
-                          <td className="py-3 px-4 border-b">
-                            {alumni.stream || "—"}
-                          </td>
-                          <td className="py-3 px-4 border-b">
-                            {alumni.email || "—"}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+              <div className="space-y-4 md:hidden">
+                {recentAlumni.map((alumni) => (
+                  <div
+                    key={alumni._id || alumni.email}
+                    className="rounded-xl border border-slate-200 bg-slate-50 p-4"
+                  >
+                    <div className="flex items-center gap-3">
+                      {alumni?.currentPhoto ? (
+                        <img
+                          src={`${API_BASE}/uploads/${alumni?.currentPhoto}`}
+                          alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
+                          className="w-10 h-10 rounded-full border object-cover"
+                        />
+                      ) : (
+                        <img
+                          src="/default-avatar.png"
+                          alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
+                          className="w-10 h-10 rounded-full border object-cover"
+                        />
+                      )}
 
-                <div className="space-y-4 md:hidden">
-                  {recentAlumni.map((alumni) => (
-                    <div
-                      key={alumni._id || alumni.email}
-                      className="rounded-xl border border-slate-200 bg-slate-50 p-4"
-                    >
-                      <div className="flex items-center gap-3">
-                        {alumni?.currentPhoto ? (
-                          <img
-                            src={`${API_BASE}/uploads/${alumni?.currentPhoto}`}
-                            alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
-                            className="w-10 h-10 rounded-full border object-cover"
-                          />
-                        ) : (
-                          <img
-                            src="/default-avatar.png"
-                            alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
-                            className="w-10 h-10 rounded-full border object-cover"
-                          />
-                        )}
-
-                        <div>
-                          <p className="text-sm font-semibold text-slate-800">
-                            {alumni.firstName} {alumni.lastName || ""}
-                          </p>
-                          <p className="text-xs text-slate-500">
-                            {alumni.email || "—"}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 grid grid-cols-2 gap-3 text-xs text-slate-600">
-                        <div className="rounded-lg bg-white p-2 shadow-sm">
-                          <p className="font-medium text-slate-700">Batch</p>
-                          <p>{alumni.batchYear || "—"}</p>
-                        </div>
-                        <div className="rounded-lg bg-white p-2 shadow-sm">
-                          <p className="font-medium text-slate-700">Stream</p>
-                          <p>{alumni.stream || "—"}</p>
-                        </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">
+                          {alumni.firstName} {alumni.lastName || ""}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          {alumni.email || "—"}
+                        </p>
                       </div>
                     </div>
-                  ))}
-                </div>
+
+                    <div className="mt-4 grid grid-cols-2 gap-3 text-xs text-slate-600">
+                      <div className="rounded-lg bg-white p-2 shadow-sm">
+                        <p className="font-medium text-slate-700">Batch</p>
+                        <p>{alumni.batchYear || "—"}</p>
+                      </div>
+                      <div className="rounded-lg bg-white p-2 shadow-sm">
+                        <p className="font-medium text-slate-700">Stream</p>
+                        <p>{alumni.stream || "—"}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
+          </div>
         </>
       )}
     </div>

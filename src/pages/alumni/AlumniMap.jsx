@@ -20,6 +20,8 @@ import {
   CheckCircle,
   AlertCircle,
   Users,
+  BookOpen,
+  Calendar,
 } from "lucide-react";
 import ImageModal from "../../components/ImageModal";
 import { useAuth } from "../../context/AuthContext";
@@ -326,13 +328,19 @@ const AlumniMap = () => {
                     <div className="flex flex-wrap gap-2 mt-4">
                       {selectedAlumni.batchYear && (
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-white border border-blue-100 text-blue-600 shadow-sm">
-                          <GraduationCap size={11} /> Class of{" "}
+                          <Calendar size={11} /> Class of{" "}
                           {selectedAlumni.batchYear}
                         </span>
                       )}
                       {selectedAlumni.stream && (
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-white border border-blue-100 text-blue-600 shadow-sm">
-                          {`${selectedAlumni.stream} Stream`}
+                          <GraduationCap size={11} /> {`${selectedAlumni.stream} Stream`}
+                        </span>
+                      )}
+                      {selectedAlumni.classFrom && selectedAlumni.classTo && (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-white border border-blue-100 text-blue-600 shadow-sm">
+                          <BookOpen size={11} /> Class Attended:{" "}
+                          {`${selectedAlumni.classFrom} - ${selectedAlumni.classTo}`}
                         </span>
                       )}
                     </div>
