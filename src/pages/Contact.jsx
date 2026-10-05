@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CheckCircle, Clock3, Mail, MapPin, Phone, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import usePageTitle from "../hooks/usePageTitle";
+import { contactAPI } from "../services/api";
 
 const contactDetails = [
   { icon: MapPin, label: "Visit us", value: <>PSG Public Schools<br />Avanashi Road, Peelamedu<br />Coimbatore - 641004, Tamil Nadu</> },
@@ -12,19 +13,59 @@ const contactDetails = [
 
 function ContactPage() {
   usePageTitle("Contact Us");
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
+  const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  const updateField = (event) => {
-    setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
-    setSent(false);
+  const updateField = (e) => {
+    const { name, value } = e.target;
+    setForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    setErrors(prev => ({
+      ...prev,
+      [name]: ""
+    }));
   };
 
-  const submitForm = (event) => {
-    event.preventDefault();
-    const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`;
-    window.location.href = `mailto:principal@psgps.edu.in?subject=${encodeURIComponent(form.subject || "PSGPS Alumni enquiry")}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+   const validateForm = () => {
+    const newErrors = {};
+    if (!form.name.trim()) newErrors.name = "Name is required";
+    if (!form.email.trim()) newErrors.email = "Email is required";
+    else if (!form.email.includes("@")) newErrors.email = "Please enter a valid email";
+    if (!form.message.trim()) newErrors.message = "Message is required";
+    return newErrors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    
+    try {
+      const payload = new FormData();
+      Object.entries(form).forEach(([key, value]) => {
+        payload.append(key, value);
+      });
+      setIsLoading(true);
+      await contactAPI.submitMessage(payload);
+      setSubmitted(true);
+      setForm({ name: "", email: "", phone: "", subject: "", message: "" });
+      setTimeout(() => setSubmitted(false), 3000);
+    }
+    catch (error) {
+      console.error("Error submitting contact form:", error);
+      alert("An error occurred while sending your message. Please try again later.");
+    }
+    finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -42,16 +83,21 @@ function ContactPage() {
         </section>
 
         <section className="contact-layout">
-          <form className="contact-form-new" onSubmit={submitForm}>
+          <form className="contact-form-new" onSubmit={handleSubmit}>
             <div className="contact-form-heading"><span className="contact-kicker">Send a message</span><h2>How can we help?</h2></div>
             <div className="contact-fields">
               <label>Name<input name="name" value={form.name} onChange={updateField} required placeholder="Your name" /></label>
               <label>Email<input name="email" type="email" value={form.email} onChange={updateField} required placeholder="you@example.com" /></label>
+              <label>Phone<input name="phone" value={form.phone} onChange={updateField} placeholder="Your phone number" /></label>
               <label className="contact-field-wide">Subject<input name="subject" value={form.subject} onChange={updateField} placeholder="What would you like to know?" /></label>
               <label className="contact-field-wide">Message<textarea name="message" value={form.message} onChange={updateField} required placeholder="Write your message here..." rows="5" /></label>
             </div>
-            <button className="contact-submit" type="submit"><Send size={16} /> Send enquiry</button>
-            {sent && <p className="contact-sent"><CheckCircle size={16} /> Your email app should open with the enquiry ready to send.</p>}
+            {Object.keys(errors).length > 0 && <div className="contact-errors"><ul>{Object.entries(errors).map(([field, error]) => <li key={field}>{error}</li>)}</ul></div>}
+            <button type="submit" className="contact-submit" disabled={isLoading}>
+                <Send size={14} />
+                {isLoading ? "Sending..." : "Send enquiry"}
+              </button>
+            {submitted && <p className="contact-sent"><CheckCircle size={16} /> Message sent successfully!</p>}
           </form>
 
           <div className="contact-side">

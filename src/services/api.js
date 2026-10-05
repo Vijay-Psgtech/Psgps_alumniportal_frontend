@@ -580,4 +580,9 @@ export const adminUsersAPI = {
   },
 };
 
+// ──────────── Contact API ──────────────────────────────────────────────────────
+export const contactAPI = {
+  submitMessage: (data) => api.post("/contact", data),
+};
+
 export default api;
