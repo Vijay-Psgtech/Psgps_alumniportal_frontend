@@ -301,6 +301,7 @@ const AlumniMap = () => {
                             src={`${API_BASE}/uploads/${selectedAlumni?.currentPhoto}`}
                             alt="Profile"
                             className="w-full h-full object-cover hover:cursor-pointer"
+                            loading="lazy"
                             onClick={() => {
                               setSelectedImage(
                                 selectedAlumni?.currentPhoto,

@@ -480,6 +480,7 @@ const AlumniUsersList = () => {
                           src={`${API_BASE}/uploads/${alumni.currentPhoto}`}
                           alt={`${alumni.firstName} ${alumni.lastName}`}
                           className="w-full h-full object-cover"
+                          loading="lazy"
                         />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg">
@@ -694,6 +695,7 @@ const AlumniUsersList = () => {
                                   src={`${API_BASE}/uploads/${alumni.currentPhoto}`}
                                   alt={`${alumni.firstName} ${alumni.lastName}`}
                                   className="w-full h-full object-cover"
+                                  loading="lazy"
                                 />
                               ) : (
                                 <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
@@ -925,6 +927,7 @@ const AlumniUsersList = () => {
                                 src={`${API_BASE}/uploads/${selectedItem?.currentPhoto}`}
                                 alt={`${selectedItem.firstName} ${selectedItem.lastName}`}
                                 className="w-full h-full object-cover"
+                                loading="lazy"
                               />
                             ) : (
                               `${selectedItem.firstName?.[0] || ""}${selectedItem.lastName?.[0] || ""}`

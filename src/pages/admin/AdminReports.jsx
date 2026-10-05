@@ -286,6 +286,7 @@ const AdminReports = () => {
                             }
                             alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
                             className="w-8 h-8 rounded-full border object-cover"
+                            loading="lazy"
                           />
                           {alumni.firstName} {alumni.lastName || ""}
                         </td>
@@ -321,12 +322,14 @@ const AdminReports = () => {
                           src={`${API_BASE}/uploads/${alumni?.currentPhoto}`}
                           alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
                           className="w-10 h-10 rounded-full border object-cover"
+                          loading="lazy"
                         />
                       ) : (
                         <img
                           src="/default-avatar.png"
                           alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
                           className="w-10 h-10 rounded-full border object-cover"
+                          
                         />
                       )}
 

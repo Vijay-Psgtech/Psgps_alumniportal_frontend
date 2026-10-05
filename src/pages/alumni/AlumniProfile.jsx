@@ -258,7 +258,7 @@ const AlumniProfile = () => {
                 {editing ? <form onSubmit={saveProfile} className="rounded-3xl bg-white p-5 shadow-xl shadow-blue-900/10 sm:p-8 lg:p-10">
                     <div className="mb-8 flex items-center gap-4 border-b border-slate-100 pb-6">
                         <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-blue-50 text-xl font-bold text-blue-700">
-                            {photo ? <img src={URL.createObjectURL(photo)} alt="Selected profile" className="h-full w-full object-cover" /> : existingPhoto ? <img src={`${API_BASE}/uploads/${existingPhoto}`} alt="Current profile" className="h-full w-full object-cover" /> : <UserRound size={27} />}
+                            {photo ? <img src={URL.createObjectURL(photo)} alt="Selected profile" className="h-full w-full object-cover"  loading="lazy" /> : existingPhoto ? <img src={`${API_BASE}/uploads/${existingPhoto}`} alt="Current profile" className="h-full w-full object-cover" loading="lazy" /> : <UserRound size={27} />}
                         </div>
                         <div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">Profile information</p><h2 className="mt-1 text-xl font-bold text-slate-900">{form.firstName || "Alumni"} {form.lastName}</h2><p className="mt-1 text-sm text-slate-500">Fields marked * are required.</p></div>
                     </div>
@@ -301,7 +301,7 @@ const ProfileSummary = ({ form, existingPhoto }) => {
                 <SummaryCard title="Profile photo" icon={Camera}>
                     <div className="flex items-center gap-4 py-4">
                         <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-blue-50 text-blue-600">
-                            {existingPhoto ? <img src={`${API_BASE}/uploads/${existingPhoto}`} alt="Current profile" className="h-full w-full object-cover" /> : <Camera size={28} />}
+                            {existingPhoto ? <img src={`${API_BASE}/uploads/${existingPhoto}`} alt="Current profile" className="h-full w-full object-cover" loading="lazy" /> : <Camera size={28} />}
                         </div>
                         <div><p className="text-sm font-semibold text-slate-800">Current photo</p><p className="mt-1 text-xs text-slate-500">{existingPhoto ? "Uploaded" : "Not uploaded"}</p></div>
                     </div>

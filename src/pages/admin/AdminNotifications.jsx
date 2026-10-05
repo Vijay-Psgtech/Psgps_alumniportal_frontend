@@ -242,6 +242,7 @@ const AdminNotifCard = ({ notification, onApprove, onReject, onDelete }) => {
                 <img
                   src={fileUrl}
                   alt={notification.attachment.originalName}
+                  loading="lazy"
                   style={{
                     maxWidth: "100%", maxHeight: 160, borderRadius: 10,
                     objectFit: "cover", border: "1px solid #e2e8f0",

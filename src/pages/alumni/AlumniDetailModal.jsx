@@ -199,6 +199,7 @@ const AlumniDetailModal = ({ alumni, isOpen, onClose, apiBase, viewer }) => {
                     height: "100%",
                     objectFit: "cover",
                   }}
+                  loading="lazy"
                 />
               ) : (
                 getInitials(alumni.firstName, alumni.lastName)

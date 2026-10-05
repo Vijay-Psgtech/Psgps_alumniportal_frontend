@@ -303,7 +303,7 @@ function SiteNavbar() {
 
       <nav className={`ab-navbar${scrolled ? ' ab-condensed' : ''}${mobileMenuOpen ? ' ab-mobile-menu-open' : ''}`} aria-label="Main navigation">
         <Link className="ab-brand" to="/" aria-label="PSGPS Alumni home">
-          <img src={psgpsLogo} alt="PSG Public Schools" />
+          <img src={psgpsLogo} alt="PSG Public Schools" loading="lazy" />
           <span>PSGPS Alumni</span>
         </Link>
 

@@ -243,6 +243,7 @@ export const EventsTab = ({ onError, onSuccess }) => {
                         src={`${API_BASE}/${ev.imageUrl}`}
                         alt={ev.title}
                         className="w-10 h-10 object-cover rounded-lg shrink-0"
+                        loading="lazy"
                       />
                     )}
                     <div className="flex items-center gap-2">

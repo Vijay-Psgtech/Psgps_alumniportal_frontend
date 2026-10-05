@@ -299,7 +299,7 @@ const NewsDetailPage = () => {
               <div className="detail-hero">
                 <div className="detail-hero-image">
                   {imageSrc ? (
-                    <img src={imageSrc} alt={newsletter.title} />
+                    <img src={imageSrc} alt={newsletter.title} loading="lazy" />
                   ) : (
                     <div className="detail-empty" style={{ minHeight: "100%", boxShadow: "none", background: "#e2e8f0" }}>
                       No image available

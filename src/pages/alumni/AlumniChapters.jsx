@@ -113,6 +113,7 @@ const ChapterCard = ({
           src={bannerUrl}
           alt={chapter.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
         />
         {/* Category Badge Overlay */}
         <div className="absolute top-3 right-3">
@@ -267,6 +268,7 @@ const ChapterDetailModal = ({
             src={bannerUrl}
             alt={chapter.title}
             className="w-full h-full object-cover"
+            loading="lazy"
           />
           <button
             onClick={onClose}
@@ -518,6 +520,7 @@ const ChapterFormModal = ({
                       src={bannerPreview}
                       alt="Banner"
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                       <p className="text-white font-semibold text-sm">

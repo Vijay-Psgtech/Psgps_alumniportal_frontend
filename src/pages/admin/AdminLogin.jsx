@@ -100,7 +100,7 @@ const AdminLogin = () => {
       <div className="flex w-full max-w-4xl bg-white rounded-2xl shadow-lg overflow-hidden">
         {/* Left Panel - Branding */}
         <div className="hidden md:flex flex-col items-center justify-center w-1/2 bg-white shadow-2xl p-8 text-center">
-          <img src={psgpslogo} alt="Logo" className="h-20 mb-6" />
+          <img src={psgpslogo} alt="Logo" className="h-20 mb-6" loading="lazy" />
           <h2 className="text-2xl font-bold text-blue-800">Welcome Admin!</h2>
           <p className="text-sm font-semibold text-gray-600 mt-4">
             Sign in to manage the alumni network and oversee registrations.

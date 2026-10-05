@@ -190,6 +190,7 @@ export const EventFormModal = ({ initial, onSave, onClose, isLoading }) => {
                     src={imagePreview}
                     alt="Preview"
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                   <button
                     type="button"

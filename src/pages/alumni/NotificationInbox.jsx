@@ -133,6 +133,7 @@ const NotificationCard = ({ notification, isSubmission }) => {
                 <img
                   src={fileUrl}
                   alt={notification.attachment.originalName}
+                  loading="lazy"
                   style={{
                     maxWidth: "100%", maxHeight: 200, borderRadius: 10,
                     objectFit: "cover", border: "1px solid #e2e8f0",

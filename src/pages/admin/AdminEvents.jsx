@@ -567,6 +567,7 @@ const AdminEvents = () => {
                         src={`${API_BASE}/${event.imageUrl}`}
                         alt={event.title}
                         className="w-full h-32 object-cover rounded-lg mb-4"
+                        loading="lazy"
                       />
                     )}
 
@@ -739,6 +740,7 @@ const AdminEvents = () => {
                                   src={`${API_BASE}/${event.imageUrl}`}
                                   alt={event.title}
                                   className="w-10 h-10 object-cover rounded-lg shrink-0"
+                                  loading="lazy"
                                 />
                               )}
                               <div className="flex items-center gap-2">
