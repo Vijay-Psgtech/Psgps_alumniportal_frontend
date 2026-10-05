@@ -35,7 +35,10 @@ const Notablealumni = () => {
                   className="h-full w-full object-cover object-top transition duration-500 hover:scale-105"
                   src={alumnus.image}
                   alt={alumnus.name}
+                  width="400"
+                  height="470"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#071d38]/45 to-transparent" aria-hidden="true" />
               </div>
