@@ -7,7 +7,7 @@ import { contactAPI } from "../services/api";
 const contactDetails = [
   { icon: MapPin, label: "Visit us", value: <>PSG Public Schools<br />Avanashi Road, Peelamedu<br />Coimbatore - 641004, Tamil Nadu</> },
   { icon: Phone, label: "Call us", value: <><a href="tel:+914224344522">0422 4344522</a><br /><a href="tel:+914224344420">0422 4344420</a></> },
-  { icon: Mail, label: "Write to us", value: <a href="mailto:principal@psgps.edu.in">principal@psgps.edu.in</a> },
+  { icon: Mail, label: "Write to us", value: <a href="mailto:alumni@psgps.edu.in">alumni@psgps.edu.in</a> },
   { icon: Clock3, label: "Office hours", value: <>Monday - Friday<br />9:00 AM - 5:00 PM</> },
 ];
 
