@@ -26,7 +26,7 @@ function LeadershipSection() {
           transition={{ duration: 0.5 }}
         >
           <div className="leader-portrait">
-            <img src={gopalakrishnanImage} alt="Mr. L. Gopalakrishnan" loading="lazy" />
+            <img src={gopalakrishnanImage} alt="Mr. L. Gopalakrishnan" width="3" height="4" loading="lazy" decoding="async" />
           </div>
           <div className="leader-detail">
             <span className="leader-label">Chief Patron · Institutional leadership</span>
@@ -50,7 +50,7 @@ function LeadershipSection() {
           transition={{ duration: 0.5 }}
         >
           <div className="leader-portrait">
-            <img src={alaguImage} alt="Mr. AlaguNachiappan S" loading="lazy" />
+            <img src={alaguImage} alt="Mr. AlaguNachiappan S" width="3" height="4" loading="lazy" decoding="async" />
           </div>
           <div className="leader-detail">
             <span className="leader-label">President · PSGPS Alumni Association</span>
