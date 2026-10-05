@@ -309,6 +309,7 @@ const AlumniCard = ({ alumni, apiBase, index, onSelect }) => {
                 src={photoUrl}
                 alt={`${alumni.firstName} ${alumni.lastName}`}
                 className="w-full h-full object-cover"
+                loading="lazy"
                 onError={(e) => {
                   e.target.style.display = "none";
                 }}

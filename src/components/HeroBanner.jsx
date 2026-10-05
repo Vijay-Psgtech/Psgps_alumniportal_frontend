@@ -417,7 +417,7 @@ export default function AlumniBanner({
         }
       `}</style>
 
-      <img className="ab-hero-bg" src={imageUrl} alt="" aria-hidden="true" loading="eager" fetchPriority="high" decoding="async" />
+      <img className="ab-hero-bg" src={imageUrl} alt="" aria-hidden="true" loading="lazy" fetchPriority="high" decoding="async" />
       <div className="ab-hero-overlay" aria-hidden="true" />
 
       <motion.div
@@ -445,7 +445,7 @@ export default function AlumniBanner({
         <motion.div variants={rise} className="ab-hero-logo-wrap">
           <span className="ab-hero-logo-ring" aria-hidden="true" />
           <Sparkles size={16} className="ab-hero-logo-sparkle" aria-hidden="true" />
-          <img className="ab-hero-logo" src={psgpsLogo} alt="PSG Public Schools" />
+          <img className="ab-hero-logo" src={psgpsLogo} alt="PSG Public Schools" loading="lazy" />
         </motion.div>
 
         <motion.span variants={rise} className="ab-eyebrow">PSGPS Alumni Association</motion.span>

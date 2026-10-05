@@ -183,6 +183,7 @@ const NewsLetterFormModal = ({ initial, onSave, onClose, isLoading }) => {
                     src={imagePreview}
                     alt="Newsletter cover"
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                   <button
                     type="button"
@@ -559,6 +560,7 @@ const AdminNewsLetter = () => {
                               src={getPreviewUrl(item.imageUrl)}
                               alt={item.title}
                               className="h-full w-full object-cover"
+                              loading="lazy"
                             />
                           ) : (
                             <FileText size={24} className="text-slate-400" />

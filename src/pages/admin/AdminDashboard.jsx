@@ -727,6 +727,7 @@ const AdminDashboard = () => {
                                 src={`${API_BASE}/uploads/${selectedItem?.currentPhoto}`}
                                 alt={`${selectedItem.firstName} ${selectedItem.lastName}`}
                                 className="w-full h-full object-cover"
+                                loading="lazy"
                               />
                             ) : (
                               `${selectedItem.firstName?.[0] || ""}${selectedItem.lastName?.[0] || ""}`

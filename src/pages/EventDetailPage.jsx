@@ -92,7 +92,7 @@ function EventDetailPage() {
       <main className="album-detail event-detail">
         <Link className="back-link" to="/events"><ArrowLeft size={15} /> Back to events</Link>
         <div className="album-heading"><span className="media-kicker">{event.category || "Community"}</span><h1>{event.title}</h1><p>{event.description}</p><div className="media-meta"><span><Calendar size={14} />{event.formattedDate}</span><span><MapPin size={14} />{event.venue}</span></div></div>
-        <img className="event-detail-cover" src={imageUrl(event.cover)} alt={event.title} />
+        <img className="event-detail-cover" src={imageUrl(event.cover)} alt={event.title} loading="lazy" />
         <div className="event-detail-gallery">{(event.images || []).slice(1).map((image, index) => <img key={`${event.id || slug}-${index}`} src={imageUrl(image)} alt={`${event.title} highlight ${index + 1}`} loading="lazy" />)}</div>
         <Link className="media-card-link" to={`/gallery/${event.slug || event.id || slug}`}>View this event in the gallery <span aria-hidden="true">&#8594;</span></Link>
       </main>

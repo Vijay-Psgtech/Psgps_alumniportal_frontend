@@ -238,6 +238,7 @@ export const AlumniTab = ({
                             src={`${API_BASE}/uploads/${photo}`}
                             alt={`${a.firstName} ${a.lastName}`}
                             className="w-full h-full object-cover"
+                            loading="lazy"
                           />
                         ) : (
                           <div className="w-full h-full bg-linear-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg">

@@ -402,6 +402,7 @@ const CampaignForm = ({ campaignId: propCampaignId }) => {
               src={campaign.coverImage}
               alt={campaign.title}
               className="w-full h-48 object-cover rounded-2xl mb-6"
+              loading="lazy"
             />
           )}
 

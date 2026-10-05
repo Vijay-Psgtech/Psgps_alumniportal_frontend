@@ -51,7 +51,7 @@ function LeadershipPage() {
             {featuredLeaders.map((leader) => (
               <article className="featured-leader-card" key={leader.name}>
                 <div className="featured-photo">
-                  <img src={leader.image} alt={leader.name} />
+                  <img src={leader.image} alt={leader.name} loading="lazy" />
                 </div>
                 <div className="featured-copy">
                   <span className="featured-role">{leader.role}</span>
