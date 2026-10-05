@@ -512,10 +512,6 @@ export const adminReportsAPI = {
     console.log("📊 Fetching events data by month...");
     return api.get("/reports/events-data-by-month");
   },
-  fetchAlumniDataByDepartment: () => {
-    console.log("📊 Fetching alumni data by department...");
-    return api.get("/reports/alumni-data-by-department");
-  },
   fetchAlumniDataByStream: () => {
     console.log("📊 Fetching alumni data by stream...");
     return api.get("/reports/alumni-data-by-stream");
