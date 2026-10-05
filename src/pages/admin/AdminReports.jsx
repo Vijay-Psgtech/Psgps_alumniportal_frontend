@@ -19,7 +19,6 @@ const AdminReports = () => {
   const [totalAlumniCount, setTotalAlumniCount] = useState(0);
   const [alumniData, setAlumniData] = useState([]);
   const [alumniList, setAlumniList] = useState([]);
-  const [departmentData, setDepartmentData] = useState([]);
   const [streamData, setStreamData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -49,21 +48,6 @@ const AdminReports = () => {
     };
 
     fetchAlumniData();
-  }, []);
-
-  useEffect(() => {
-    const fetchAlumniDataByDepartment = async () => {
-      try {
-        const res = await adminReportsAPI.fetchAlumniDataByDepartment();
-        const data = res?.data?.data;
-        if (data) {
-          setDepartmentData(data.countByDepartment || []);
-        }
-      } catch (fetchError) {
-        console.error("Failed to load alumni data by department:", fetchError);
-      }
-    };
-    fetchAlumniDataByDepartment();
   }, []);
 
   useEffect(() => {
