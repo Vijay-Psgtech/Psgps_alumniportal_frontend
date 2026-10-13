@@ -95,10 +95,20 @@ function SiteNavbar() {
 
         .ab-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .ab-brand img { width: 50px; height: 50px; object-fit: contain; border-radius: 8px; }
-        .ab-brand span {
+        .ab-brand-copy { display: flex; flex-direction: column; }
+        .ab-brand-title {
           font-family: var(--font-display, serif);
           font-size: 19px;
           font-weight: 600;
+          letter-spacing: 0.02em;
+          color: #f7fbff;
+        }
+
+        .ab-brand-subtitle {
+          display: block;
+          font-family: var(--font-display, serif);
+          font-size: 17px;
+          font-weight: 500;
           letter-spacing: 0.02em;
           color: #f7fbff;
         }
@@ -249,9 +259,20 @@ function SiteNavbar() {
         .ab-ud-divider { height: 1px; margin: 6px 14px; background: #e7eef6; }
 
         .ab-menu-toggle { display: none; background: none; border: none; color: #f1f4f8; cursor: pointer; }
+        .ab-mobile-auth { display: none; }
 
         @media (max-width: 900px) {
           .ab-navbar { padding: 0 5vw; background: linear-gradient(180deg, rgba(7,29,56,0.9), rgba(11,33,61,0.9)); }
+          .ab-actions > .ab-sign-in,
+          .ab-actions > .ab-join { display: none; }
+          .ab-mobile-auth {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(215, 173, 90, 0.3);
+          }
           .ab-menu-toggle {
             position: relative;
             display: inline-flex;
@@ -299,13 +320,27 @@ function SiteNavbar() {
           .ab-nav-links.ab-open-links { right: 0; }
           .ab-dropdown-menu { position: static; transform: none; margin-top: 4px; box-shadow: none; border-color: rgba(215,173,90,0.2); background: rgba(255,255,255,0.04); }
         }
+
+        @media (max-width: 600px) {
+          .ab-navbar { min-height: 72px; padding: 0 16px; }
+          .ab-brand { min-width: 0; flex: 1; gap: 8px; }
+          .ab-brand img { width: 42px; height: 42px; }
+          .ab-brand-copy { min-width: 0; }
+          .ab-brand-title { font-size: 15px; line-height: 1.15; }
+          .ab-brand-subtitle { font-size: 14px; line-height: 1.15; }
+          .ab-actions { gap: 8px; }
+        }
       `}</style>
 
       <nav className={`ab-navbar${scrolled ? ' ab-condensed' : ''}${mobileMenuOpen ? ' ab-mobile-menu-open' : ''}`} aria-label="Main navigation">
-        <Link className="ab-brand" to="/" aria-label="PSGPS Alumni home">
+        <Link className="ab-brand" to="/" aria-label="PSG Public Schools Alumni home">
           <img src={psgpsLogo} alt="PSG Public Schools" loading="lazy" />
-          <span>PSGPS Alumni</span>
+          <span className="ab-brand-copy">
+            <span className="ab-brand-title">PSG Public Schools</span>
+            <span className="ab-brand-subtitle">Alumni Association</span>
+          </span>
         </Link>
+        
 
         <div className={`ab-nav-links${mobileMenuOpen ? ' ab-open-links' : ''}`} id="primary-navigation">
           <Link to="/" onClick={closeMobileMenu}>Home</Link>
@@ -339,6 +374,13 @@ function SiteNavbar() {
           </div>
 
           <Link to="/contact" onClick={closeMobileMenu}>Contact</Link>
+
+          {!user && (
+            <div className="ab-mobile-auth">
+              <Link to="/alumni/login" onClick={closeMobileMenu}>Sign in</Link>
+              <Link to="/alumni/register" onClick={closeMobileMenu}>Join now</Link>
+            </div>
+          )}
 
           {user?.role === 'admin' || user?.role === 'superadmin' ? (
             <div className="ab-dropdown" ref={adminMenuRef}>

@@ -448,7 +448,7 @@ export default function AlumniBanner({
           <img className="ab-hero-logo" src={psgpsLogo} alt="PSG Public Schools" loading="eager" />
         </motion.div>
 
-        <motion.span variants={rise} className="ab-eyebrow">PSGPS Alumni Association</motion.span>
+        <motion.span variants={rise} className="ab-eyebrow">PSG Public Schools Alumni Association</motion.span>
 
         <motion.h1
           variants={headlineContainer}
