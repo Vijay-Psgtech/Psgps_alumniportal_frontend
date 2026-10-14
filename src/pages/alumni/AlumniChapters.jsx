@@ -203,11 +203,10 @@ const ChapterCard = ({
               onJoin();
             }}
             disabled={isLoadingChapter} // ✅ NEW: Disable while loading
-            className={`w-full py-2 rounded-lg font-semibold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
-              isMember
+            className={`w-full py-2 rounded-lg font-semibold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed ${isMember
                 ? "bg-slate-100 text-slate-700 hover:bg-slate-200"
                 : "bg-indigo-600 text-white hover:bg-indigo-700"
-            }`}
+              }`}
           >
             {isLoadingChapter ? (
               <div className="flex items-center justify-center gap-1.5">
@@ -233,13 +232,13 @@ const ChapterCard = ({
 };
 
 // Chapter Detail Modal
-const ChapterDetailModal = ({ 
-  chapter, 
-  user, 
-  isAuthor, 
-  isMember, 
-  onClose, 
-  onEdit, 
+const ChapterDetailModal = ({
+  chapter,
+  user,
+  isAuthor,
+  isMember,
+  onClose,
+  onEdit,
   onJoin,
   isLoadingChapter, // ✅ NEW: Loading state
 }) => {
@@ -389,11 +388,10 @@ const ChapterDetailModal = ({
               whileTap={{ scale: 0.98 }}
               onClick={onJoin}
               disabled={isLoadingChapter} // ✅ NEW: Disable while loading
-              className={`w-full py-3 rounded-lg font-bold text-base transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
-                isMember
+              className={`w-full py-3 rounded-lg font-bold text-base transition-all disabled:opacity-50 disabled:cursor-not-allowed ${isMember
                   ? "bg-slate-200 text-slate-700 hover:bg-slate-300"
                   : "bg-indigo-600 text-white hover:bg-indigo-700"
-              }`}
+                }`}
             >
               {isLoadingChapter ? (
                 <div className="flex items-center justify-center gap-2">
@@ -974,11 +972,10 @@ const AlumniChapters = () => {
               <span className="text-sm font-semibold text-slate-600">Filter:</span>
               <button
                 onClick={() => setFilterCategory("")}
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors ${
-                  !filterCategory
+                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors ${!filterCategory
                     ? "bg-indigo-600 text-white"
                     : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                }`}
+                  }`}
               >
                 All Categories
               </button>
@@ -986,11 +983,10 @@ const AlumniChapters = () => {
                 <button
                   key={cat.id}
                   onClick={() => setFilterCategory(cat.id)}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors flex items-center gap-1.5 ${
-                    filterCategory === cat.id
+                  className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors flex items-center gap-1.5 ${filterCategory === cat.id
                       ? "bg-indigo-600 text-white"
                       : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                  }`}
+                    }`}
                 >
                   <cat.icon size={14} />
                   {cat.label}

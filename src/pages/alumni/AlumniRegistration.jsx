@@ -62,8 +62,7 @@ const Field = ({ label, required, error, children, className = "" }) => (
 );
 
 const inputClass = (error) =>
-  `w-full rounded-xl border bg-white px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 ${
-    error ? "border-red-400 bg-red-50/30" : "border-slate-200 hover:border-slate-300"
+  `w-full rounded-xl border bg-white px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 ${error ? "border-red-400 bg-red-50/30" : "border-slate-200 hover:border-slate-300"
   }`;
 
 const Select = ({ error, children, ...props }) => (

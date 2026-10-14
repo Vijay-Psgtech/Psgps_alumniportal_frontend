@@ -337,11 +337,10 @@ const AdminEvents = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`mb-6 p-4 rounded-xl border flex items-center gap-3 font-['Outfit',sans-serif] ${
-              notification.type === "success"
+            className={`mb-6 p-4 rounded-xl border flex items-center gap-3 font-['Outfit',sans-serif] ${notification.type === "success"
                 ? "bg-emerald-50 border-emerald-200 text-emerald-700"
                 : "bg-red-50 border-red-200 text-red-700"
-            }`}
+              }`}
           >
             {notification.type === "success" ? (
               <CheckCircle size={18} className="shrink-0" />
@@ -395,11 +394,10 @@ const AdminEvents = () => {
                         setSortOrder("asc");
                       }
                     }}
-                    className={`px-3 py-2 rounded-lg text-xs font-bold font-['Outfit',sans-serif] border transition-all flex items-center gap-1 ${
-                      sortBy === option.value
+                    className={`px-3 py-2 rounded-lg text-xs font-bold font-['Outfit',sans-serif] border transition-all flex items-center gap-1 ${sortBy === option.value
                         ? "bg-[#764ba2] text-white border-[#764ba2]"
                         : "bg-white text-gray-600 border-slate-200 hover:border-blue-300"
-                    }`}
+                      }`}
                   >
                     {option.label}
                     {sortBy === option.value &&
@@ -421,11 +419,10 @@ const AdminEvents = () => {
                 <button
                   key={f}
                   onClick={() => setStatusFilter(f)}
-                  className={`flex-1 sm:flex-none px-4 py-2.5 border-none font-['Outfit',sans-serif] text-xs sm:text-sm font-bold transition-all capitalize ${
-                    statusFilter === f
+                  className={`flex-1 sm:flex-none px-4 py-2.5 border-none font-['Outfit',sans-serif] text-xs sm:text-sm font-bold transition-all capitalize ${statusFilter === f
                       ? "bg-[#143d69] text-white"
                       : "bg-white text-gray-500 hover:bg-slate-50 hover:text-gray-700"
-                  }`}
+                    }`}
                 >
                   {f === "all" ? "All Events" : f}
                 </button>
@@ -446,11 +443,10 @@ const AdminEvents = () => {
               <div className="flex bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm shadow-black/5">
                 <button
                   onClick={() => setViewMode("grid")}
-                  className={`p-2.5 transition-all ${
-                    viewMode === "grid"
+                  className={`p-2.5 transition-all ${viewMode === "grid"
                       ? "bg-[#143d69] text-white"
                       : "bg-white text-gray-500 hover:bg-slate-50 hover:text-gray-700"
-                  }`}
+                    }`}
                   title="Grid View"
                 >
                   <Grid3x3 size={16} />
@@ -458,11 +454,10 @@ const AdminEvents = () => {
                 <div className="w-px bg-slate-200"></div>
                 <button
                   onClick={() => setViewMode("table")}
-                  className={`p-2.5 transition-all ${
-                    viewMode === "table"
+                  className={`p-2.5 transition-all ${viewMode === "table"
                       ? "bg-[#764ba2] text-white"
                       : "bg-white text-gray-500 hover:bg-slate-50 hover:text-gray-700"
-                  }`}
+                    }`}
                   title="Table View"
                 >
                   <List size={16} />
@@ -546,11 +541,10 @@ const AdminEvents = () => {
 
                       {/* Status Badge */}
                       <div
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold font-['Outfit',sans-serif] uppercase tracking-wider whitespace-nowrap border ${
-                          event.status === "upcoming"
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold font-['Outfit',sans-serif] uppercase tracking-wider whitespace-nowrap border ${event.status === "upcoming"
                             ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                             : "bg-gray-50 text-gray-600 border-gray-200"
-                        }`}
+                          }`}
                       >
                         {event.status === "upcoming" ? (
                           <Clock size={11} />
@@ -653,11 +647,10 @@ const AdminEvents = () => {
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`w-9 h-9 rounded-lg text-sm font-bold font-['Outfit',sans-serif] transition-all ${
-                        currentPage === page
+                      className={`w-9 h-9 rounded-lg text-sm font-bold font-['Outfit',sans-serif] transition-all ${currentPage === page
                           ? "bg-blue-500 text-white border border-blue-500"
                           : "border border-slate-200 hover:bg-slate-50"
-                      }`}
+                        }`}
                     >
                       {page}
                     </button>
@@ -809,11 +802,10 @@ const AdminEvents = () => {
                           {/* Status Badge */}
                           <td className="px-6 py-4 text-center">
                             <span
-                              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold font-['Outfit',sans-serif] uppercase tracking-wider border ${
-                                event.status === "upcoming"
+                              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold font-['Outfit',sans-serif] uppercase tracking-wider border ${event.status === "upcoming"
                                   ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                                   : "bg-gray-50 text-gray-600 border-gray-200"
-                              }`}
+                                }`}
                             >
                               {event.status === "upcoming" ? (
                                 <Clock size={11} />
@@ -897,11 +889,10 @@ const AdminEvents = () => {
                           <button
                             key={page}
                             onClick={() => setCurrentPage(page)}
-                            className={`w-8 h-8 rounded-lg text-xs font-bold font-['Outfit',sans-serif] transition-all ${
-                              currentPage === page
+                            className={`w-8 h-8 rounded-lg text-xs font-bold font-['Outfit',sans-serif] transition-all ${currentPage === page
                                 ? "bg-blue-500 text-white border border-blue-500"
                                 : "border border-slate-200 hover:bg-slate-50"
-                            }`}
+                              }`}
                           >
                             {page}
                           </button>
@@ -911,11 +902,10 @@ const AdminEvents = () => {
                       <>
                         <button
                           onClick={() => setCurrentPage(1)}
-                          className={`w-8 h-8 rounded-lg text-xs font-bold font-['Outfit',sans-serif] ${
-                            currentPage === 1
+                          className={`w-8 h-8 rounded-lg text-xs font-bold font-['Outfit',sans-serif] ${currentPage === 1
                               ? "bg-blue-500 text-white border border-blue-500"
                               : "border border-slate-200 hover:bg-slate-50"
-                          }`}
+                            }`}
                         >
                           1
                         </button>
@@ -935,11 +925,10 @@ const AdminEvents = () => {
                         )}
                         <button
                           onClick={() => setCurrentPage(totalPages)}
-                          className={`w-8 h-8 rounded-lg text-xs font-bold font-['Outfit',sans-serif] ${
-                            currentPage === totalPages
+                          className={`w-8 h-8 rounded-lg text-xs font-bold font-['Outfit',sans-serif] ${currentPage === totalPages
                               ? "bg-blue-500 text-white border border-blue-500"
                               : "border border-slate-200 hover:bg-slate-50"
-                          }`}
+                            }`}
                         >
                           {totalPages}
                         </button>

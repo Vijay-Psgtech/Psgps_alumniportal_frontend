@@ -325,8 +325,8 @@ const AlumniUsersList = () => {
                     });
                   }}
                   className={`flex-1 sm:flex-none px-4 py-2.5 border-none text-xs sm:text-sm font-bold transition-all capitalize ${statusFilter === filter.value
-                      ? "bg-blue-500 text-white"
-                      : "bg-white text-gray-600 hover:bg-slate-50"
+                    ? "bg-blue-500 text-white"
+                    : "bg-white text-gray-600 hover:bg-slate-50"
                     }`}
                 >
                   {filter.label}
@@ -419,8 +419,8 @@ const AlumniUsersList = () => {
                 <button
                   onClick={() => setViewMode("grid")}
                   className={`p-2.5 transition-all ${viewMode === "grid"
-                      ? "bg-blue-500 text-white"
-                      : "bg-white text-gray-500 hover:bg-slate-50"
+                    ? "bg-blue-500 text-white"
+                    : "bg-white text-gray-500 hover:bg-slate-50"
                     }`}
                   title="Grid View"
                 >
@@ -430,8 +430,8 @@ const AlumniUsersList = () => {
                 <button
                   onClick={() => setViewMode("table")}
                   className={`p-2.5 transition-all ${viewMode === "table"
-                      ? "bg-purple-500 text-white"
-                      : "bg-white text-gray-500 hover:bg-slate-50"
+                    ? "bg-purple-500 text-white"
+                    : "bg-white text-gray-500 hover:bg-slate-50"
                     }`}
                   title="Table View"
                 >
@@ -499,8 +499,8 @@ const AlumniUsersList = () => {
                       <div className="flex items-center gap-2 mt-1">
                         <span
                           className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${alumni.isApproved
-                              ? "bg-green-100 text-green-700"
-                              : "bg-yellow-100 text-yellow-700"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-yellow-100 text-yellow-700"
                             }`}
                         >
                           {alumni.isApproved ? (
@@ -622,8 +622,8 @@ const AlumniUsersList = () => {
                             handlePageChange(page);
                           }}
                           className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${pageData.currentPage === page
-                              ? "bg-purple-500 text-white"
-                              : "border border-slate-200 text-slate-600 hover:bg-slate-50"
+                            ? "bg-purple-500 text-white"
+                            : "border border-slate-200 text-slate-600 hover:bg-slate-50"
                             }`}
                         >
                           {page}
@@ -756,8 +756,8 @@ const AlumniUsersList = () => {
                         <td className="px-6 py-4 text-center">
                           <span
                             className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${alumni.isApproved
-                                ? "bg-green-100 text-green-700"
-                                : "bg-yellow-100 text-yellow-700"
+                              ? "bg-green-100 text-green-700"
+                              : "bg-yellow-100 text-yellow-700"
                               }`}
                           >
                             {alumni.isApproved ? (
@@ -848,8 +848,8 @@ const AlumniUsersList = () => {
                             handlePageChange(page);
                           }}
                           className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${pageData.currentPage === page
-                              ? "bg-purple-500 text-white"
-                              : "border border-slate-200 text-slate-600 hover:bg-slate-50"
+                            ? "bg-purple-500 text-white"
+                            : "border border-slate-200 text-slate-600 hover:bg-slate-50"
                             }`}
                         >
                           {page}

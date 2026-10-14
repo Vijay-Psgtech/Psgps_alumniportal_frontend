@@ -13,7 +13,6 @@ const Footer = () => {
       <div className="footer-attribution" aria-label="Website attribution">
         <span>Copyright © {new Date().getFullYear()} PSG Public Schools Alumni Association. All rights reserved.</span>
         <span>Powered by <strong>Central IT Services</strong></span>
-        
       </div>
     </>
   )

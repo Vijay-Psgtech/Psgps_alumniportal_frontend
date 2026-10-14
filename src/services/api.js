@@ -66,7 +66,7 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 // ──────────────── API_BASE ──────────────────────── //
@@ -102,7 +102,7 @@ export const campaignsAPI = {
       throw error;
     });
   },
- 
+
   // Get single campaign by ID
   getById: (id) => {
     console.log(`📡 Fetching campaign ${id}...`);
@@ -111,7 +111,7 @@ export const campaignsAPI = {
       throw error;
     });
   },
- 
+
   // Create new campaign
   create: (data) => {
     console.log("📤 Creating campaign...", data.title);
@@ -126,7 +126,7 @@ export const campaignsAPI = {
         throw error;
       });
   },
- 
+
   // Update campaign
   update: (id, data) => {
     console.log(`📤 Updating campaign ${id}...`);
@@ -141,7 +141,7 @@ export const campaignsAPI = {
         throw error;
       });
   },
- 
+
   // Delete campaign
   delete: (id) => {
     console.log(`📤 Deleting campaign ${id}...`);
@@ -156,9 +156,9 @@ export const campaignsAPI = {
         throw error;
       });
   },
- 
+
   // ── CAMPAIGN RESPONSES ──
- 
+
   // Submit response to campaign
   submitResponse: (campaignId, data) => {
     console.log(`📤 Submitting response to campaign ${campaignId}...`);
@@ -173,7 +173,7 @@ export const campaignsAPI = {
         throw error;
       });
   },
- 
+
   // Get all responses for a campaign
   getResponses: (campaignId, params = {}) => {
     console.log(`📡 Fetching responses for campaign ${campaignId}...`, params);
@@ -181,19 +181,19 @@ export const campaignsAPI = {
       .get(`/campaigns/${campaignId}/responses`, { params })
       .then((response) => {
         console.log(
-          `✅ Fetched ${response.data.count || 0} responses from campaign`
+          `✅ Fetched ${response.data.count || 0} responses from campaign`,
         );
         return response;
       })
       .catch((error) => {
         console.error(
           `❌ Failed to fetch responses for campaign ${campaignId}:`,
-          error.message
+          error.message,
         );
         throw error;
       });
   },
- 
+
   // Get single response
   getResponse: (responseId) => {
     console.log(`📡 Fetching response ${responseId}...`);
@@ -202,7 +202,7 @@ export const campaignsAPI = {
       throw error;
     });
   },
- 
+
   // Update response status
   updateResponseStatus: (responseId, data) => {
     console.log(`📤 Updating response ${responseId} status...`);
@@ -217,7 +217,7 @@ export const campaignsAPI = {
         throw error;
       });
   },
- 
+
   // Publish response as story
   publishResponse: (responseId, title) => {
     console.log(`📤 Publishing response ${responseId} as story...`);
@@ -232,7 +232,7 @@ export const campaignsAPI = {
         throw error;
       });
   },
- 
+
   // Delete response
   deleteResponse: (responseId) => {
     console.log(`📤 Deleting response ${responseId}...`);
@@ -247,7 +247,7 @@ export const campaignsAPI = {
         throw error;
       });
   },
- 
+
   // Export responses as CSV
   exportResponses: (campaignId, params = {}) => {
     console.log(`📥 Exporting responses for campaign ${campaignId}...`);
@@ -261,7 +261,7 @@ export const campaignsAPI = {
         throw error;
       });
   },
- 
+
   // Get campaign analytics
   getAnalytics: (campaignId) => {
     console.log(`📊 Fetching analytics for campaign ${campaignId}...`);
@@ -446,55 +446,55 @@ export const donationAPI = {
     console.log("📤 Creating donation...");
     return api.post("/donations", data);
   },
- 
+
   // 🔓 PUBLIC - Verify Razorpay payment
   verifyRazorPay: (data) => {
     console.log("📤 Verifying Razorpay payment...");
     return api.post("/donations/verify-razorpay", data);
   },
- 
+
   // 🔓 PUBLIC - Get donation history with filters (anyone can view)
   getHistory: (params) => {
     console.log("📡 Fetching donation history...", params);
     return api.get("/donations/history", { params });
   },
- 
+
   // 🔓 PUBLIC - Get donation stats
   getStats: (params) => {
     console.log("📡 Fetching donation stats...");
     return api.get("/donations/stats", { params });
   },
- 
+
   // 🔐 ADMIN - Get all donations
   getAll: () => {
     console.log("📡 Fetching all donations (admin)...");
     return api.get("/donations");
   },
- 
+
   // 🔐 ADMIN - Get specific donation by ID
   getById: (id) => {
     console.log(`📡 Fetching donation ${id}...`);
     return api.get(`/donations/${id}`);
   },
- 
+
   // 🔐 ADMIN - Update donation (notes, status, flags)
   update: (id, data) => {
     console.log(`📤 Updating donation ${id}...`);
     return api.put(`/donations/${id}`, data);
   },
- 
+
   // 🔐 ADMIN - Update donation status
   updateStatus: (id, status) => {
     console.log(`📤 Updating donation ${id} status to ${status}...`);
     return api.put(`/donations/${id}/status`, { status });
   },
- 
+
   // 🔐 ADMIN - Flag/Unflag donation
   flagDonation: (id, data) => {
     console.log(`📤 Updating flag status for donation ${id}...`);
     return api.put(`/donations/${id}/flag`, data);
   },
- 
+
   // 🔐 ADMIN - Delete donation
   delete: (id) => {
     console.log(`📤 Deleting donation ${id}...`);
@@ -515,8 +515,7 @@ export const adminReportsAPI = {
   fetchAlumniDataByStream: () => {
     console.log("📊 Fetching alumni data by stream...");
     return api.get("/reports/alumni-data-by-stream");
-  }
-
+  },
 };
 
 // ── ✅ Notification API ───────────────────────────────────────────────

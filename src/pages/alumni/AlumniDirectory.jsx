@@ -1080,11 +1080,10 @@ const AlumniDirectory = () => {
                                       filterDept,
                                     );
                                   }}
-                                  className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
-                                    currentPage === page
+                                  className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${currentPage === page
                                       ? "bg-indigo-600 text-white shadow-md"
                                       : "border border-indigo-200 text-indigo-600 hover:bg-indigo-50"
-                                  }`}
+                                    }`}
                                 >
                                   {page}
                                 </button>

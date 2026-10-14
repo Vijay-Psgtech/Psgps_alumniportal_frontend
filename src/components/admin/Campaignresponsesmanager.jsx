@@ -231,11 +231,10 @@ const CampaignResponsesManager = ({ campaignId }) => {
               key={status}
               onClick={() => setStatusFilter(status)}
               disabled={isLoading}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition disabled:opacity-50 ${
-                statusFilter === status
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition disabled:opacity-50 ${statusFilter === status
                   ? "bg-slate-900 text-white"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-              }`}
+                }`}
             >
               {status === "all" ? "All Responses" : status}
             </button>

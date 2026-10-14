@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import CAMPAIGN_TEMPLATES from "../../content/data/campaignTemplates";
 
-const CampaignCreator = ({ onCampaignCreated = () => {} }) => {
+const CampaignCreator = ({ onCampaignCreated = () => { } }) => {
   const [step, setStep] = useState(1); // 1: Template, 2: Details, 3: Form Fields
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

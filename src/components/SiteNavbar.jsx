@@ -340,7 +340,7 @@ function SiteNavbar() {
             <span className="ab-brand-subtitle">Alumni Association</span>
           </span>
         </Link>
-        
+
 
         <div className={`ab-nav-links${mobileMenuOpen ? ' ab-open-links' : ''}`} id="primary-navigation">
           <Link to="/" onClick={closeMobileMenu}>Home</Link>

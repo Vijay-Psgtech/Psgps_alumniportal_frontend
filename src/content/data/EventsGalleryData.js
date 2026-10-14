@@ -14,7 +14,8 @@ export const alumniEvents = [
     date: "August 18, 2025",
     category: "Reunion",
     venue: "PSG Public Schools Campus",
-    description: "A warm evening of familiar faces, shared stories, and new memories across generations of PSGPS alumni.",
+    description:
+      "A warm evening of familiar faces, shared stories, and new memories across generations of PSGPS alumni.",
     cover: together2025,
     images: [together2025, togetherOne, togetherTwo],
   },
@@ -24,7 +25,8 @@ export const alumniEvents = [
     date: "August 2, 2025",
     category: "Sports",
     venue: "PSGPS Sports Ground",
-    description: "A spirited day of friendly competition, teamwork, and community beyond the classroom.",
+    description:
+      "A spirited day of friendly competition, teamwork, and community beyond the classroom.",
     cover: sportOne,
     images: [sportOne, sportTwo],
   },
@@ -34,7 +36,8 @@ export const alumniEvents = [
     date: "August 15, 2022",
     category: "Community",
     venue: "Coimbatore",
-    description: "A memorable alumni gathering celebrating the shared journey and enduring PSGPS spirit.",
+    description:
+      "A memorable alumni gathering celebrating the shared journey and enduring PSGPS spirit.",
     cover: march,
     images: [march],
   },
@@ -44,7 +47,8 @@ export const alumniEvents = [
     date: "2022",
     category: "Milestone",
     venue: "PSG Public Schools",
-    description: "The beginning of a connected alumni community built on strong roots and a shared future.",
+    description:
+      "The beginning of a connected alumni community built on strong roots and a shared future.",
     cover: inaugurationOne,
     images: [inaugurationOne, inaugurationTwo],
   },

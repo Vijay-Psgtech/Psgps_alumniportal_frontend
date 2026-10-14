@@ -13,7 +13,7 @@ const normalizeAlbumsData = (payload) => {
     return payload.reduce((acc, album) => {
       const year = String(
         album.year ??
-          (album.date ? new Date(album.date).getFullYear() : "unknown"),
+        (album.date ? new Date(album.date).getFullYear() : "unknown"),
       );
       const photos =
         parseInt(album.photos, 10) ||
@@ -197,10 +197,10 @@ export const AlbumsTab = ({ onError, onSuccess }) => {
               style={
                 isSel
                   ? {
-                      borderColor: `${yd.coverColor}50`,
-                      backgroundColor: `${yd.coverColor}10`,
-                      color: yd.coverColor,
-                    }
+                    borderColor: `${yd.coverColor}50`,
+                    backgroundColor: `${yd.coverColor}10`,
+                    color: yd.coverColor,
+                  }
                   : {}
               }
             >

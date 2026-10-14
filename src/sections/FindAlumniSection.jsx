@@ -3,7 +3,7 @@ import { Handshake, MapPin, Search, UsersRound } from 'lucide-react'
 
 const FindAlumniSection = () => {
     const [directoryQuery, setDirectoryQuery] = useState('')
-      const [directoryFilter, setDirectoryFilter] = useState('All Alumni')
+    const [directoryFilter, setDirectoryFilter] = useState('All Alumni')
 
     return (
         <section className="directory-section" id="directory">

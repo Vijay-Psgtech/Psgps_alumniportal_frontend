@@ -23,8 +23,6 @@ import alumniImg20 from "../../assets/Alumni/Thilak Vikram.jpeg";
 import alumniImg21 from "../../assets/Alumni/Vignesh Prabhu.png";
 import alumniImg22 from "../../assets/Alumni/Vineeth.jpg";
 
-
-
 export const NoteableAlumniData = [
   {
     id: 1,

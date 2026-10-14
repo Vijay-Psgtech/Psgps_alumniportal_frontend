@@ -147,8 +147,8 @@ const AdminNotifCard = ({ notification, onApprove, onReject, onDelete }) => {
         background: notification.status === "pending"
           ? "linear-gradient(90deg, #667eea, #764ba2)"
           : notification.status === "approved"
-          ? "linear-gradient(90deg, #22c55e, #16a34a)"
-          : "linear-gradient(90deg, #ef4444, #dc2626)",
+            ? "linear-gradient(90deg, #22c55e, #16a34a)"
+            : "linear-gradient(90deg, #ef4444, #dc2626)",
       }} />
 
       <div style={{ padding: "20px 24px" }}>

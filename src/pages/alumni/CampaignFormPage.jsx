@@ -52,8 +52,8 @@ const CampaignFormPage = () => {
       console.error("❌ Error loading campaign:", err);
       setError(
         err.response?.data?.message ||
-          err.message ||
-          "Failed to load campaign"
+        err.message ||
+        "Failed to load campaign"
       );
     } finally {
       setLoading(false);
@@ -123,8 +123,8 @@ const CampaignFormPage = () => {
       console.error("❌ Error submitting response:", err);
       setError(
         err.response?.data?.message ||
-          err.message ||
-          "Failed to submit response. Please try again."
+        err.message ||
+        "Failed to submit response. Please try again."
       );
     } finally {
       setSubmitting(false);
@@ -405,9 +405,8 @@ const CampaignFormPage = () => {
                             </label>
                             <input
                               type="text"
-                              value={`${user?.firstName || ""} ${
-                                user?.lastName || ""
-                              }`.trim()}
+                              value={`${user?.firstName || ""} ${user?.lastName || ""
+                                }`.trim()}
                               disabled
                               className="w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-white text-slate-600 cursor-not-allowed"
                             />

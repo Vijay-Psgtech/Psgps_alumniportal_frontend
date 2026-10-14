@@ -200,8 +200,8 @@ export const AlumniTab = ({
                 });
               }}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[13px] font-bold font-['Outfit',sans-serif] transition-all duration-300 border ${statusFilter === btn.id
-                  ? "bg-slate-900 border-slate-900 text-white shadow-lg shadow-slate-200 scale-[1.02]"
-                  : "bg-white border-slate-200 text-slate-500 hover:border-slate-300 hover:bg-slate-50"
+                ? "bg-slate-900 border-slate-900 text-white shadow-lg shadow-slate-200 scale-[1.02]"
+                : "bg-white border-slate-200 text-slate-500 hover:border-slate-300 hover:bg-slate-50"
                 }`}
             >
               <btn.icon
@@ -258,8 +258,8 @@ export const AlumniTab = ({
                         <div className="flex items-center gap-2 mt-1">
                           <span
                             className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${a.isApproved
-                                ? "bg-green-100 text-green-700"
-                                : "bg-yellow-100 text-yellow-700"
+                              ? "bg-green-100 text-green-700"
+                              : "bg-yellow-100 text-yellow-700"
                               }`}
                           >
                             {a.isApproved ? (
@@ -299,7 +299,7 @@ export const AlumniTab = ({
                             {a.occupation}
                           </span>
                           <span className="text-gray-400">•</span>
-                            <Building size={14} className="text-gray-400" />
+                          <Building size={14} className="text-gray-400" />
                           <span className="text-gray-600">{a.company ? a.company : '-'}</span>
                         </div>
                       )}
@@ -385,8 +385,8 @@ export const AlumniTab = ({
                           onPageChange(page);
                         }}
                         className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${currentPage === page
-                            ? "bg-slate-900 text-white"
-                            : "border border-slate-200 text-slate-600 hover:bg-slate-50"
+                          ? "bg-slate-900 text-white"
+                          : "border border-slate-200 text-slate-600 hover:bg-slate-50"
                           }`}
                       >
                         {page}

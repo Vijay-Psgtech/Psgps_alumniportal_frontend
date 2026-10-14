@@ -293,10 +293,10 @@ const AlumniDetailModal = ({ alumni, isOpen, onClose, apiBase, viewer }) => {
             </Section>
 
             <Section title="Professional Information">
-              <InfoRow 
-                icon={Briefcase} 
-                label="Current Role" 
-                value={alumni.occupation} 
+              <InfoRow
+                icon={Briefcase}
+                label="Current Role"
+                value={alumni.occupation}
               />
 
               <InfoRow
