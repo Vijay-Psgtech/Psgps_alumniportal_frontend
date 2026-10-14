@@ -1,4 +1,4 @@
-import patronImg1 from "../../assets/Patrons/Chief.jpg";
+import patronImg1 from "../../assets/Patrons/trustee.JPG";
 import patronImg2 from "../../assets/Patrons/PRINCIPAL.png";
 import patronImg3 from "../../assets/Patrons/Picture1.png";
 import patronImg4 from "../../assets/Patrons/Picture3.png";
