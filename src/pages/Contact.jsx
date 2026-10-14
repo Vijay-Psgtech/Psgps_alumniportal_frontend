@@ -30,7 +30,7 @@ function ContactPage() {
     }));
   };
 
-   const validateForm = () => {
+  const validateForm = () => {
     const newErrors = {};
     if (!form.name.trim()) newErrors.name = "Name is required";
     if (!form.email.trim()) newErrors.email = "Email is required";
@@ -41,13 +41,13 @@ function ContactPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-    
+
     try {
       const payload = new FormData();
       Object.entries(form).forEach(([key, value]) => {
@@ -94,9 +94,9 @@ function ContactPage() {
             </div>
             {Object.keys(errors).length > 0 && <div className="contact-errors"><ul>{Object.entries(errors).map(([field, error]) => <li key={field}>{error}</li>)}</ul></div>}
             <button type="submit" className="contact-submit" disabled={isLoading}>
-                <Send size={14} />
-                {isLoading ? "Sending..." : "Send enquiry"}
-              </button>
+              <Send size={14} />
+              {isLoading ? "Sending..." : "Send enquiry"}
+            </button>
             {submitted && <p className="contact-sent"><CheckCircle size={16} /> Message sent successfully!</p>}
           </form>
 
