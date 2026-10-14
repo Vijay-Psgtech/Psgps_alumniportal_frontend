@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
           isAdmin: freshUser.isAdmin ?? false,
           isApproved: freshUser.isApproved ?? true,
         };
-        
+
         setUser(normalizedUser);
         setRole(normalizedUser.role);
         setIsAuthenticated(true);
@@ -69,7 +69,7 @@ export function AuthProvider({ children }) {
         isAdmin: userData.isAdmin ?? false,
         isApproved: userData.isApproved ?? true,
       };
-      
+
       setUser(normalizedUser);
       setRole(normalizedUser.role);
       setIsAuthenticated(true);

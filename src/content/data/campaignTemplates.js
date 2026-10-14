@@ -5,7 +5,8 @@ const CAMPAIGN_TEMPLATES = {
   nostalgicStory: {
     id: "nostalgic-story",
     title: "Nostalgic Stories",
-    description: "Collect heartwarming stories from alumni about their college days",
+    description:
+      "Collect heartwarming stories from alumni about their college days",
     category: "Nostalgic Stories",
     duration: 14,
     formFields: [
@@ -34,7 +35,7 @@ const CAMPAIGN_TEMPLATES = {
         label: "Batch Year",
         required: true,
         options: Array.from({ length: 30 }, (_, i) =>
-          String(new Date().getFullYear() - i)
+          String(new Date().getFullYear() - i),
         ),
       },
       {
