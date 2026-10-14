@@ -267,11 +267,10 @@ const NewsLetterFormModal = ({ initial, onSave, onClose, isLoading }) => {
               })
             }
             disabled={!valid || isLoading}
-            className={`flex-1 py-3 rounded-xl border-none font-['Outfit',sans-serif] text-sm font-bold flex items-center justify-center gap-2 transition-all ${
-              valid && !isLoading
+            className={`flex-1 py-3 rounded-xl border-none font-['Outfit',sans-serif] text-sm font-bold flex items-center justify-center gap-2 transition-all ${valid && !isLoading
                 ? "bg-linear-to-br from-blue-600 to-blue-900 text-white shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40"
                 : "bg-slate-200 text-slate-400 cursor-not-allowed"
-            } ${isLoading ? "opacity-70" : ""}`}
+              } ${isLoading ? "opacity-70" : ""}`}
           >
             <CheckCircle size={16} />
             {isLoading
@@ -284,9 +283,8 @@ const NewsLetterFormModal = ({ initial, onSave, onClose, isLoading }) => {
             type="button"
             onClick={onClose}
             disabled={isLoading}
-            className={`px-6 py-3 rounded-xl border border-slate-200 bg-white text-gray-500 font-['Outfit',sans-serif] text-sm font-semibold transition-colors ${
-              isLoading ? "opacity-70 cursor-not-allowed" : "hover:bg-slate-100"
-            }`}
+            className={`px-6 py-3 rounded-xl border border-slate-200 bg-white text-gray-500 font-['Outfit',sans-serif] text-sm font-semibold transition-colors ${isLoading ? "opacity-70 cursor-not-allowed" : "hover:bg-slate-100"
+              }`}
           >
             Cancel
           </button>
@@ -352,24 +350,24 @@ const AdminNewsLetter = () => {
     try {
       setIsSaving(true);
       const fd = new FormData();
-      
+
       // ✅ Append form fields
       fd.append("title", form.title);
       fd.append("date", form.date);
       fd.append("category", form.category);
       fd.append("description", form.description);
       fd.append("author", form.author || "");
-      
+
       // ✅ FIXED: Send tags as array (backend will parse it)
       if (Array.isArray(form.tags) && form.tags.length) {
         form.tags.forEach(tag => fd.append("tags", tag));
       }
-      
+
       // ✅ FIXED: Use correct field name "imageUrl" to match backend
       if (form.imageUrl instanceof File) {
         fd.append("imageUrl", form.imageUrl);
       }
-      
+
       // ✅ FIXED: Use correct field name "pdf" to match backend
       if (form.pdfUrl instanceof File) {
         fd.append("pdf", form.pdfUrl);
@@ -400,7 +398,7 @@ const AdminNewsLetter = () => {
     } catch (error) {
       console.error("Save newsletter error", error);
       console.error("Full error response:", error.response?.data);
-      
+
       setNotice({
         type: "error",
         message:
@@ -486,11 +484,10 @@ const AdminNewsLetter = () => {
 
       {notice && (
         <div
-          className={`rounded-2xl px-4 py-3 text-sm font-medium ${
-            notice.type === "success"
+          className={`rounded-2xl px-4 py-3 text-sm font-medium ${notice.type === "success"
               ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
               : "bg-red-50 text-red-700 border border-red-100"
-          }`}
+            }`}
         >
           {notice.message}
         </div>
@@ -517,11 +514,10 @@ const AdminNewsLetter = () => {
                   key={category}
                   type="button"
                   onClick={() => setCategoryFilter(category)}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                    categoryFilter === category
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${categoryFilter === category
                       ? "bg-slate-900 text-white"
                       : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                  }`}
+                    }`}
                 >
                   {category === "all" ? "All" : category}
                 </button>

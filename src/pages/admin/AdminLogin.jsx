@@ -4,7 +4,7 @@ import { AlertCircle, Eye, EyeOff, Lock } from "lucide-react";
 import { authAPI } from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
 import usePageTitle from "../../hooks/usePageTitle";
-import psgpslogo from  "../../assets/ALUMNI LOGO.jpg";
+import psgpslogo from "../../assets/ALUMNI LOGO.jpg";
 
 const AdminLogin = () => {
   usePageTitle("Admin Login");
@@ -79,7 +79,7 @@ const AdminLogin = () => {
       } else if (err.response?.status === 403) {
         setError(
           err.response?.data?.message ||
-            "Admin account is inactive or not approved",
+          "Admin account is inactive or not approved",
         );
       } else if (err.response?.status === 500) {
         setError("Server error. Please try again later.");

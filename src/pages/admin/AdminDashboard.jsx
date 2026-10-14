@@ -509,8 +509,8 @@ const AdminDashboard = () => {
                 key={key}
                 onClick={() => setActiveTab(key)}
                 className={`px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition ${activeTab === key
-                    ? "bg-[#0d2d52] text-white"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  ? "bg-[#0d2d52] text-white"
+                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
               >
                 <Icon size={15} />
@@ -616,7 +616,7 @@ const AdminDashboard = () => {
               />
             </motion.div>
           )}
-          
+
           {activeTab === "donation-history" && (
             <motion.div
               key="donation-history"
@@ -664,7 +664,7 @@ const AdminDashboard = () => {
               </p>
             </div>
           )}
-          
+
           {activeTab === "users" && (
             <motion.div
               key="users"

@@ -329,7 +329,7 @@ const AdminReports = () => {
                           src="/default-avatar.png"
                           alt={`${alumni.firstName || ""} ${alumni.lastName || ""}`}
                           className="w-10 h-10 rounded-full border object-cover"
-                          
+
                         />
                       )}
 
