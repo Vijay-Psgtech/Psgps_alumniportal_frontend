@@ -23,7 +23,7 @@ const useCampaignForm = (initialCampaignId = null) => {
   // Extract campaign ID from various sources
   useEffect(() => {
     let id = initialCampaignId;
-    
+
     const debugInfo = {
       fromProps: initialCampaignId,
       fromURLQuery: new URLSearchParams(window.location.search).get("campaignId"),
@@ -463,11 +463,10 @@ const CampaignForm = ({ campaignId: propCampaignId }) => {
               disabled={isSubmitting}
               whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
               whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-              className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition ${
-                isSubmitting
+              className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition ${isSubmitting
                   ? "bg-slate-300 text-slate-500 cursor-not-allowed"
                   : "bg-blue-600 text-white hover:bg-blue-700"
-              }`}
+                }`}
             >
               {isSubmitting ? (
                 <>

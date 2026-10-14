@@ -497,11 +497,9 @@ export const DonationHistory = ({ isSuperAdmin = false }) => {
                   <p className="text-xs text-gray-500 font-semibold">Status</p>
                   <div className="mt-1">
                     <span
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide ${
-                        getStatusStyles(donation.status).bg
-                      } ${getStatusStyles(donation.status).text} border ${
-                        getStatusStyles(donation.status).border
-                      }`}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide ${getStatusStyles(donation.status).bg
+                        } ${getStatusStyles(donation.status).text} border ${getStatusStyles(donation.status).border
+                        }`}
                     >
                       {getStatusStyles(donation.status).icon}
                       {donation.status}
@@ -614,11 +612,10 @@ export const DonationHistory = ({ isSuperAdmin = false }) => {
                 <button
                   onClick={() => handleFlagDonation(donation._id, !donation.adminFlagged)}
                   disabled={loading}
-                  className={`flex-1 px-4 py-2 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 ${
-                    donation.adminFlagged
+                  className={`flex-1 px-4 py-2 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 ${donation.adminFlagged
                       ? "bg-red-100 hover:bg-red-200 text-red-700"
                       : "bg-gray-200 hover:bg-gray-300 text-gray-700"
-                  }`}
+                    }`}
                 >
                   <Flag size={16} />
                   {donation.adminFlagged ? "Unflag" : "Flag"}
@@ -876,11 +873,9 @@ export const DonationHistory = ({ isSuperAdmin = false }) => {
                       <div>
                         <p className="text-xs text-gray-500 font-semibold">Status</p>
                         <span
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
-                            getStatusStyles(donation.status).bg
-                          } ${getStatusStyles(donation.status).text} border ${
-                            getStatusStyles(donation.status).border
-                          }`}
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${getStatusStyles(donation.status).bg
+                            } ${getStatusStyles(donation.status).text} border ${getStatusStyles(donation.status).border
+                            }`}
                         >
                           {getStatusStyles(donation.status).icon}
                           {donation.status}
@@ -954,11 +949,10 @@ export const DonationHistory = ({ isSuperAdmin = false }) => {
                   <button
                     key={page}
                     onClick={() => handlePageChange(page)}
-                    className={`w-10 h-10 rounded-lg font-semibold transition-all ${
-                      pagination.page === page
+                    className={`w-10 h-10 rounded-lg font-semibold transition-all ${pagination.page === page
                         ? "bg-emerald-600 text-white"
                         : "border border-gray-300 text-gray-700 hover:bg-gray-100"
-                    }`}
+                      }`}
                   >
                     {page}
                   </button>

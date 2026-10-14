@@ -22,12 +22,12 @@ export const AlbumFormModal = ({
   const [form, setForm] = useState(
     initial
       ? {
-          ...initial,
-          tags: Array.isArray(initial.tags)
-            ? initial.tags.join(", ")
-            : initial.tags || "",
-          images: Array.isArray(initial.images) ? initial.images : [],
-        }
+        ...initial,
+        tags: Array.isArray(initial.tags)
+          ? initial.tags.join(", ")
+          : initial.tags || "",
+        images: Array.isArray(initial.images) ? initial.images : [],
+      }
       : BLANK_ALBUM,
   );
   const isEdit = !!initial?.id;

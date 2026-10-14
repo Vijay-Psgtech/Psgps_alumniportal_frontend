@@ -15,7 +15,7 @@ const INITIAL_FORM = {
   isActive: true,
 };
 
-const AdminUsersTab = ({ onError = () => {}, onSuccess = () => {} }) => {
+const AdminUsersTab = ({ onError = () => { }, onSuccess = () => { } }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(INITIAL_FORM);
@@ -403,11 +403,10 @@ const AdminUsersTab = ({ onError = () => {}, onSuccess = () => {} }) => {
                       </td>
                       <td className="px-4 py-4">
                         <span
-                          className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
-                            user.isActive
+                          className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${user.isActive
                               ? "bg-emerald-100 text-emerald-700"
                               : "bg-amber-100 text-amber-700"
-                          }`}
+                            }`}
                         >
                           {user.isActive ? "Active" : "Inactive"}
                         </span>
