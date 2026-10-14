@@ -6,6 +6,10 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    allowedHosts: ["localhost","alumni.psgps.ac.in", "alumnitestpsgps.psginstitutions.in"],
+    allowedHosts: [
+      "localhost",
+      "alumni.psgps.ac.in",
+      "alumnitestpsgps.psginstitutions.in",
+    ],
   },
 });
