@@ -34,7 +34,7 @@ const SendNotification = ({ onClose, onSuccess }) => {
   useEffect(() => {
     alumniAPI.getBatches().then((res) => {
       setBatches(res.data.batches || []);
-    }).catch(() => {});
+    }).catch(() => { });
   }, []);
 
   const handleFile = (e) => {

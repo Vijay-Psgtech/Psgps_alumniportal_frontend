@@ -14,7 +14,7 @@ const AlumniDonations = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   usePageTitle("Make a Donation");
-  
+
 
   const [donationAmount, setDonationAmount] = useState("");
   const [purpose, setPurpose] = useState("general");
@@ -55,7 +55,7 @@ const AlumniDonations = () => {
 
   const handleDonation = async (e) => {
     e.preventDefault();
-    
+
     if (!donationAmount || Number(donationAmount) <= 0) {
       setError("Please enter a valid amount");
       return;
@@ -76,7 +76,7 @@ const AlumniDonations = () => {
         setSuccess(true);
         setDonationAmount("");
         setPurpose("general");
-        
+
         // Reload donations
         setTimeout(() => {
           loadDonationHistory();

@@ -47,8 +47,8 @@ const CampaignsPage = () => {
       console.error("❌ Error loading campaigns:", err);
       setError(
         err.response?.data?.message ||
-          err.message ||
-          "Failed to load campaigns"
+        err.message ||
+        "Failed to load campaigns"
       );
       setCampaigns([]);
     } finally {
@@ -139,11 +139,10 @@ const CampaignsPage = () => {
               <button
                 key={status}
                 onClick={() => setSelectedStatus(status)}
-                className={`px-4 py-2 rounded-full text-xs font-bold transition-all capitalize ${
-                  selectedStatus === status
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all capitalize ${selectedStatus === status
                     ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200"
                     : "bg-white border border-slate-200 text-slate-600 hover:border-slate-300"
-                }`}
+                  }`}
               >
                 {status === "all" ? "All Campaigns" : status}
               </button>
@@ -234,11 +233,10 @@ const CampaignsPage = () => {
                     >
                       {/* Header Background */}
                       <div
-                        className={`h-3 w-full ${
-                          isActive
+                        className={`h-3 w-full ${isActive
                             ? "bg-gradient-to-r from-indigo-600 to-violet-600"
                             : "bg-gradient-to-r from-slate-400 to-slate-500"
-                        }`}
+                          }`}
                       />
 
                       <div className="p-6 space-y-4">

@@ -72,7 +72,7 @@ const QUICK_CARDS = [
     iconColor: "text-emerald-600",
     cta: "Explore locations",
   },
-   {
+  {
     id: "campaigns",
     icon: Megaphone,
     title: "Campaigns",
@@ -175,7 +175,7 @@ const AlumniDashboard = () => {
     notificationAPI
       .getMyNotifications()
       .then((r) => setUnreadCount(r.data.count || 0))
-      .catch(() => {});
+      .catch(() => { });
 
   useEffect(() => {
     refreshCount();
