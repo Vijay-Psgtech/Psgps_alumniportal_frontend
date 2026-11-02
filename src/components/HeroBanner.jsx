@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { Users, Globe2, CalendarDays, ArrowRight, ChevronDown, Sparkles } from "lucide-react";
 import { motion, animate, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-import schoolImage from "../assets/school_building.png";
+import schoolImage from "../assets/banner_school_image.png";
 import psgpsLogo from "../assets/PSGPS LOGO IN COREL.jpg";
 
 const container = {
@@ -74,13 +74,13 @@ export default function AlumniBanner({
           min-height: 760px;
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-start;
           overflow: hidden;
           padding-top: 82px;
           box-sizing: border-box;
         }
         @media (max-width: 760px) {
-          .ab-hero { min-height: 600px; }
+          .ab-hero { min-height: max(100svh, 700px); }
         }
 
         .ab-hero-bg {
@@ -100,7 +100,7 @@ export default function AlumniBanner({
           to   { transform: scale(1.12) translate(-1.5%, -1%); }
         }
 
-        .ab-hero-overlay {
+         .ab-hero-overlay {
           position: absolute;
           inset: 0;
           z-index: 1;
@@ -172,20 +172,29 @@ export default function AlumniBanner({
           z-index: 2;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          gap: 20px;
+          align-items: flex-start;
+          gap: 22px;
+          width: min(760px, 82vw);
           max-width: 760px;
-          margin: 0 auto;
-          padding: 40px 6vw 90px;
-          text-align: center;
+          margin: 0 auto 0 clamp(24px, 8vw, 140px);
+          padding: 0 32px;
+          text-align: left;
+          box-sizing: border-box;
+        }
+
+        .ab-hero-kicker {
+          display: flex;
+          align-items: center;
+          gap: 18px;
         }
 
         /* Rotating dashed ring orbiting the logo, plus a slow counter-rotating
            sparkle — a small decorative flourish that reads as "living" crest */
         .ab-hero-logo-wrap {
           position: relative;
-          width: 88px;
-          height: 88px;
+          width: 72px;
+          height: 72px;
+          flex: 0 0 72px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -219,8 +228,8 @@ export default function AlumniBanner({
         }
 
         .ab-hero-logo {
-          width: 64px; height: 64px; object-fit: contain; border-radius: 14px;
-          background: #fff; padding: 7px;
+          width: 54px; height: 54px; object-fit: contain; border-radius: 12px;
+          background: #fff; padding: 6px;
           box-shadow: 0 14px 30px rgba(0,0,0,0.3);
         }
 
@@ -233,13 +242,13 @@ export default function AlumniBanner({
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: var(--gold-soft, #f5dc97);
+          line-height: 1.6;
         }
-        .ab-eyebrow::before,
-        .ab-eyebrow::after { content: ""; width: 26px; height: 1px; background: var(--gold-soft, #f5dc97); }
+        .ab-eyebrow::before { content: ""; width: 24px; height: 1px; flex: 0 0 24px; background: var(--gold-soft, #f5dc97); }
 
         .ab-hero-copy h1 {
           font-family: var(--font-display, serif);
-          font-size: clamp(2.8rem, 6vw, 5rem);
+          font-size: clamp(3.2rem, 6.4vw, 5.8rem);
           line-height: 0.98;
           font-weight: 600;
           color: #fbfcff;
@@ -264,7 +273,7 @@ export default function AlumniBanner({
         }
 
         .ab-hero-desc {
-          max-width: 560px;
+          max-width: 540px;
           font-size: 15.5px;
           line-height: 1.75;
           color: rgba(230, 238, 250, 0.88);
@@ -276,7 +285,7 @@ export default function AlumniBanner({
           gap: 14px;
           padding-top: 6px;
           flex-wrap: wrap;
-          justify-content: center;
+          justify-content: flex-start;
         }
         .ab-stat {
           position: relative;
@@ -332,7 +341,7 @@ export default function AlumniBanner({
           50% { box-shadow: 0 0 0 7px rgba(215, 173, 90, 0); }
         }
 
-        .ab-hero-actions { display: flex; gap: 14px; padding-top: 8px; flex-wrap: wrap; justify-content: center; }
+        .ab-hero-actions { display: flex; gap: 14px; padding-top: 8px; flex-wrap: wrap; justify-content: flex-start; }
         .ab-btn-primary {
           position: relative;
           padding: 14px 28px;
@@ -415,6 +424,29 @@ export default function AlumniBanner({
           from { background-position: 0% 0; }
           to   { background-position: -200% 0; }
         }
+
+        @media (max-width: 760px) {
+          .ab-hero-copy {
+            width: 100%;
+            margin: 0;
+            padding: 80px 24px 92px;
+            gap: 18px;
+          }
+          .ab-hero-copy h1 { font-size: clamp(2.8rem, 11vw, 4.25rem); }
+          .ab-eyebrow { font-size: 10px; letter-spacing: 0.12em; }
+          .ab-hero-kicker { gap: 12px; }
+          .ab-hero-logo-wrap { width: 64px; height: 64px; flex-basis: 64px; }
+          .ab-stats { width: 100%; gap: 8px; }
+          .ab-stat { min-width: 0; flex: 1 1 0; padding: 11px 8px; }
+          .ab-stat small { font-size: 9px; }
+        }
+
+        @media (max-width: 380px) {
+          .ab-hero-copy { padding-right: 18px; padding-left: 18px; }
+          .ab-hero-kicker { gap: 9px; }
+          .ab-eyebrow { font-size: 9px; letter-spacing: 0.1em; }
+          .ab-stat { padding-right: 5px; padding-left: 5px; }
+        }
       `}</style>
 
       <img className="ab-hero-bg" src={imageUrl} alt="" aria-hidden="true" loading="eager" fetchPriority="high" decoding="async" />
@@ -442,13 +474,14 @@ export default function AlumniBanner({
       <span className="ab-particle" style={{ left: "88%", animationDuration: "12s", animationDelay: "2s" }} />
 
       <motion.div className="ab-hero-copy" variants={container} initial="hidden" animate="show">
-        <motion.div variants={rise} className="ab-hero-logo-wrap">
-          <span className="ab-hero-logo-ring" aria-hidden="true" />
-          <Sparkles size={16} className="ab-hero-logo-sparkle" aria-hidden="true" />
-          <img className="ab-hero-logo" src={psgpsLogo} alt="PSG Public Schools" loading="eager" />
+        <motion.div variants={rise} className="ab-hero-kicker">
+          <div className="ab-hero-logo-wrap">
+            <span className="ab-hero-logo-ring" aria-hidden="true" />
+            <Sparkles size={16} className="ab-hero-logo-sparkle" aria-hidden="true" />
+            <img className="ab-hero-logo" src={psgpsLogo} alt="PSG Public Schools" loading="eager" />
+          </div>
+          <span className="ab-eyebrow">PSG Public Schools Alumni Association</span>
         </motion.div>
-
-        <motion.span variants={rise} className="ab-eyebrow">PSG Public Schools Alumni Association</motion.span>
 
         <motion.h1
           variants={headlineContainer}
